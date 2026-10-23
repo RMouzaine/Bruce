@@ -131,15 +131,15 @@ def route_matin():
     if jour_py == 0:
         coaching = "18h30 à 19h45 (Séance physique)"
     elif jour_py == 2:
-        coaching = "18h30 à 19h45 (Séance tactique ludique)"
+        coaching = "18h30 à 19h45 (Séance tactique/ludique)"
     else:
-        coaching = "Aucun"
+        coaching = "Pas de Coaching aujourd'hui"
         
     # 2. Match
     if jour_py == 5:
-        match = "Match aujourd'hui"
+        match = "Jour De Match"
     else:
-        match = "Aucun"
+        match = "Pas de match prévu"
     
     corps = (
         f"Cours : {cours_str}\n"
