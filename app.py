@@ -56,11 +56,9 @@ def obtenir_horaires_drive():
         
         fuseau = pytz.timezone('Europe/Paris')
         aujourd_hui = datetime.now(fuseau)
+        date_str = aujourd_hui.strftime("%d/%m") # Cherche "23/10"
         
-        # Le script va chercher la date d'aujourd'hui (ex: "23/10")
-        date_str_1 = aujourd_hui.strftime("%d/%m")
-        date_str_2 = f"{aujourd_hui.day}/{aujourd_hui.month:02d}"
-        
+        dates_trouvees = []
         index_col_date = -1
         
         for ligne in lecteur:
@@ -70,13 +68,17 @@ def obtenir_horaires_drive():
             # Si on lit une ligne de dates
             if "DATE" in ligne[0].upper():
                 index_col_date = -1
+                # On mémorise les dates trouvées pour le débogage
+                dates_trouvees.extend([val.strip() for val in ligne[1:8] if val.strip()])
+                
                 for i, val in enumerate(ligne):
-                    if val.strip() in [date_str_1, date_str_2]:
+                    # Recherche plus souple (tolère les espaces ou années)
+                    if date_str in val:
                         index_col_date = i
                         break
                         
-            # Si la date a été trouvée, on cherche votre prénom
-            elif index_col_date != -1 and "Rayan" in ligne[0]:
+            # Si la date a été trouvée, on cherche votre prénom (insensible aux majuscules)
+            elif index_col_date != -1 and "RAYAN" in ligne[0].upper():
                 col_debut = index_col_date * 3 - 1
                 col_fin = index_col_date * 3
                 
@@ -84,14 +86,21 @@ def obtenir_horaires_drive():
                     debut = ligne[col_debut].strip()
                     fin = ligne[col_fin].strip()
                     
-                    if (debut == "00:00" and fin == "00:00") or debut == "":
+                    if (debut == "00:00" and fin == "00:00") or debut == "" or debut.lower() == "repos":
                         return "Repos"
                     else:
                         return f"{debut} à {fin}"
                 else:
                     return "Repos"
                     
-        return "Repos (date non planifiée)"
+        # Si on arrive ici, il n'a pas trouvé aujourd'hui
+        if not dates_trouvees:
+            return "Erreur : Ligne 'DATE' introuvable dans le tableau."
+            
+        # Il va nous afficher les premières dates qu'il a réellement lues pour qu'on comprenne
+        dates_vues = ", ".join(dates_trouvees[:4])
+        return f"Date {date_str} introuvable (Dates vues: {dates_vues}...)"
+        
     except Exception as e:
         return f"Erreur Drive: {str(e)}"
 
