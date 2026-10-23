@@ -52,36 +52,42 @@ def obtenir_horaires_drive():
     try:
         reponse = requests.get(URL_DRIVE)
         reponse.encoding = 'utf-8'
-        lecteur = csv.reader(StringIO(reponse.text))
+        lecteur = list(csv.reader(StringIO(reponse.text)))
         
         fuseau = pytz.timezone('Europe/Paris')
         aujourd_hui = datetime.now(fuseau)
-        date_str = aujourd_hui.strftime("%d/%m") # Cherche "23/10"
         
-        dates_trouvees = []
-        index_col_date = -1
+        # Calcul du jour (Lundi = 0, Mardi = 1... Dimanche = 6)
+        # Le planning Auchan commence le Dimanche.
+        jour_py = aujourd_hui.weekday()
+        offset_jour = 0 if jour_py == 6 else jour_py + 1
+        
+        # Position mathématique des horaires dans les colonnes du tableau
+        col_debut = 2 + (offset_jour * 3)
+        col_fin = 3 + (offset_jour * 3)
+        
+        # Détermination automatique du numéro de la semaine
+        semaine_actuelle = aujourd_hui.isocalendar()[1]
+        if jour_py == 6: 
+            # Si on est dimanche, Auchan considère que c'est déjà la nouvelle semaine
+            semaine_actuelle += 1
+            
+        recherche_sem = f"sem {semaine_actuelle}"
+        dans_bonne_semaine = False
         
         for ligne in lecteur:
             if not ligne:
                 continue
                 
-            # Si on lit une ligne de dates
-            if "DATE" in ligne[0].upper():
-                index_col_date = -1
-                # On mémorise les dates trouvées pour le débogage
-                dates_trouvees.extend([val.strip() for val in ligne[1:8] if val.strip()])
+            texte_ligne0 = ligne[0].lower()
+            
+            # On cherche le bloc de la semaine en cours (ex: "sem 43")
+            if "date:" in texte_ligne0 and recherche_sem in texte_ligne0:
+                dans_bonne_semaine = True
+                continue
                 
-                for i, val in enumerate(ligne):
-                    # Recherche plus souple (tolère les espaces ou années)
-                    if date_str in val:
-                        index_col_date = i
-                        break
-                        
-            # Si la date a été trouvée, on cherche votre prénom (insensible aux majuscules)
-            elif index_col_date != -1 and "RAYAN" in ligne[0].upper():
-                col_debut = index_col_date * 3 - 1
-                col_fin = index_col_date * 3
-                
+            # Si on est dans la bonne semaine et qu'on trouve votre prénom
+            if dans_bonne_semaine and "rayan" in texte_ligne0:
                 if len(ligne) > col_fin:
                     debut = ligne[col_debut].strip()
                     fin = ligne[col_fin].strip()
@@ -91,15 +97,13 @@ def obtenir_horaires_drive():
                     else:
                         return f"{debut} à {fin}"
                 else:
-                    return "Repos"
+                    return "Repos (cellules vides)"
                     
-        # Si on arrive ici, il n'a pas trouvé aujourd'hui
-        if not dates_trouvees:
-            return "Erreur : Ligne 'DATE' introuvable dans le tableau."
-            
-        # Il va nous afficher les premières dates qu'il a réellement lues pour qu'on comprenne
-        dates_vues = ", ".join(dates_trouvees[:4])
-        return f"Date {date_str} introuvable (Dates vues: {dates_vues}...)"
+            # Si on arrive au bloc de la semaine suivante, on arrête de chercher
+            if dans_bonne_semaine and "date:" in texte_ligne0 and recherche_sem not in texte_ligne0:
+                break
+                
+        return f"Erreur : Semaine {semaine_actuelle} non trouvée dans le fichier."
         
     except Exception as e:
         return f"Erreur Drive: {str(e)}"
