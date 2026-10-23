@@ -20,7 +20,45 @@ CITATIONS_MOTIVANTES = [
     "La seule limite à notre épanouissement de demain sera nos doutes d'aujourd'hui.",
     "Ce n'est pas l'aptitude, mais l'attitude, qui détermine votre altitude.",
     "Un voyage de mille lieues commence toujours par un premier pas.",
-    "Faites de votre vie un rêve, et d'un rêve, une réalité."
+    "Faites de votre vie un rêve, et d'un rêve, une réalité.",
+    "La motivation vous fait débuter, mais c'est l'habitude qui vous fait continuer.",
+    "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+    "Il n'y a pas d'ascenseur pour la réussite, il faut prendre l'escalier.",
+    "La folie, c'est de faire toujours la même chose et de s'attendre à un résultat différent.",
+    "Croyez en vous. Sachez qu'il y a quelque chose à l'intérieur de vous qui est plus grand que n'importe quel obstacle.",
+    "Le meilleur moment pour planter un arbre était il y a 20 ans. Le deuxième meilleur moment est maintenant.",
+    "Votre temps est limité, ne le gâchez pas en menant une existence qui n'est pas la vôtre.",
+    "L'avenir appartient à ceux qui croient à la beauté de leurs rêves.",
+    "Pour pouvoir accomplir de grandes choses, il faut d'abord y rêver.",
+    "Le seul moyen de faire du bon travail, c'est d'aimer ce que vous faites.",
+    "Ne regardez pas la montre ; faites comme elle. Avancez.",
+    "Les gagnants trouvent des moyens, les perdants des excuses.",
+    "Le succès est la somme de petits efforts, répétés jour après jour.",
+    "L'action est la clé fondamentale de tout succès.",
+    "Si vous traversez l'enfer, continuez d'avancer.",
+    "La grandeur ne consiste pas à ne jamais tomber, mais à se relever après chaque chute.",
+    "Tout ce que vous avez toujours voulu se trouve de l'autre côté de la peur.",
+    "Le travail acharné bat le talent quand le talent ne travaille pas dur.",
+    "Il est difficile de battre une personne qui n'abandonne jamais.",
+    "Ne vous arrêtez pas quand vous êtes fatigué, arrêtez-vous quand vous avez terminé.",
+    "La meilleure façon de prédire l'avenir est de le créer.",
+    "Vous ne trouverez jamais ce que vous ne cherchez pas.",
+    "Le succès, c'est d'aller d'échec en échec sans perdre son enthousiasme.",
+    "Osez rêver. Osez essayer. Osez échouer. Osez réussir.",
+    "Si l'opportunité ne frappe pas, construisez une porte."
+]
+
+TRANSITIONS_PROGRAMME = [
+    "Voici le programme de votre journée :",
+    "Passons maintenant en revue votre emploi du temps :",
+    "Voici ce qui vous attend pour les prochaines heures :",
+    "Consultons votre agenda du jour :",
+    "Affichage de vos directives pour la journée :",
+    "Je vous présente votre feuille de route :",
+    "Initialisation du planning de la journée :",
+    "Voici le détail de vos engagements d'aujourd'hui :",
+    "Je charge votre emploi du temps. Le voici :",
+    "Préparation de votre emploi du temps terminée. Voici les détails :"
 ]
 
 CONCLUSIONS = [
@@ -152,6 +190,7 @@ def route_matin():
     if jour_py == 5: match = "Match aujourd'hui"
     else: match = "Aucun"
     
+    # Texte brut affiché dans la notification iOS
     corps = (
         f"Cours : {cours_str}\n"
         f"Drive : {drive_str}\n"
@@ -159,11 +198,23 @@ def route_matin():
         f"Match : {match}"
     )
     
+    # Construction de la version naturelle pour la synthèse vocale
     citation = random.choice(CITATIONS_MOTIVANTES)
+    transition = random.choice(TRANSITIONS_PROGRAMME)
+    
+    cours_vocal = "Aucun cours à l'université aujourd'hui." if "Aucun" in cours_str else f"Côté université, vous avez : {cours_str}."
+    drive_vocal = "Vous êtes en repos au Drive." if "Repos" in drive_str else f"Pour Auchan Drive, vous travaillez de {drive_str}."
+    
+    phrase_programme = f"{cours_vocal} {drive_vocal}"
+    if coaching != "Aucun":
+        phrase_programme += f" Vous donnez entraînement de {coaching}."
+    if match != "Aucun":
+        phrase_programme += " Et vous avez un match aujourd'hui."
+        
     conclusion = random.choice(CONCLUSIONS).format(titre=titre_choisi)
     
     # La phrase complète que Siri va prononcer
-    phrase_vocale = f"{titre_complet} {meteo_conseil} {citation} {conclusion}"
+    phrase_vocale = f"{titre_complet} {meteo_conseil} {citation} {transition} {phrase_programme} {conclusion}"
     
     return jsonify({
         "sous_titre": titre_complet,
