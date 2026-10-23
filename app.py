@@ -13,12 +13,29 @@ app = Flask(__name__)
 TITRES = ["Monsieur", "Sir", "Excellence", "Boss", "Patron", "Mentor"]
 ACCROCHES = ["Salutations distinguées,", "Les systèmes sont opérationnels,", "Rapport de situation prêt,", "À vos ordres,"]
 
+CITATIONS_MOTIVANTES = [
+    "N'oubliez pas : le succès, c'est de tomber sept fois et de se relever huit.",
+    "La discipline est le pont entre les objectifs et les accomplissements.",
+    "Chaque jour est une nouvelle opportunité de devenir la meilleure version de vous-même.",
+    "La seule limite à notre épanouissement de demain sera nos doutes d'aujourd'hui.",
+    "Ce n'est pas l'aptitude, mais l'attitude, qui détermine votre altitude.",
+    "Un voyage de mille lieues commence toujours par un premier pas.",
+    "Faites de votre vie un rêve, et d'un rêve, une réalité."
+]
+
+CONCLUSIONS = [
+    "Passez une excellente journée, {titre}.",
+    "Que votre journée soit des plus productives, {titre}.",
+    "Bon courage pour vos objectifs du jour, {titre}.",
+    "Force et honneur pour aujourd'hui, {titre}.",
+    "Je reste en veille. Excellente journée à vous, {titre}."
+]
+
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
 URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
 
 def obtenir_meteo_et_conseil():
     try:
-        # Coordonnées d'Orléans
         url_meteo = "https://api.open-meteo.com/v1/forecast?latitude=47.90&longitude=1.90&current_weather=true"
         reponse = requests.get(url_meteo).json()
         meteo = reponse.get("current_weather", {})
@@ -37,17 +54,17 @@ def obtenir_meteo_et_conseil():
         conseil = f"{condition} sur Orléans avec {temp} degrés. "
         
         if "pleut" in condition or "orage" in condition:
-            conseil += "Je vous recommande de prendre une veste imperméable. Si vous avez entraînement ce soir, n'oubliez pas les coupe-vents pour les petits."
+            conseil += "Je vous recommande de prendre une veste imperméable. Si vous avez entraînement ce soir, n'oubliez pas les coupe-vents pour les petits. "
         elif temp < 10:
-            conseil += "Les températures sont assez basses. Couvrez-vous bien, surtout si vous enchaînez les pistes au Drive."
+            conseil += "Les températures sont assez basses. Couvrez-vous bien, surtout si vous enchaînez les pistes au Drive. "
         elif temp > 22:
-            conseil += "Il fait particulièrement chaud. N'oubliez pas votre bouteille d'eau."
+            conseil += "Il fait particulièrement chaud. N'oubliez pas votre bouteille d'eau. "
         else:
-            conseil += "Les conditions météorologiques sont optimales pour votre journée."
+            conseil += "Les conditions météorologiques sont optimales pour votre journée. "
             
         return conseil
     except Exception:
-        return "Météo indisponible pour le moment."
+        return "Météo indisponible pour le moment. "
 
 def obtenir_cours_du_jour():
     try:
@@ -117,7 +134,9 @@ def obtenir_horaires_drive():
 
 @app.route('/rapport/matin', methods=['GET'])
 def route_matin():
-    titre = f"{random.choice(ACCROCHES)} {random.choice(TITRES)}."
+    titre_choisi = random.choice(TITRES)
+    accroche = random.choice(ACCROCHES)
+    titre_complet = f"{accroche} {titre_choisi}."
     
     cours_str = obtenir_cours_du_jour()
     drive_str = obtenir_horaires_drive()
@@ -140,11 +159,14 @@ def route_matin():
         f"Match : {match}"
     )
     
-    # La phrase générée spécifiquement pour être lue à haute voix par l'iPhone
-    phrase_vocale = f"{titre} {meteo_conseil}"
+    citation = random.choice(CITATIONS_MOTIVANTES)
+    conclusion = random.choice(CONCLUSIONS).format(titre=titre_choisi)
+    
+    # La phrase complète que Siri va prononcer
+    phrase_vocale = f"{titre_complet} {meteo_conseil} {citation} {conclusion}"
     
     return jsonify({
-        "sous_titre": titre,
+        "sous_titre": titre_complet,
         "corps": corps,
         "phrase_vocale": phrase_vocale
     })
