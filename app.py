@@ -1,6 +1,8 @@
-import os
+vimport os
 import random
 import requests
+import csv
+from io import StringIO
 from datetime import datetime
 import pytz
 from icalendar import Calendar
@@ -11,6 +13,7 @@ app = Flask(__name__)
 TITRES = ["Monsieur", "Sir", "Excellence", "Boss", "Patron", "Mentor"]
 ACCROCHES = ["Salutations distinguées,", "Les systèmes sont opérationnels,", "Rapport de situation prêt,", "À vos ordres,"]
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
+URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
 
 def obtenir_cours_du_jour():
     try:
@@ -34,31 +37,79 @@ def obtenir_cours_du_jour():
                 if date_evenement == aujourd_hui:
                     titre = str(composant.get('summary'))
                     titre = titre.split('\n')[0].strip()
-                    
                     heure_debut = debut.astimezone(fuseau).strftime("%Hh%M")
                     fin = composant.get('dtend').dt.astimezone(fuseau).strftime("%Hh%M")
-                    
                     cours_liste.append(f"{titre} ({heure_debut}-{fin})")
         
         if not cours_liste:
             return "Aucun cours aujourd'hui."
-            
         return " / ".join(cours_liste)
         
     except Exception as e:
         return f"Erreur de lecture ADE: {str(e)}"
+
+def obtenir_horaires_drive():
+    try:
+        reponse = requests.get(URL_DRIVE)
+        reponse.encoding = 'utf-8'
+        lecteur = csv.reader(StringIO(reponse.text))
+        
+        fuseau = pytz.timezone('Europe/Paris')
+        aujourd_hui = datetime.now(fuseau)
+        
+        # Le script va chercher la date d'aujourd'hui (ex: "23/10")
+        date_str_1 = aujourd_hui.strftime("%d/%m")
+        date_str_2 = f"{aujourd_hui.day}/{aujourd_hui.month:02d}"
+        
+        index_col_date = -1
+        
+        for ligne in lecteur:
+            if not ligne:
+                continue
+                
+            # Si on lit une ligne de dates
+            if "DATE" in ligne[0].upper():
+                index_col_date = -1
+                for i, val in enumerate(ligne):
+                    if val.strip() in [date_str_1, date_str_2]:
+                        index_col_date = i
+                        break
+                        
+            # Si la date a été trouvée, on cherche votre prénom
+            elif index_col_date != -1 and "Rayan" in ligne[0]:
+                col_debut = index_col_date * 3 - 1
+                col_fin = index_col_date * 3
+                
+                if len(ligne) > col_fin:
+                    debut = ligne[col_debut].strip()
+                    fin = ligne[col_fin].strip()
+                    
+                    if (debut == "00:00" and fin == "00:00") or debut == "":
+                        return "Repos"
+                    else:
+                        return f"{debut} à {fin}"
+                else:
+                    return "Repos"
+                    
+        return "Repos (date non planifiée)"
+    except Exception as e:
+        return f"Erreur Drive: {str(e)}"
 
 @app.route('/rapport/matin', methods=['GET'])
 def route_matin():
     titre = f"{random.choice(ACCROCHES)} {random.choice(TITRES)}."
     
     cours_str = obtenir_cours_du_jour()
+    drive_str = obtenir_horaires_drive()
+    
+    coaching = "Aucun (test)"
+    match = "Aucun (test)"
     
     corps = (
         f"Cours : {cours_str}\n"
-        f"Drive : 18h00 à 21h00 (test)\n"
-        f"Coaching : Aucun (test)\n"
-        f"Match : Aucun (test)"
+        f"Drive : {drive_str}\n"
+        f"Coaching : {coaching}\n"
+        f"Match : {match}"
     )
     
     return jsonify({
