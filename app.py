@@ -14,7 +14,6 @@ TITRES = ["Monsieur", "Sir", "Excellence", "Boss", "Patron", "Mentor"]
 ACCROCHES = ["Salutations distinguées,", "Les systèmes sont opérationnels,", "Rapport de situation prêt,", "À vos ordres,"]
 
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
-
 URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
 
 def obtenir_cours_du_jour():
@@ -87,7 +86,6 @@ def obtenir_horaires_drive():
                     
                     if val == "00:00" or val == "" or val.lower() == "repos":
                         jours_extraits.append("Repos")
-                        # Algorithme adaptatif : 3 colonnes vs 1 colonne
                         if i + 2 < len(valeurs_jours):
                             v2 = valeurs_jours[i+1].strip()
                             v3 = valeurs_jours[i+2].strip()
@@ -124,8 +122,24 @@ def route_matin():
     
     cours_str = obtenir_cours_du_jour()
     drive_str = obtenir_horaires_drive()
-    coaching = "Aucun (test)"
-    match = "Aucun (test)"
+    
+    # --- LOGIQUE COACHING & MATCH ---
+    fuseau = pytz.timezone('Europe/Paris')
+    jour_py = datetime.now(fuseau).weekday() # 0=Lundi, 1=Mardi, 2=Mercredi, ..., 5=Samedi
+    
+    # 1. Coaching
+    if jour_py == 0:
+        coaching = "18h30 à 19h45 (Séance physique)"
+    elif jour_py == 2:
+        coaching = "18h30 à 19h45 (Séance tactique ludique)"
+    else:
+        coaching = "Aucun"
+        
+    # 2. Match
+    if jour_py == 5:
+        match = "Match aujourd'hui"
+    else:
+        match = "Aucun"
     
     corps = (
         f"Cours : {cours_str}\n"
