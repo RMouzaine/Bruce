@@ -89,4 +89,55 @@ def obtenir_horaires_drive():
                 i = 0
                 
                 # On parcourt dynamiquement les colonnes pour reconstruire les 7 jours
-                while len(jours_extraits
+                while len(jours_extraits) < 7 and i < len(valeurs_jours):
+                    val = valeurs_jours[i].strip()
+                    if val == "00:00" or val == "":
+                        jours_extraits.append("Repos")
+                        i += 1 # Un jour de repos prend 1 seule colonne
+                    else:
+                        if i + 1 < len(valeurs_jours):
+                            debut = val
+                            fin = valeurs_jours[i+1].strip()
+                            jours_extraits.append(f"{debut} à {fin}")
+                            i += 3 # Un jour travaillé prend 3 colonnes
+                        else:
+                            break
+                            
+                if offset_jour < len(jours_extraits):
+                    return jours_extraits[offset_jour]
+                else:
+                    return "Erreur de décalage des colonnes"
+                    
+            if dans_bonne_semaine and "date:" in texte_ligne0 and recherche_sem not in texte_ligne0:
+                break
+                
+        return f"Erreur : Semaine {semaine_actuelle} non trouvée dans le fichier."
+        
+    except Exception as e:
+        return f"Erreur Drive: {str(e)}"
+
+@app.route('/rapport/matin', methods=['GET'])
+def route_matin():
+    titre = f"{random.choice(ACCROCHES)} {random.choice(TITRES)}."
+    
+    cours_str = obtenir_cours_du_jour()
+    drive_str = obtenir_horaires_drive()
+    
+    coaching = "Aucun (test)"
+    match = "Aucun (test)"
+    
+    corps = (
+        f"Cours : {cours_str}\n"
+        f"Drive : {drive_str}\n"
+        f"Coaching : {coaching}\n"
+        f"Match : {match}"
+    )
+    
+    return jsonify({
+        "sous_titre": titre,
+        "corps": corps
+    })
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
