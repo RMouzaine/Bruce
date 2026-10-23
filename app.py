@@ -16,10 +16,8 @@ ACCROCHES = ["Salutations distinguées,", "Les systèmes sont opérationnels,", 
 # L'URL de votre emploi du temps universitaire
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
 
-# IMPORTANT : Assurez-vous que cette URL est bien celle du NOUVEL onglet "RMHoraires" 
-# (le numéro après 'gid=' doit correspondre au bon onglet de votre fichier Google Sheets)
-URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=REMPLACEZ_CECI_PAR_LE_BON_GID&single=true&output=csv"
-
+# L'URL de votre planning Auchan Drive
+URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
 
 def obtenir_cours_du_jour():
     try:
@@ -54,7 +52,6 @@ def obtenir_cours_du_jour():
     except Exception as e:
         return f"Erreur de lecture ADE: {str(e)}"
 
-
 def obtenir_horaires_drive():
     try:
         reponse = requests.get(URL_DRIVE)
@@ -82,4 +79,14 @@ def obtenir_horaires_drive():
                 
             texte_ligne0 = ligne[0].lower()
             
-            if "date:" in texte_ligne
+            if "date:" in texte_ligne0 and recherche_sem in texte_ligne0:
+                dans_bonne_semaine = True
+                continue
+                
+            if dans_bonne_semaine and "rayan" in texte_ligne0:
+                valeurs_jours = ligne[2:] # On ignore le nom et le statut 'travail'
+                jours_extraits = []
+                i = 0
+                
+                # On parcourt dynamiquement les colonnes pour reconstruire les 7 jours
+                while len(jours_extraits
