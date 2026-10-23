@@ -13,10 +13,8 @@ app = Flask(__name__)
 TITRES = ["Monsieur", "Sir", "Excellence", "Boss", "Patron", "Mentor"]
 ACCROCHES = ["Salutations distinguées,", "Les systèmes sont opérationnels,", "Rapport de situation prêt,", "À vos ordres,"]
 
-# L'URL de votre emploi du temps universitaire
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
 
-# L'URL de votre planning Auchan Drive
 URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
 
 def obtenir_cours_du_jour():
@@ -32,7 +30,6 @@ def obtenir_cours_du_jour():
         for composant in cal.walk():
             if composant.name == "VEVENT":
                 debut = composant.get('dtstart').dt
-                
                 if hasattr(debut, 'date'):
                     date_evenement = debut.astimezone(fuseau).date() if hasattr(debut, 'astimezone') else debut.date()
                 else:
@@ -48,7 +45,6 @@ def obtenir_cours_du_jour():
         if not cours_liste:
             return "Aucun cours aujourd'hui."
         return " / ".join(cours_liste)
-        
     except Exception as e:
         return f"Erreur de lecture ADE: {str(e)}"
 
@@ -61,11 +57,9 @@ def obtenir_horaires_drive():
         fuseau = pytz.timezone('Europe/Paris')
         aujourd_hui = datetime.now(fuseau)
         
-        # Calcul du jour (Lundi = 0, Mardi = 1... Dimanche = 6)
         jour_py = aujourd_hui.weekday()
         offset_jour = 0 if jour_py == 6 else jour_py + 1
         
-        # Détermination automatique du numéro de la semaine
         semaine_actuelle = aujourd_hui.isocalendar()[1]
         if jour_py == 6: 
             semaine_actuelle += 1
@@ -84,22 +78,31 @@ def obtenir_horaires_drive():
                 continue
                 
             if dans_bonne_semaine and "rayan" in texte_ligne0:
-                valeurs_jours = ligne[2:] # On ignore le nom et le statut 'travail'
+                valeurs_jours = ligne[2:]
                 jours_extraits = []
                 i = 0
                 
-                # On parcourt dynamiquement les colonnes pour reconstruire les 7 jours
                 while len(jours_extraits) < 7 and i < len(valeurs_jours):
                     val = valeurs_jours[i].strip()
-                    if val == "00:00" or val == "":
+                    
+                    if val == "00:00" or val == "" or val.lower() == "repos":
                         jours_extraits.append("Repos")
-                        i += 1 # Un jour de repos prend 1 seule colonne
+                        # Algorithme adaptatif : 3 colonnes vs 1 colonne
+                        if i + 2 < len(valeurs_jours):
+                            v2 = valeurs_jours[i+1].strip()
+                            v3 = valeurs_jours[i+2].strip()
+                            if (v2 == "00:00" or v2 == "") and (v3 == "00:00" or v3 == ""):
+                                i += 3
+                            else:
+                                i += 1
+                        else:
+                            i += 1
                     else:
                         if i + 1 < len(valeurs_jours):
                             debut = val
                             fin = valeurs_jours[i+1].strip()
                             jours_extraits.append(f"{debut} à {fin}")
-                            i += 3 # Un jour travaillé prend 3 colonnes
+                            i += 3
                         else:
                             break
                             
@@ -112,7 +115,6 @@ def obtenir_horaires_drive():
                 break
                 
         return f"Erreur : Semaine {semaine_actuelle} non trouvée dans le fichier."
-        
     except Exception as e:
         return f"Erreur Drive: {str(e)}"
 
@@ -122,7 +124,6 @@ def route_matin():
     
     cours_str = obtenir_cours_du_jour()
     drive_str = obtenir_horaires_drive()
-    
     coaching = "Aucun (test)"
     match = "Aucun (test)"
     
