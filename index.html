@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bruce | Assistant Personnel Automatisé</title>
+<title>Bruce | Votre Assistant Personnel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -39,13 +39,14 @@ body {
 /* Header & Intro */
 header { margin-bottom: 48px; text-align: center; }
 .logo { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; background: linear-gradient(to right, #38BDF8, #818CF8); -webkit-background-clip: text; color: transparent; }
-.tagline { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+.tagline { font-size: 1.15rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto; }
 
 /* Explications */
 .explication-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 56px; }
-.card-info { background: var(--surface); padding: 24px; border-radius: 16px; border: 1px solid var(--border); }
+.card-info { background: var(--surface); padding: 24px; border-radius: 16px; border: 1px solid var(--border); transition: transform 0.2s; }
+.card-info:hover { transform: translateY(-3px); }
 .card-info h3 { font-size: 1.1rem; margin-bottom: 12px; color: var(--accent); }
-.card-info p { color: var(--text-secondary); font-size: 0.95rem; }
+.card-info p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; }
 
 /* Demo Section */
 .demo-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 32px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
@@ -90,7 +91,7 @@ header { margin-bottom: 48px; text-align: center; }
 /* Zone de texte & Resultats */
 .result-section { margin-bottom: 32px; }
 .result-section h2 { font-size: 1.1rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; font-weight: 600; }
-.vocal-output { background: var(--bg-color); border-left: 4px solid var(--accent); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; line-height: 1.7; color: var(--text-primary); margin-bottom: 16px; }
+.vocal-output { background: var(--bg-color); border-left: 4px solid var(--accent); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; line-height: 1.7; color: var(--text-primary); margin-bottom: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
 .alerte-logistique { color: var(--danger); font-weight: 600; margin-top: 12px; display: block; }
 
 .data-list { background: var(--bg-color); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
@@ -113,10 +114,10 @@ header { margin-bottom: 48px; text-align: center; }
 footer { margin-top: 64px; text-align: center; border-top: 1px solid var(--border); padding-top: 48px; }
 .cta-box { background: linear-gradient(145deg, var(--surface), var(--bg-color)); border: 1px solid var(--border); padding: 40px 24px; border-radius: 24px; max-width: 700px; margin: 0 auto 48px; }
 .cta-box h3 { font-size: 1.5rem; margin-bottom: 16px; }
-.cta-box p { color: var(--text-secondary); margin-bottom: 24px; }
-.cta-box .note { display: inline-block; background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 32px; text-align: left; }
-.contact-btn { display: inline-block; background: var(--text-primary); color: var(--bg-color); text-decoration: none; padding: 12px 32px; border-radius: 8px; font-weight: 600; font-size: 1.1rem; transition: transform 0.2s; }
-.contact-btn:hover { transform: translateY(-2px); }
+.cta-box p { color: var(--text-secondary); margin-bottom: 24px; font-size: 1.05rem; }
+.cta-box .note { display: inline-block; background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 12px 20px; border-radius: 8px; font-size: 0.95rem; margin-bottom: 32px; text-align: left; }
+.contact-btn { display: inline-block; background: var(--text-primary); color: var(--bg-color); text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 1.1rem; transition: transform 0.2s, box-shadow 0.2s; }
+.contact-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
 .copyright { color: var(--text-secondary); font-size: 0.9rem; }
 </style>
@@ -126,27 +127,27 @@ footer { margin-top: 64px; text-align: center; border-top: 1px solid var(--borde
 <div class="container">
   <header>
     <div class="logo">Bruce.</div>
-    <p class="tagline">L'API d'assistance personnelle qui unifie votre planning, vos horaires, la météo et vos e-mails en un briefing vocal quotidien.</p>
+    <p class="tagline">Votre assistant personnel sur-mesure. Il unifie votre emploi du temps, vos contraintes et vos e-mails pour vous offrir un briefing vocal clair chaque matin.</p>
   </header>
 
   <div class="explication-grid">
     <div class="card-info">
-      <h3>1. Centralisation des données</h3>
-      <p>Bruce se connecte à vos flux iCal (Université/École), vos Google Sheets (Horaires de travail) et votre IMAP (Gmail) pour collecter vos informations en temps réel.</p>
+      <h3>1. Centralisation intelligente</h3>
+      <p>Bruce se synchronise silencieusement avec tout votre écosystème (agendas, tableurs, messageries). Il rassemble toutes vos informations vitales en temps réel, sans aucune intervention de votre part.</p>
     </div>
     <div class="card-info">
       <h3>2. Anticipation Logistique</h3>
-      <p>Un algorithme croise les horaires. Si le temps de trajet est trop court entre deux activités, Bruce déclenche une alerte de "vigilance de transit" pour vous prévenir.</p>
+      <p>Bruce veille sur votre journée. S'il détecte un chevauchement ou un temps de trajet trop court entre deux de vos engagements, il vous alerte instantanément pour que vous gardiez toujours un coup d'avance.</p>
     </div>
     <div class="card-info">
-      <h3>3. Restitution Vocale (iOS)</h3>
-      <p>Tous les matins à 7h00, l'application Raccourcis de l'iPhone interroge le serveur Render. Bruce génère un texte structuré et vous le lit à voix haute.</p>
+      <h3>3. Briefing Vocal Matinal</h3>
+      <p>Tous les matins à 7h00, dès votre réveil, Bruce prépare votre rapport sur-mesure et vous l'annonce de vive voix. Démarrez votre journée avec toutes les cartes en main, sans ouvrir la moindre application.</p>
     </div>
   </div>
 
   <div class="demo-wrapper">
     <div class="demo-header">
-      <div class="demo-title"><span class="live-dot"></span> Mode Simulation (Données Fictives)</div>
+      <div class="demo-title"><span class="live-dot"></span> Testez l'expérience Bruce</div>
       <div class="controls">
         <div class="btn-group" role="group">
           <button type="button" data-vue="matin" aria-pressed="true">Briefing Matin</button>
@@ -158,7 +159,7 @@ footer { margin-top: 64px; text-align: center; border-top: 1px solid var(--borde
           <button type="button" data-jour="jeudi" aria-pressed="false">Jeu</button>
           <button type="button" data-jour="samedi" aria-pressed="false">Sam</button>
         </div>
-        <button type="button" class="action-btn" id="ecouter">Écouter l'IA</button>
+        <button type="button" class="action-btn" id="ecouter">Écouter le briefing</button>
       </div>
     </div>
 
@@ -166,7 +167,7 @@ footer { margin-top: 64px; text-align: center; border-top: 1px solid var(--borde
       <div class="cadran-container" id="vueCadran">
         <svg id="cadran" viewBox="-10 -10 420 420"></svg>
         <ul class="legende">
-          <li><i style="background:var(--cours)"></i> Académique</li>
+          <li><i style="background:var(--cours)"></i> Principal</li>
           <li><i style="background:var(--travail)"></i> Professionnel</li>
           <li><i style="background:var(--activite)"></i> Activité</li>
         </ul>
@@ -176,12 +177,12 @@ footer { margin-top: 64px; text-align: center; border-top: 1px solid var(--borde
 
       <div class="result-wrapper">
         <div class="result-section">
-          <h2>Restitution de l'API (Texte généré)</h2>
+          <h2>Ce que vous entendez au réveil</h2>
           <div class="vocal-output" id="parole"></div>
         </div>
 
         <div class="result-section" id="blocProgramme">
-          <h2>Parsing des bases de données</h2>
+          <h2>Informations traitées par l'assistant</h2>
           <dl class="data-list" id="corps"></dl>
         </div>
       </div>
@@ -191,54 +192,54 @@ footer { margin-top: 64px; text-align: center; border-top: 1px solid var(--borde
   <footer>
     <div class="cta-box">
       <h3>Vous souhaitez votre propre assistant ?</h3>
-      <p>Cette démonstration illustre la mécanique logicielle. Mais Bruce est conçu pour être entièrement sur-mesure.</p>
+      <p>Cette interface vous donne un aperçu de l'expérience Bruce. Parce que chaque vie est différente, l'outil est conçu pour s'adapter entièrement à vos besoins.</p>
       
       <div class="note">
-        <strong> Flexibilité totale :</strong> Que vous ayez des heures de conduite, des cours de yoga, des entraînements de sport réguliers, ou des horaires de travail atypiques (freelance, étudiant, etc.), les modules d'activités sont adaptables à n'importe quelle routine. 
+        <strong>💡 Une flexibilité totale :</strong> Heures de conduite, cours de yoga, horaires atypiques de freelance, compétitions sportives ou gardes d'enfants... Les algorithmes de Bruce sont paramétrables pour épouser parfaitement votre routine, quelle qu'elle soit.
       </div>
       <br>
-      <a href="mailto:rayanmouzaine@gmail.com" class="contact-btn">Contactez-moi pour configurer votre API</a>
+      <a href="mailto:votre.email@exemple.com" class="contact-btn">Contactez-moi pour configurer le vôtre</a>
     </div>
-    <div class="copyright">Conçu et développé par RMouzaine • Architecture Python/Flask hébergée sur Render.</div>
+    <div class="copyright">Imaginé, conçu et développé par Rayan Mouzaine.</div>
   </footer>
 </div>
 
 <script>
-// Logique métier (identique à la version précédente, adaptée pour l'affichage)
+// Logique métier pour la simulation (génère le texte et les alertes)
 const TITRES = ["Monsieur", "Sir", "Boss", "Patron"];
-const ACCROCHES = ["Salutations,", "Systèmes en ligne,", "À vos ordres,"];
+const ACCROCHES = ["Salutations,", "Vos systèmes sont en ligne,", "Rapport de situation prêt,", "À vos ordres,"];
 const CITATIONS = [
   "La discipline est le pont entre les objectifs et les accomplissements.",
   "Un voyage de mille lieues commence toujours par un premier pas.",
   "La motivation vous fait débuter, mais c'est l'habitude qui vous fait continuer."
 ];
-const TRANSITIONS = ["Voici le programme de votre journée :", "Consultons votre agenda :"];
+const TRANSITIONS = ["Voici le programme de votre journée :", "Consultons votre feuille de route :"];
 const ANNONCES_MAILS = ["Le résumé complet de votre boîte de réception sera prêt pour 10 heures, {titre}."];
-const CONCLUSIONS_MATIN = ["Que votre journée soit productive.", "Je reste en veille."];
+const CONCLUSIONS_MATIN = ["Que votre journée soit productive.", "Je reste en veille. Excellente journée."];
 const INTROS_MAILS = ["Salutations, {titre}. Voici la synthèse de vos correspondances récentes. "];
 const CONCLUSIONS_MAILS = [" C'est tout pour le moment. Excellente continuation, {titre}."];
 
 const pick = l => l[Math.floor(Math.random() * l.length)];
 
-// Scénarios
+// Scénarios génériques
 const JOURS = {
   lundi: {
     nom: "Lundi",
-    cours: [{ titre: "Architecture Réseau", d: "08:30", f: "12:30" }],
+    cours: [{ titre: "Obligation principale", d: "08:30", f: "12:30" }],
     travail: "17:00 à 19:00",
-    activite: { texte: "18h30 à 20h00 (Salle de sport)", d: "18:30", f: "20:00" }, // Chevauchement
+    activite: { texte: "18h30 à 20h00 (Séance de sport)", d: "18:30", f: "20:00" }, // Chevauchement
     meteo: { code: 61, temp: 9 }
   },
   mercredi: {
     nom: "Mercredi",
-    cours: [{ titre: "Développement Python", d: "09:00", f: "12:00" }],
+    cours: [{ titre: "Réunion ou formation", d: "09:00", f: "12:00" }],
     travail: "14:00 à 18:00",
     activite: null,
     meteo: { code: 3, temp: 14 }
   },
   jeudi: {
     nom: "Jeudi",
-    cours: [{ titre: "Cyber-sécurité", d: "14:00", f: "16:00" }],
+    cours: [{ titre: "Projet de groupe", d: "14:00", f: "16:00" }],
     travail: "16:15 à 20:00", // Trajet court
     activite: null,
     meteo: { code: 0, temp: 22 }
@@ -254,8 +255,8 @@ const JOURS = {
 
 const COURRIELS = {
   filtres: 5,
-  pro: [{ de: "Sopra Steria", objet: "Suite à votre candidature" }, { de: "GitHub", objet: "Action failed" }],
-  perso: [{ de: "Administration", objet: "Dossier validé" }]
+  pro: [{ de: "Responsable RH", objet: "Suite à notre entretien" }, { de: "Client A", objet: "Validation du devis" }],
+  perso: [{ de: "Service Administratif", objet: "Dossier mis à jour" }]
 };
 
 const extraireMinutes = str => { 
@@ -268,26 +269,26 @@ const hhmm = s => s.replace(":", "h");
 function meteoConseil(code, temp) {
   let cond = [0,1].includes(code) ? "Le ciel est dégagé" : [51,61].includes(code) ? "Il pleut" : "Temps mitigé";
   let t = `${cond} avec ${temp} degrés. `;
-  if (temp < 10) t += "Couvrez-vous bien. ";
-  else if (temp > 20) t += "Conditions optimales. ";
+  if (temp < 10) t += "Je vous recommande de bien vous couvrir. ";
+  else if (temp > 20) t += "Les conditions sont optimales aujourd'hui. ";
   return t;
 }
 
 function analyserConflits(j) {
   let blocks = [];
-  j.cours.forEach(c => blocks.push({ s: extraireMinutes(c.d), e: extraireMinutes(c.f), nom: "votre formation" }));
+  j.cours.forEach(c => blocks.push({ s: extraireMinutes(c.d), e: extraireMinutes(c.f), nom: "votre obligation principale" }));
   if (j.travail && j.travail !== "Repos") {
     let m = j.travail.match(/(\d{2}:\d{2}) à (\d{2}:\d{2})/);
-    if (m) blocks.push({ s: extraireMinutes(m[1]), e: extraireMinutes(m[2]), nom: "vos horaires de travail" });
+    if (m) blocks.push({ s: extraireMinutes(m[1]), e: extraireMinutes(m[2]), nom: "votre contrainte professionnelle" });
   }
-  if (j.activite) blocks.push({ s: extraireMinutes(j.activite.d), e: extraireMinutes(j.activite.f), nom: "votre activité" });
+  if (j.activite) blocks.push({ s: extraireMinutes(j.activite.d), e: extraireMinutes(j.activite.f), nom: "votre activité annexe" });
 
   blocks.sort((a, b) => a.s - b.s);
   let avertissements = [];
   for (let i = 0; i < blocks.length - 1; i++) {
     if (blocks[i].nom !== blocks[i+1].nom) {
       let diff = blocks[i+1].s - blocks[i].e;
-      if (diff < 0) avertissements.push(`Anomalie logistique détectée : ${blocks[i].nom} chevauche directement ${blocks[i+1].nom}.`);
+      if (diff < 0) avertissements.push(`Anomalie logistique : ${blocks[i].nom} chevauche ${blocks[i+1].nom}.`);
       else if (diff <= 25) avertissements.push(`Vigilance de transit requise : vous n'aurez que ${diff} minutes de battement entre ${blocks[i].nom} et ${blocks[i+1].nom}.`);
     }
   }
@@ -295,14 +296,14 @@ function analyserConflits(j) {
 }
 
 function rapportMatin(j, tirage) {
-  const intro = `${tirage.accroche} ${tirage.titre}. Je suis Bruce, votre assistant personnel.`;
-  const coursStr = j.cours.length ? j.cours.map(c => `${c.titre} (${hhmm(c.d)}-${hhmm(c.f)})`).join(" / ") : "Aucun cours.";
+  const intro = `${tirage.accroche} ${tirage.titre}. Je suis Bruce, votre assistant.`;
+  const coursStr = j.cours.length ? j.cours.map(c => `${c.titre} (${hhmm(c.d)}-${hhmm(c.f)})`).join(" / ") : "Aucune.";
   const activite = j.activite ? j.activite.texte : "Aucune";
   const meteo = meteoConseil(j.meteo.code, j.meteo.temp);
 
-  let programme = (coursStr.includes("Aucun") ? "Aucun cours aujourd'hui." : `Côté académique, vous avez : ${coursStr}.`) + 
-                  (j.travail === "Repos" ? " Vous êtes en repos pour le travail." : ` Professionnellement, vous êtes de service de ${j.travail}.`);
-  if (j.activite) programme += ` Votre activité annexe : ${activite}.`;
+  let programme = (coursStr.includes("Aucune") ? "Aucune obligation majeure." : `Votre occupation principale : ${coursStr}.`) + 
+                  (j.travail === "Repos" ? " Vous êtes en repos professionnel." : ` Côté professionnel, vous êtes engagé de ${j.travail}.`);
+  if (j.activite) programme += ` Votre activité annexe prévue : ${activite}.`;
 
   const conflits = analyserConflits(j);
   let texteConflitHtml = "";
@@ -314,7 +315,7 @@ function rapportMatin(j, tirage) {
   const phrase = `${intro} ${meteo} ${tirage.transition} ${programme} ${tirage.annonce.replace("{titre}", tirage.titre)} ${tirage.citation} ${tirage.conclusion}`;
 
   return {
-    corps: { Académique: coursStr, Professionnel: j.travail, Activités: activite, Météo: meteo },
+    corps: { Principal: coursStr, Professionnel: j.travail, Activités: activite, Météo: meteo },
     phrase_vocale: phrase.replace(/\s+/g, " ").trim(),
     texte_conflit_html: texteConflitHtml
   };
@@ -322,9 +323,9 @@ function rapportMatin(j, tirage) {
 
 function rapportEmails(tirage) {
   const t = pick(TITRES);
-  let contenu = `J'ai pris la liberté de filtrer ${COURRIELS.filtres} courriels automatisés. `;
-  if (COURRIELS.pro.length) contenu += "Sur le plan professionnel : " + COURRIELS.pro.map(m => `De ${m.de}, objet : ${m.objet}. `).join("") + " ";
-  if (COURRIELS.perso.length) contenu += "Autres correspondances : " + COURRIELS.perso.map(m => `De ${m.de}, objet : ${m.objet}. `).join("") + " ";
+  let contenu = `J'ai pris soin d'écarter ${COURRIELS.filtres} courriels automatisés sans importance. `;
+  if (COURRIELS.pro.length) contenu += "Sur le plan professionnel, voici l'essentiel : " + COURRIELS.pro.map(m => `De ${m.de}, concernant : ${m.objet}. `).join("") + " ";
+  if (COURRIELS.perso.length) contenu += "Pour vos correspondances générales : " + COURRIELS.perso.map(m => `De ${m.de}, concernant : ${m.objet}. `).join("") + " ";
   return { phrase_vocale: `${pick(INTROS_MAILS).replace("{titre}", t)} ${contenu} ${pick(CONCLUSIONS_MAILS).replace("{titre}", t)}`.replace(/\s+/g, " ").trim() };
 }
 
@@ -350,9 +351,9 @@ function dessinerCadran(j) {
 function afficherTri() {
   const liste = ms => `<ul class="email-list">${ms.map(m => `<li>${m.objet}<span>Expéditeur : ${m.de}</span></li>`).join("")}</ul>`;
   document.getElementById("vueTri").innerHTML = `
-    <div class="email-group"><h3>Dossier Professionnel</h3>${liste(COURRIELS.pro)}</div>
+    <div class="email-group"><h3>Opportunités & Professionnel</h3>${liste(COURRIELS.pro)}</div>
     <div class="email-group perso"><h3>Correspondances Générales</h3>${liste(COURRIELS.perso)}</div>
-    <div class="email-group filtre"><p><strong>${COURRIELS.filtres} courriels promotionnels bloqués</strong> (Publicités automatisées écartées du rapport vocal).</p></div>`;
+    <div class="email-group filtre"><p><strong>${COURRIELS.filtres} courriels inutiles bloqués</strong> (Publicités et automatisations silencieusement écartées de votre briefing).</p></div>`;
 }
 
 let vue = "matin", jour = "lundi", texteBriefing = "";
@@ -371,9 +372,9 @@ function afficher() {
     const r = rapportMatin(JOURS[jour], tirage);
     texteBriefing = r.phrase_vocale;
     dessinerCadran(JOURS[jour]);
-    const couleurs = { Académique: "cours", Professionnel: "travail", Activités: "activite", Météo: null };
+    const couleurs = { Principal: "cours", Professionnel: "travail", Activités: "activite", Météo: null };
     document.getElementById("corps").innerHTML = Object.entries(r.corps).map(([k, v]) => `<dt><span class="dot-indicator" style="background:${couleurs[k] ? `var(--${couleurs[k]})` : 'var(--text-secondary)'}"></span>${k}</dt><dd>${v}</dd>`).join("");
-    document.getElementById("parole").innerHTML = texteBriefing.replace(/Anomalie logistique/g, "<strong>Anomalie logistique</strong>").replace(/Vigilance de transit/g, "<strong>Vigilance de transit</strong>") + r.texte_conflit_html;
+    document.getElementById("parole").innerHTML = texteBriefing.replace(/Anomalie logistique/g, "<strong>Anomalie logistique</strong>").replace(/Vigilance de transit requise/g, "<strong>Vigilance de transit requise</strong>") + r.texte_conflit_html;
   } else {
     texteBriefing = rapportEmails(tirage).phrase_vocale;
     afficherTri();
@@ -386,7 +387,7 @@ function afficher() {
 
 const bouton = document.getElementById("ecouter");
 const synthese = window.speechSynthesis;
-function arreterVoix() { if(synthese) synthese.cancel(); bouton.textContent = "Écouter l'IA"; }
+function arreterVoix() { if(synthese) synthese.cancel(); bouton.textContent = "Écouter le briefing"; }
 
 if (synthese) {
   bouton.addEventListener("click", () => {
@@ -395,7 +396,7 @@ if (synthese) {
     u.lang = "fr-FR";
     const voix = synthese.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
     if (voix) u.voice = voix;
-    u.onend = u.onerror = () => { bouton.textContent = "Écouter l'IA"; };
+    u.onend = u.onerror = () => { bouton.textContent = "Écouter le briefing"; };
     synthese.speak(u);
     bouton.textContent = "Arrêter la lecture";
   });
