@@ -17,6 +17,17 @@ CITATIONS_MOTIVANTES = [
     "N'oubliez pas : le succès, c'est de tomber sept fois et de se relever huit.",
     "La discipline est le pont entre les objectifs et les accomplissements.",
     "Chaque jour est une nouvelle opportunité de devenir la meilleure version de vous-même.",
+    "Si tu pries pour qu'il y ait des fleurs, t'étonnes pas qu'il commence àà pleuvoir.",
+    "Allah n'impose à aucune âme une charge supérieur à sa capacité.",
+    "Les diamants sont conçues sous la pression.",
+    "la haine se transforme en dalle, la dalle se transforme en réussite.",
+    "Rien ne te sera donné, va tout chercher.",
+    "tu n'as aucun compte à rendre à personne, aucun."
+    "Certes avec la difficulté viens la facilité."
+    "Place ta confiance en Allah, Allah suffit comme garant."
+    "Le prophète a dit: rien ne sera plus lourd sur la balance du croyant que le bon caractère."
+    "Tu n'existe peut-être pas dans le futur dont t'es stressé."
+    "Demain tout ira mieux inshAllah."
     "La seule limite à notre épanouissement de demain sera nos doutes d'aujourd'hui.",
     "Ce n'est pas l'aptitude, mais l'attitude, qui détermine votre altitude.",
     "Un voyage de mille lieues commence toujours par un premier pas.",
@@ -100,7 +111,7 @@ def obtenir_meteo_et_conseil():
         if "pleut" in condition or "orage" in condition:
             conseil += "Je vous recommande de prendre une veste imperméable. Si vous avez entraînement ce soir, n'oubliez pas les coupe-vents pour les petits. "
         elif temp < 10:
-            conseil += "Les températures sont assez basses. Couvrez-vous bien, surtout si vous enchaînez les pistes au Drive. "
+            conseil += "Les températures sont assez basses. Couvrez-vous bien. "
         elif temp > 22:
             conseil += "Il fait particulièrement chaud. N'oubliez pas votre bouteille d'eau. "
         else:
@@ -193,11 +204,11 @@ def route_matin():
     jour_py = datetime.now(fuseau).weekday()
     
     if jour_py == 0: coaching = "18h30 à 19h45 (Séance physique)"
-    elif jour_py == 2: coaching = "18h30 à 19h45 (Séance tactique ludique)"
-    else: coaching = "Aucun"
+    elif jour_py == 2: coaching = "18h30 à 19h45 (Séance tactique/ludique)"
+    else: coaching = "Pas de coaching"
         
-    if jour_py == 5: match = "Match aujourd'hui"
-    else: match = "Aucun"
+    if jour_py == 5: match = "Jour de match"
+    else: match = "Pas de match prévu"
     
     # Texte brut affiché dans la notification iOS
     corps = (
@@ -215,9 +226,9 @@ def route_matin():
     drive_vocal = "Vous êtes en repos au Drive." if "Repos" in drive_str else f"Pour Auchan Drive, vous travaillez de {drive_str}."
     
     phrase_programme = f"{cours_vocal} {drive_vocal}"
-    if coaching != "Aucun":
+    if coaching != "Pas de coaching":
         phrase_programme += f" Vous donnez entraînement de {coaching}."
-    if match != "Aucun":
+    if match != "Pas de match prévu":
         phrase_programme += " Et vous avez un match aujourd'hui."
         
     annonce_mails = random.choice(ANNONCES_MAILS).format(titre=titre_choisi)
