@@ -7,6 +7,9 @@ from datetime import datetime
 import pytz
 from icalendar import Calendar
 from flask import Flask, jsonify
+import imaplib
+import email
+from email.header import decode_header
 
 app = Flask(__name__)
 
@@ -187,13 +190,68 @@ def obtenir_horaires_drive():
     except Exception as e:
         return f"Erreur Drive: {str(e)}"
 
+def obtenir_derniers_mails():
+    utilisateur = os.environ.get("GMAIL_USER")
+    mot_de_passe = os.environ.get("GMAIL_PASS")
+    
+    if not utilisateur or not mot_de_passe:
+        return "Les identifiants de messagerie ne sont pas configurés sur le serveur."
+        
+    try:
+        mail = imaplib.IMAP4_SSL("imap.gmail.com")
+        mail.login(utilisateur, mot_de_passe)
+        mail.select("inbox")
+        
+        status, messages = mail.search(None, '(UNSEEN)')
+        if status != "OK":
+            return "Impossible d'accéder à la boîte de réception."
+            
+        id_list = messages[0].split()
+        if not id_list:
+            return "Vous n'avez aucun nouvel e-mail."
+            
+        derniers_ids = id_list[-3:]
+        sujets_lus = []
+        
+        for i in derniers_ids:
+            res, msg_data = mail.fetch(i, "(RFC822)")
+            for response_part in msg_data:
+                if isinstance(response_part, tuple):
+                    msg = email.message_from_bytes(response_part[1])
+                    
+                    sujet_complet = msg["Subject"]
+                    sujet = "Sans objet"
+                    if sujet_complet:
+                        sujet_decode, encoding = decode_header(sujet_complet)[0]
+                        if isinstance(sujet_decode, bytes):
+                            sujet = sujet_decode.decode(encoding if encoding else "utf-8")
+                        else:
+                            sujet = str(sujet_decode)
+                        
+                    expediteur_complet = msg.get("From")
+                    exp_nom = "Quelqu'un"
+                    if expediteur_complet:
+                        exp_decode, enc_exp = decode_header(expediteur_complet)[0]
+                        if isinstance(exp_decode, bytes):
+                            expediteur = exp_decode.decode(enc_exp if enc_exp else "utf-8")
+                        else:
+                            expediteur = str(exp_decode)
+                        exp_nom = expediteur.split('<')[0].strip()
+                        
+                    sujets_lus.append(f"Un message de {exp_nom} concernant : {sujet}. ")
+        
+        mail.logout()
+        return " ".join(sujets_lus)
+        
+    except Exception as e:
+        return f"Erreur de connexion : {str(e)}"
+
 @app.route('/rapport/matin', methods=['GET'])
 def route_matin():
     titre_choisi = random.choice(TITRES)
     accroche = random.choice(ACCROCHES)
     titre_complet = f"{accroche} {titre_choisi}."
     
-    # "Brousse" force l'accent anglais pour "Bruce" dans la synthèse vocale française
     intro_vocale = f"{titre_complet} Je suis Brousse, votre assistant personnel."
     
     cours_str = obtenir_cours_du_jour()
@@ -201,70 +259,4 @@ def route_matin():
     meteo_conseil = obtenir_meteo_et_conseil()
     
     fuseau = pytz.timezone('Europe/Paris')
-    jour_py = datetime.now(fuseau).weekday()
-    
-    if jour_py == 0: coaching = "18h30 à 19h45 (Séance physique)"
-    elif jour_py == 2: coaching = "18h30 à 19h45 (Séance tactique/ludique)"
-    else: coaching = "Pas de coaching"
-        
-    if jour_py == 5: match = "Jour de match"
-    else: match = "Pas de match prévu"
-    
-    # Texte brut affiché dans la notification iOS
-    corps = (
-        f"Cours : {cours_str}\n"
-        f"Drive : {drive_str}\n"
-        f"Coaching : {coaching}\n"
-        f"Match : {match}"
-    )
-    
-    # Construction de la version naturelle pour la synthèse vocale
-    citation = random.choice(CITATIONS_MOTIVANTES)
-    transition = random.choice(TRANSITIONS_PROGRAMME)
-    
-    cours_vocal = "Aucun cours à l'université aujourd'hui." if "Aucun" in cours_str else f"Côté université, vous avez : {cours_str}."
-    drive_vocal = "Vous êtes en repos au Drive." if "Repos" in drive_str else f"Pour Auchan Drive, vous travaillez de {drive_str}."
-    
-    phrase_programme = f"{cours_vocal} {drive_vocal}"
-    if coaching != "Pas de coaching":
-        phrase_programme += f" Vous donnez entraînement de {coaching}."
-    if match != "Pas de match prévu":
-        phrase_programme += " Et vous avez un match aujourd'hui."
-        
-    annonce_mails = random.choice(ANNONCES_MAILS).format(titre=titre_choisi)
-    conclusion = random.choice(CONCLUSIONS)
-    
-    # La phrase complète que le téléphone va prononcer
-    phrase_vocale = f"{intro_vocale} {meteo_conseil} {transition} {phrase_programme} {annonce_mails} {citation} {conclusion}"
-    
-    return jsonify({
-        "sous_titre": titre_complet,
-        "corps": corps,
-        "phrase_vocale": phrase_vocale
-    })
-
-# --- ROUTE POUR LES MAILS (10h00) ---
-@app.route('/rapport/emails', methods=['GET'])
-def route_emails():
-    titre_choisi = random.choice(TITRES)
-    
-    intros_mails = [
-        f"Re-bonjour {titre_choisi}. Il est 10 heures, voici comme convenu le point sur votre boîte de réception.",
-        f"Je suis de retour {titre_choisi}. Voici votre briefing e-mails de 10 heures.",
-        f"Connexion établie {titre_choisi}. Je vous lis vos derniers messages importants."
-    ]
-    
-    conclusions_mails = [
-        f"C'est tout pour le moment {titre_choisi}. Retour aux opérations normales.",
-        f"Fin du rapport de communication {titre_choisi}. Je reste en veille.",
-        f"Vos communications sont à jour {titre_choisi}. Bonne continuation."
-    ]
-    
-    return jsonify({
-        "intro_vocale": random.choice(intros_mails),
-        "conclusion_vocale": random.choice(conclusions_mails)
-    })
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    jour
