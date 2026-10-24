@@ -17,17 +17,17 @@ CITATIONS_MOTIVANTES = [
     "N'oubliez pas : le succès, c'est de tomber sept fois et de se relever huit.",
     "La discipline est le pont entre les objectifs et les accomplissements.",
     "Chaque jour est une nouvelle opportunité de devenir la meilleure version de vous-même.",
-    "Si tu pries pour qu'il y ait des fleurs, t'étonnes pas qu'il commence àà pleuvoir.",
+    "Si tu pries pour qu'il y ait des fleurs, t'étonnes pas qu'il commence à pleuvoir.",
     "Allah n'impose à aucune âme une charge supérieur à sa capacité.",
     "Les diamants sont conçues sous la pression.",
     "la haine se transforme en dalle, la dalle se transforme en réussite.",
     "Rien ne te sera donné, va tout chercher.",
-    "tu n'as aucun compte à rendre à personne, aucun."
-    "Certes avec la difficulté viens la facilité."
-    "Place ta confiance en Allah, Allah suffit comme garant."
-    "Le prophète a dit: rien ne sera plus lourd sur la balance du croyant que le bon caractère."
-    "Tu n'existe peut-être pas dans le futur dont t'es stressé."
-    "Demain tout ira mieux inshAllah."
+    "tu n'as aucun compte à rendre à personne, aucun.",
+    "Certes avec la difficulté viens la facilité.",
+    "Place ta confiance en Allah, Allah suffit comme garant.",
+    "Le prophète a dit: rien ne sera plus lourd sur la balance du croyant que le bon caractère.",
+    "Tu n'existe peut-être pas dans le futur dont t'es stressé.",
+    "Demain tout ira mieux inshAllah.",
     "La seule limite à notre épanouissement de demain sera nos doutes d'aujourd'hui.",
     "Ce n'est pas l'aptitude, mais l'attitude, qui détermine votre altitude.",
     "Un voyage de mille lieues commence toujours par un premier pas.",
@@ -241,6 +241,28 @@ def route_matin():
         "sous_titre": titre_complet,
         "corps": corps,
         "phrase_vocale": phrase_vocale
+    })
+
+# --- ROUTE POUR LES MAILS (10h00) ---
+@app.route('/rapport/emails', methods=['GET'])
+def route_emails():
+    titre_choisi = random.choice(TITRES)
+    
+    intros_mails = [
+        f"Re-bonjour {titre_choisi}. Il est 10 heures, voici comme convenu le point sur votre boîte de réception.",
+        f"Je suis de retour {titre_choisi}. Voici votre briefing e-mails de 10 heures.",
+        f"Connexion établie {titre_choisi}. Je vous lis vos derniers messages importants."
+    ]
+    
+    conclusions_mails = [
+        f"C'est tout pour le moment {titre_choisi}. Retour aux opérations normales.",
+        f"Fin du rapport de communication {titre_choisi}. Je reste en veille.",
+        f"Vos communications sont à jour {titre_choisi}. Bonne continuation."
+    ]
+    
+    return jsonify({
+        "intro_vocale": random.choice(intros_mails),
+        "conclusion_vocale": random.choice(conclusions_mails)
     })
 
 if __name__ == "__main__":
