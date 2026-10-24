@@ -82,8 +82,7 @@ ANNONCES_MAILS = [
 ]
 
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
-# J'ai ajouté /export?format=csv à la fin de votre lien pour éviter l'erreur de Raccourcis
-URL_DRIVE = "https://docs.google.com/spreadsheets/d/1CY5wtikz1j1smztGkEAyuwej8F_cus80mmRiEaWmIdM/export?format=csv"
+URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
 
 def obtenir_meteo_et_conseil():
     try:
@@ -203,15 +202,12 @@ def obtenir_derniers_mails():
         if not id_list:
             return "Votre boîte de réception est à jour. Aucun message prioritaire ne requiert votre attention pour le moment."
             
-        # On réduit l'analyse aux 10 derniers e-mails non lus pour éviter les longs discours
         derniers_ids = id_list[-10:]
         mails_pro = []
         mails_perso = []
         nb_ignores = 0
         
-        # Liste noire enrichie
         mots_promo = ['apple', 'under armour', 'zalando', 'pub', 'newsletter', 'promo', 'promotion', 'solde', 'offre spéciale', 'réduction', 'no-reply', 'noreply', 'ne-pas-repondre', 'marketing', 'unsubscribe', 'désinscription', 'spam', 'notification']
-        # Liste professionnelle
         mots_pro = ['linkedin', 'candidature', 'entretien', 'indeed', 'recrutement', 'offre', 'stage', 'alternance', 'sopra', 'steria', 'auchan', 'cyber', 'pilote', 'informatique']
         
         for i in derniers_ids:
