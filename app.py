@@ -61,12 +61,18 @@ TRANSITIONS_PROGRAMME = [
     "Préparation de votre emploi du temps terminée. Voici les détails :"
 ]
 
+ANNONCES_MAILS = [
+    "Pour information, le compte-rendu de vos e-mails vous sera communiqué à 10 heures, {titre}.",
+    "Je vous rappelle que votre briefing e-mails arrivera à 10 heures, {titre}.",
+    "Le résumé complet de votre boîte de réception sera prêt pour 10 heures, {titre}."
+]
+
 CONCLUSIONS = [
-    "Passez une excellente journée, {titre}.",
-    "Que votre journée soit des plus productives, {titre}.",
-    "Bon courage pour vos objectifs du jour, {titre}.",
-    "Force et honneur pour aujourd'hui, {titre}.",
-    "Je reste en veille. Excellente journée à vous, {titre}."
+    "Passez une excellente journée.",
+    "Que votre journée soit des plus productives.",
+    "Bon courage pour vos objectifs du jour.",
+    "Force et honneur pour aujourd'hui.",
+    "Je reste en veille. Excellente journée à vous."
 ]
 
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
@@ -176,6 +182,9 @@ def route_matin():
     accroche = random.choice(ACCROCHES)
     titre_complet = f"{accroche} {titre_choisi}."
     
+    # "Brousse" force l'accent anglais pour "Bruce" dans la synthèse vocale française
+    intro_vocale = f"{titre_complet} Je suis Brousse, votre assistant personnel."
+    
     cours_str = obtenir_cours_du_jour()
     drive_str = obtenir_horaires_drive()
     meteo_conseil = obtenir_meteo_et_conseil()
@@ -211,10 +220,11 @@ def route_matin():
     if match != "Aucun":
         phrase_programme += " Et vous avez un match aujourd'hui."
         
-    conclusion = random.choice(CONCLUSIONS).format(titre=titre_choisi)
+    annonce_mails = random.choice(ANNONCES_MAILS).format(titre=titre_choisi)
+    conclusion = random.choice(CONCLUSIONS)
     
-    # La phrase complète que Siri va prononcer
-    phrase_vocale = f"{titre_complet} {meteo_conseil} {citation} {transition} {phrase_programme} {conclusion}"
+    # La phrase complète que le téléphone va prononcer
+    phrase_vocale = f"{intro_vocale} {meteo_conseil} {citation} {transition} {phrase_programme} {annonce_mails} {conclusion}"
     
     return jsonify({
         "sous_titre": titre_complet,
