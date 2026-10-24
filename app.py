@@ -75,8 +75,15 @@ TRANSITIONS_PROGRAMME = [
     "Préparation de votre emploi du temps terminée. Voici les détails :"
 ]
 
+ANNONCES_MAILS = [
+    "Pour information, le compte-rendu de vos e-mails vous sera communiqué à 10 heures, {titre}.",
+    "Je vous rappelle que votre briefing e-mails arrivera à 10 heures, {titre}.",
+    "Le résumé complet de votre boîte de réception sera prêt pour 10 heures, {titre}."
+]
+
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
-URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
+# J'ai ajouté /export?format=csv à la fin de votre lien pour éviter l'erreur de Raccourcis
+URL_DRIVE = "https://docs.google.com/spreadsheets/d/1CY5wtikz1j1smztGkEAyuwej8F_cus80mmRiEaWmIdM/export?format=csv"
 
 def obtenir_meteo_et_conseil():
     try:
