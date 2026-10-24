@@ -235,7 +235,7 @@ def route_matin():
     conclusion = random.choice(CONCLUSIONS)
     
     # La phrase complète que le téléphone va prononcer
-    phrase_vocale = f"{intro_vocale} {meteo_conseil} {citation} {transition} {phrase_programme} {annonce_mails} {conclusion}"
+    phrase_vocale = f"{intro_vocale} {meteo_conseil} {transition} {phrase_programme} {annonce_mails} {citation} {conclusion}"
     
     return jsonify({
         "sous_titre": titre_complet,
