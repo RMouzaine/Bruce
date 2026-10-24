@@ -196,12 +196,15 @@ def obtenir_derniers_mails():
         if not id_list:
             return "Votre boîte de réception est à jour. Aucun message prioritaire ne requiert votre attention pour le moment."
             
-        derniers_ids = id_list[-15:]
+        # On réduit l'analyse aux 10 derniers e-mails non lus pour éviter les longs discours
+        derniers_ids = id_list[-10:]
         mails_pro = []
         mails_perso = []
         nb_ignores = 0
         
-        mots_promo = ['newsletter', 'promo', 'promotion', 'solde', 'offre spéciale', 'réduction', 'no-reply', 'noreply', 'ne-pas-repondre', 'marketing', 'unsubscribe', 'désinscription', 'spam', 'notification']
+        # Liste noire enrichie
+        mots_promo = ['apple', 'under armour', 'zalando', 'pub', 'newsletter', 'promo', 'promotion', 'solde', 'offre spéciale', 'réduction', 'no-reply', 'noreply', 'ne-pas-repondre', 'marketing', 'unsubscribe', 'désinscription', 'spam', 'notification']
+        # Liste professionnelle
         mots_pro = ['linkedin', 'candidature', 'entretien', 'indeed', 'recrutement', 'offre', 'stage', 'alternance', 'sopra', 'steria', 'auchan', 'cyber', 'pilote', 'informatique']
         
         for i in derniers_ids:
