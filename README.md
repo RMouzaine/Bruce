@@ -2,7 +2,7 @@
   <img src="./banner.svg" width="100%" alt="Bruce AI Assistant">
 </p>
 
-# Bruce : AI Personnel Assistant
+# Bruce : AI Personal Assistant
 
 > API Python qui regroupe planning, horaires, météo et e-mails en briefings vocaux.
 
