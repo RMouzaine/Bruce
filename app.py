@@ -75,20 +75,6 @@ TRANSITIONS_PROGRAMME = [
     "Préparation de votre emploi du temps terminée. Voici les détails :"
 ]
 
-ANNONCES_MAILS = [
-    "Pour information, le compte-rendu de vos e-mails vous sera communiqué à 10 heures, {titre}.",
-    "Je vous rappelle que votre briefing e-mails arrivera à 10 heures, {titre}.",
-    "Le résumé complet de votre boîte de réception sera prêt pour 10 heures, {titre}."
-]
-
-CONCLUSIONS = [
-    "Passez une excellente journée.",
-    "Que votre journée soit des plus productives.",
-    "Bon courage pour vos objectifs du jour.",
-    "Force et honneur pour aujourd'hui.",
-    "Je reste en veille. Excellente journée à vous."
-]
-
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
 URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
 
@@ -195,7 +181,7 @@ def obtenir_derniers_mails():
     mot_de_passe = os.environ.get("GMAIL_PASS")
     
     if not utilisateur or not mot_de_passe:
-        return "Les identifiants de messagerie ne sont pas configurés sur le serveur."
+        return "Les identifiants de messagerie ne sont pas configurés sur les serveurs."
         
     try:
         mail = imaplib.IMAP4_SSL("imap.gmail.com")
@@ -204,14 +190,19 @@ def obtenir_derniers_mails():
         
         status, messages = mail.search(None, '(UNSEEN)')
         if status != "OK":
-            return "Impossible d'accéder à la boîte de réception."
+            return "Impossible d'accéder à l'interface de votre boîte de réception."
             
         id_list = messages[0].split()
         if not id_list:
-            return "Vous n'avez aucun nouvel e-mail important."
+            return "Votre boîte de réception est à jour. Aucun message prioritaire ne requiert votre attention pour le moment."
             
-        derniers_ids = id_list[-3:]
-        sujets_lus = []
+        derniers_ids = id_list[-15:]
+        mails_pro = []
+        mails_perso = []
+        nb_ignores = 0
+        
+        mots_promo = ['newsletter', 'promo', 'promotion', 'solde', 'offre spéciale', 'réduction', 'no-reply', 'noreply', 'ne-pas-repondre', 'marketing', 'unsubscribe', 'désinscription', 'spam', 'notification']
+        mots_pro = ['linkedin', 'candidature', 'entretien', 'indeed', 'recrutement', 'offre', 'stage', 'alternance', 'sopra', 'steria', 'auchan', 'cyber', 'pilote', 'informatique']
         
         for i in derniers_ids:
             res, msg_data = mail.fetch(i, "(RFC822)")
@@ -224,27 +215,54 @@ def obtenir_derniers_mails():
                     if sujet_complet:
                         sujet_decode, encoding = decode_header(sujet_complet)[0]
                         if isinstance(sujet_decode, bytes):
-                            sujet = sujet_decode.decode(encoding if encoding else "utf-8")
+                            sujet = sujet_decode.decode(encoding if encoding else "utf-8", errors="ignore")
                         else:
                             sujet = str(sujet_decode)
-                        
+                            
                     expediteur_complet = msg.get("From")
-                    exp_nom = "Quelqu'un"
+                    exp_nom = "Expéditeur inconnu"
                     if expediteur_complet:
                         exp_decode, enc_exp = decode_header(expediteur_complet)[0]
                         if isinstance(exp_decode, bytes):
-                            expediteur = exp_decode.decode(enc_exp if enc_exp else "utf-8")
+                            expediteur = exp_decode.decode(enc_exp if enc_exp else "utf-8", errors="ignore")
                         else:
                             expediteur = str(exp_decode)
                         exp_nom = expediteur.split('<')[0].strip()
                         
-                    sujets_lus.append(f"Un message de {exp_nom} concernant : {sujet}. ")
+                    sujet_lower = sujet.lower()
+                    exp_lower = expediteur.lower()
+                    
+                    est_promo = any(mot in sujet_lower or mot in exp_lower for mot in mots_promo)
+                    est_pro = any(mot in sujet_lower or mot in exp_lower for mot in mots_pro)
+                    
+                    if est_promo:
+                        nb_ignores += 1
+                    elif est_pro:
+                        mails_pro.append(f"De {exp_nom} concernant : {sujet}. ")
+                    else:
+                        mails_perso.append(f"De {exp_nom} concernant : {sujet}. ")
         
         mail.logout()
-        return " ".join(sujets_lus)
+        
+        discours = ""
+        if nb_ignores > 0:
+            discours += f"J'ai pris la liberté de filtrer {nb_ignores} courriels de type publicitaire ou automatisé. "
+            
+        if mails_pro:
+            discours += "Concernant votre réseau professionnel et vos opportunités, vous avez reçu : "
+            discours += " ".join(mails_pro) + " "
+            
+        if mails_perso:
+            discours += "Pour vos autres correspondances importantes : "
+            discours += " ".join(mails_perso) + " "
+            
+        if not mails_pro and not mails_perso and nb_ignores > 0:
+            discours += "Aucun message important ne requiert votre attention immédiate."
+            
+        return discours
         
     except Exception as e:
-        return f"Erreur de connexion : {str(e)}"
+        return "Une erreur de connexion aux serveurs Google est survenue lors de l'analyse."
 
 @app.route('/rapport/matin', methods=['GET'])
 def route_matin():
@@ -288,7 +306,15 @@ def route_matin():
         phrase_programme += " Et vous avez un match aujourd'hui."
         
     annonce_mails = random.choice(ANNONCES_MAILS).format(titre=titre_choisi)
-    conclusion = random.choice(CONCLUSIONS)
+    
+    conclusions_matin = [
+        "Passez une excellente journée.",
+        "Que votre journée soit des plus productives.",
+        "Bon courage pour vos objectifs du jour.",
+        "Force et honneur pour aujourd'hui.",
+        "Je reste en veille. Excellente journée à vous."
+    ]
+    conclusion = random.choice(conclusions_matin)
     
     phrase_vocale = f"{intro_vocale} {meteo_conseil} {transition} {phrase_programme} {annonce_mails} {citation} {conclusion}"
     
@@ -300,18 +326,19 @@ def route_matin():
 
 @app.route('/rapport/emails', methods=['GET'])
 def route_emails():
-    titre_choisi = random.choice(TITRES)
+    titres_jarvis = ["Monsieur", "Sir", "Boss"]
+    titre_choisi = random.choice(titres_jarvis)
     
     intros_mails = [
-        f"Re-bonjour {titre_choisi}. Il est 10 heures, voici le point sur votre boîte de réception. ",
-        f"Je suis de retour {titre_choisi}. Voici votre briefing e-mails de 10 heures. ",
-        f"Connexion établie {titre_choisi}. Je vous lis vos messages importants. "
+        f"Salutations, {titre_choisi}. J'ai procédé à l'analyse de votre boîte de réception pour ces dernières heures. ",
+        f"Bonjour, {titre_choisi}. Voici la synthèse de vos correspondances récentes. ",
+        f"À vos ordres, {titre_choisi}. Je viens de terminer l'évaluation et le tri de vos messages entrants. "
     ]
     
     conclusions_mails = [
-        f"C'est tout pour le moment {titre_choisi}. Retour aux opérations normales.",
-        f"Fin du rapport de communication {titre_choisi}. Je reste en veille.",
-        f"Vos communications sont à jour {titre_choisi}. Bonne continuation."
+        f" C'est tout pour le moment. Je reste à votre entière disposition, {titre_choisi}.",
+        f" Fin du rapport de communication. Je poursuis ma veille en arrière-plan, {titre_choisi}.",
+        f" Vos systèmes de communication sont à jour. Excellente continuation, {titre_choisi}."
     ]
     
     intro = random.choice(intros_mails)
