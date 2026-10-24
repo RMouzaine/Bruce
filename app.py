@@ -2,6 +2,7 @@ import os
 import random
 import requests
 import csv
+import re
 from io import StringIO
 from datetime import datetime
 import pytz
@@ -83,6 +84,14 @@ ANNONCES_MAILS = [
 
 URL_ADE = "https://aderead.univ-orleans.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?data=0cb0acbfa10fd68c9769e63289f7d1483ed7389bc6dd2ee49782fad5fcaf7f5f4a2cea4e0ce85231d703b1edfe75344af6ed377fd569fdc9a44be0d5e17794f1b9d9678561997212cf33897c1d423e46577d226868daa6af56688876af752974,1"
 URL_DRIVE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv"
+
+def extraire_temps(horaire_str):
+    matches = re.findall(r'(\d{1,2})[h:](\d{2})', horaire_str)
+    if len(matches) >= 2:
+        start = int(matches[0][0]) * 60 + int(matches[0][1])
+        end = int(matches[-1][0]) * 60 + int(matches[-1][1])
+        return start, end
+    return None, None
 
 def obtenir_meteo_et_conseil():
     try:
@@ -244,24 +253,26 @@ def obtenir_derniers_mails():
                     if est_promo:
                         nb_ignores += 1
                     elif est_pro:
-                        mails_pro.append(f"De {exp_nom}, objet : {sujet}. ")
+                        mails_pro.append(f"De {exp_nom} concernant : {sujet}. ")
                     else:
-                        mails_perso.append(f"De {exp_nom}, objet : {sujet}. ")
+                        mails_perso.append(f"De {exp_nom} concernant : {sujet}. ")
         
         mail.logout()
         
         discours = ""
         if nb_ignores > 0:
-            discours += f"J'ai pris la liberté de filtrer {nb_ignores} courriels publicitaires ou automatisés. "
+            discours += f"J'ai pris la liberté de filtrer {nb_ignores} courriels de type publicitaire ou automatisé. "
             
         if mails_pro:
-            discours += "Sur le plan professionnel, vous avez reçu : " + " ".join(mails_pro) + " "
+            discours += "Concernant votre réseau professionnel et vos opportunités, vous avez reçu : "
+            discours += " ".join(mails_pro) + " "
             
         if mails_perso:
-            discours += "Pour vos autres correspondances : " + " ".join(mails_perso) + " "
+            discours += "Pour vos autres correspondances importantes : "
+            discours += " ".join(mails_perso) + " "
             
         if not mails_pro and not mails_perso and nb_ignores > 0:
-            discours += "Aucun courriel prioritaire ne nécessite votre attention immédiate."
+            discours += "Aucun message important ne requiert votre attention immédiate."
             
         return discours
         
@@ -308,6 +319,46 @@ def route_matin():
         phrase_programme += f" Vous donnez entraînement de {coaching}."
     if match != "Pas de match prévu":
         phrase_programme += " Et vous avez un match aujourd'hui."
+
+    # --- DETECTION DES CONFLITS ---
+    blocks = []
+    if "Aucun" not in cours_str and "Erreur" not in cours_str:
+        cours_liste = cours_str.split(" / ")
+        for c in cours_liste:
+            s, e = extraire_temps(c)
+            if s and e:
+                blocks.append((s, e, "vos obligations à l'IUT"))
+                
+    if "Repos" not in drive_str and "Erreur" not in drive_str:
+        s, e = extraire_temps(drive_str)
+        if s and e:
+            blocks.append((s, e, "votre service au Drive"))
+            
+    if coaching != "Pas de coaching":
+        s, e = extraire_temps(coaching)
+        if s and e:
+            blocks.append((s, e, "l'entraînement des U10"))
+            
+    blocks.sort(key=lambda x: x[0])
+    
+    avertissements = []
+    for i in range(len(blocks)-1):
+        fin_actuel = blocks[i][1]
+        debut_suivant = blocks[i+1][0]
+        nom_actuel = blocks[i][2]
+        nom_suivant = blocks[i+1][2]
+        
+        if nom_actuel != nom_suivant:
+            diff = debut_suivant - fin_actuel
+            if diff < 0:
+                avertissements.append(f"Anomalie logistique détectée : {nom_actuel} chevauche directement {nom_suivant}.")
+            elif diff <= 25:
+                avertissements.append(f"Vigilance de transit requise : vous n'aurez que {diff} minutes de battement entre {nom_actuel} et {nom_suivant}. La marge de manœuvre avec la Clio est très réduite.")
+                
+    phrase_conflits = " ".join(avertissements)
+    if phrase_conflits:
+        phrase_programme += f" {phrase_conflits}"
+    # --------------------------------
         
     annonce_mails = random.choice(ANNONCES_MAILS).format(titre=titre_choisi)
     
