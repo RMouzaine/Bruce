@@ -1,3 +1,5 @@
+<p align="center"><strong>Fiche Technique</strong>
+
 <p align="center">
   <img src="./banner.svg" width="100%" alt="Bruce AI Assistant">
 </p>
@@ -10,7 +12,7 @@
 
 **Auteur :** RMouzaine
 
-**Statut :** en service
+**Statut :** en cours de maintenance
 
 **Version :** v1.1
 
