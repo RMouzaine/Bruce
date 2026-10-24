@@ -244,26 +244,24 @@ def obtenir_derniers_mails():
                     if est_promo:
                         nb_ignores += 1
                     elif est_pro:
-                        mails_pro.append(f"De {exp_nom} concernant : {sujet}. ")
+                        mails_pro.append(f"De {exp_nom}, objet : {sujet}. ")
                     else:
-                        mails_perso.append(f"De {exp_nom} concernant : {sujet}. ")
+                        mails_perso.append(f"De {exp_nom}, objet : {sujet}. ")
         
         mail.logout()
         
         discours = ""
         if nb_ignores > 0:
-            discours += f"J'ai pris la liberté de filtrer {nb_ignores} courriels de type publicitaire ou automatisé. "
+            discours += f"J'ai pris la liberté de filtrer {nb_ignores} courriels publicitaires ou automatisés. "
             
         if mails_pro:
-            discours += "Concernant votre réseau professionnel et vos opportunités, vous avez reçu : "
-            discours += " ".join(mails_pro) + " "
+            discours += "Sur le plan professionnel, vous avez reçu : " + " ".join(mails_pro) + " "
             
         if mails_perso:
-            discours += "Pour vos autres correspondances importantes : "
-            discours += " ".join(mails_perso) + " "
+            discours += "Pour vos autres correspondances : " + " ".join(mails_perso) + " "
             
         if not mails_pro and not mails_perso and nb_ignores > 0:
-            discours += "Aucun message important ne requiert votre attention immédiate."
+            discours += "Aucun courriel prioritaire ne nécessite votre attention immédiate."
             
         return discours
         
