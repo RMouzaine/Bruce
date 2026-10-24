@@ -2,9 +2,11 @@
   <img src="./banner.svg" width="100%" alt="Bruce AI Assistant">
 </p>
 
-# Bruce : AI Personal Assistant
+# Bruce : AI Personnel Assistant
 
-> API Python qui regroupe planning, horaires, météo et e-mails en briefings vocaux.
+> API Python qui regroupe planning, horaires, météo et e-mails en briefings vocaux, déclenchés chaque jour à 7h et 10h sur iOS.
+
+> **[Voir la démonstration interactive](https://rmouzaine.github.io/Bruce-AIAssistant/)**
 
 **Auteur :** RMouzaine
 
@@ -12,7 +14,7 @@
 
 **Version :** v1.1
 
-**Stack :** Python · Flask · Render · iOS Raccourcis · UptimeRobot
+**Stack :** Python · Flask · Render · iOS Raccourcis · UptimeRobot · HTML/CSS/JS (Frontend)
 
 ---
 
@@ -22,19 +24,21 @@ Planning, horaires de travail, météo, mails : quatre applications à ouvrir ch
 
 >## Solution
 
-Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appelle l'API, récupère un texte prêt à lire et le fait énoncer par l'iPhone.
+Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appelle l'API, récupère un texte prêt à lire et le fait énoncer par l'iPhone. 
+
+L'architecture est agnostique et sur-mesure : elle s'adapte à n'importe quelle routine (heures de conduite, freelance, cours de yoga, entraînements sportifs) par simple configuration des modules de collecte.
 
 ---
 
 >## Architecture
- 
-```
-┌────────────────┐                   ┌──────────────────────┐
-│ Automatisation │ tous les jours    │  Raccourci iOS       │
-│ iOS · 7h       │ ───────────────►  │                      │
-└────────────────┘                   └──────────┬───────────┘
-                                                │ GET /rapport/...
-                                                ▼
+
+```text
+┌────────────────┐                  ┌──────────────────────┐
+│ Automatisation │ tous les jours   │  Raccourci iOS       │
+│ iOS · 7h       │ ───────────────► │                      │
+└────────────────┘                  └──────────┬───────────┘
+                                               │ GET /rapport/...
+                                               ▼
                                      ┌──────────────────────┐
                                      │  API Flask (Render)  │
                                      └──┬────┬────┬────┬────┘
@@ -49,7 +53,7 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 
 - **Backend :** API RESTful développée en Python (framework Flask).
 - **Hébergement Cloud :** Déployé sur Render (PaaS).
-- **Interface Client (Frontend) :** Apple iOS (Application Raccourcis / Siri).
+- **Interface Client (Frontend) :** Apple iOS (Application Raccourcis / Siri) et interface Web de démonstration.
 - **Stabilité et Haute Disponibilité :** Stratégie Keep-Alive via UptimeRobot pour envoyer des requêtes Ping toutes les 5 minutes, empêchant la mise en veille du serveur et annulant la latence de démarrage (Cold Start).
 
 >## Fonctionnalités
@@ -59,7 +63,7 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 - **Météo** : conditions actuelles (Open-Meteo) et conseil adapté.
 - **Cours** : flux iCal filtré sur la journée, fuseau Europe/Paris.
 - **Horaires de travail** : Google Sheets en CSV, détection de la semaine puis du jour.
-- **Agenda sportif** : entraînements et matchs selon le jour.
+- **Agenda sportif et annexes** : intégration dynamique d'activités personnalisées.
 - **Anticipation logistique** : analyse temporelle (Regex) triant les activités chronologiquement pour détecter et signaler les chevauchements ou les temps de trajet critiques (< 25 min).
 - **Variété** : intro, citation et conclusion aléatoires.
 
@@ -89,6 +93,7 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 - Consommer des sources variées : iCal, CSV, JSON, IMAP
 - Gérer des contraintes réelles : veille, latence, fuseaux, conflits logistiques
 - Identifier les failles de sécurité de son propre projet
+- Concevoir une interface front-end statique (Pages) pour vulgariser l'architecture backend
 
 ---
 
