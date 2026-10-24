@@ -4,7 +4,7 @@
 
 # Bruce : AI Personnel Assistant
 
-> API Python qui regroupe planning, horaires, météo et e-mails en briefings vocaux, déclenchés chaque jour à 7h et 10h sur iOS.
+> API Python qui regroupe planning, horaires, météo et e-mails en briefings vocaux.
 
 **Auteur :** RMouzaine
 
