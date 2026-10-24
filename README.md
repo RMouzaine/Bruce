@@ -10,7 +10,7 @@
 
 **Statut :** en service
 
-**Version :** v1.0
+**Version :** v1.1
 
 **Stack :** Python · Flask · Render · iOS Raccourcis · UptimeRobot
 
@@ -27,7 +27,7 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 ---
 
 >## Architecture
-
+ 
 ```
 ┌────────────────┐                   ┌──────────────────────┐
 │ Automatisation │ tous les jours    │  Raccourci iOS       │
@@ -47,10 +47,10 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 
 >## Architecture Technique
 
-* **Backend :** API RESTful développée en Python (framework Flask).
-* **Hébergement Cloud :** Déployé sur Render (PaaS).
-* **Interface Client (Frontend) :** Apple iOS (Application Raccourcis / Siri).
-* **Stabilité et Haute Disponibilité :** Stratégie Keep-Alive via UptimeRobot pour envoyer des requêtes Ping toutes les 5 minutes, empêchant la mise en veille du serveur et annulant la latence de démarrage (Cold Start).
+- **Backend :** API RESTful développée en Python (framework Flask).
+- **Hébergement Cloud :** Déployé sur Render (PaaS).
+- **Interface Client (Frontend) :** Apple iOS (Application Raccourcis / Siri).
+- **Stabilité et Haute Disponibilité :** Stratégie Keep-Alive via UptimeRobot pour envoyer des requêtes Ping toutes les 5 minutes, empêchant la mise en veille du serveur et annulant la latence de démarrage (Cold Start).
 
 >## Fonctionnalités
 
@@ -60,6 +60,7 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 - **Cours** : flux iCal filtré sur la journée, fuseau Europe/Paris.
 - **Horaires de travail** : Google Sheets en CSV, détection de la semaine puis du jour.
 - **Agenda sportif** : entraînements et matchs selon le jour.
+- **Anticipation logistique** : analyse temporelle (Regex) triant les activités chronologiquement pour détecter et signaler les chevauchements ou les temps de trajet critiques (< 25 min).
 - **Variété** : intro, citation et conclusion aléatoires.
 
 ### `GET /rapport/emails` : boîte de réception
@@ -76,6 +77,7 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 
 - **Cold start** : Render met le serveur en veille et le premier appel dure près d'une minute. Un ping UptimeRobot toutes les 5 minutes l'évite.
 - **Tableur irrégulier** : saisie manuelle, cellules vides, « 00:00 » pour les repos. Un parseur tolérant retrouve la semaine puis les créneaux.
+- **Synchronisation et Conflits** : extraire des données temporelles de formats hétérogènes (iCal, CSV brut, texte) pour permettre à l'algorithme de calculer les intervalles de transit.
 - **Fuseaux horaires** : serveur en UTC, événements en heure de Paris. Conversion avec `pytz`.
 - **Écrire pour l'oreille** : heures, listes et transitions reformulées pour la synthèse vocale.
 
@@ -85,7 +87,7 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 
 - Concevoir et déployer une API légère
 - Consommer des sources variées : iCal, CSV, JSON, IMAP
-- Gérer des contraintes réelles : veille, latence, fuseaux
+- Gérer des contraintes réelles : veille, latence, fuseaux, conflits logistiques
 - Identifier les failles de sécurité de son propre projet
 
 ---
@@ -97,4 +99,3 @@ Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appell
 - [ ] Tri des mails plus fiable
 - [ ] Réponse aux mails à la voix
 - [ ] Rapport du soir
-
