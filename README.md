@@ -2,53 +2,99 @@
   <img src="./banner.svg" width="100%" alt="Bruce AI Assistant">
 </p>
 
-# Projet Bruce : AI Assistant
+# Bruce : AI Personnel Assistant
 
-**Créateur :** RMouzaine  
-**Statut du système :** en maintenance
+> API Python qui regroupe planning, horaires, météo et e-mails en briefings vocaux, déclenchés chaque jour à 7h et 10h sur iOS.
 
-**Version :** 1.0  
+**Auteur :** RMouzaine
+
+**Statut :** en service
+
+**Version :** v1.0
+
+**Stack :** Python · Flask · Render · iOS Raccourcis · UptimeRobot
 
 ---
 
-## Présentation Générale
+> ## Problème
 
-Bruce est une interface d'assistance personnelle centralisée, conçue pour automatiser et dicter le flux d'informations quotidiennes de son créateur. Pensé avec une personnalité stricte, clinique et professionnelle, le système connecte des bases de données hétérogènes (universitaires, professionnelles, personnelles) pour générer des rapports vocaux instantanés via les appareils iOS.
+Planning, horaires de travail, météo, mails : quatre applications à ouvrir chaque matin.
 
-Ce projet démontre une capacité à concevoir une architecture backend légère, à manipuler des requêtes HTTP et à contourner des contraintes matérielles (latence réseau, serveurs en veille) par l'ingénierie système.
+>## Solution
 
-## Architecture Technique
+Une API centralise ces sources. Chaque jour à 7h, une automatisation iOS appelle l'API, récupère un texte prêt à lire et le fait énoncer par l'iPhone.
+
+---
+
+>## Architecture
+
+```
+┌────────────────┐                   ┌──────────────────────┐
+│ Automatisation │ tous les jours    │  Raccourci iOS       │
+│ iOS · 7h       │ ───────────────►  │                      │
+└────────────────┘                   └──────────┬───────────┘
+                                                │ GET /rapport/...
+                                                ▼
+                                     ┌──────────────────────┐
+                                     │  API Flask (Render)  │
+                                     └──┬────┬────┬────┬────┘
+                                        │    │    │    │
+                        ┌───────────────┘    │    │    └──────────────┐
+                        ▼                    ▼    ▼                   ▼
+                 Planning (iCal)      Google Sheets   Open-Meteo    Gmail (IMAP)
+                                      (export CSV)    (météo)
+```
+
+>## Architecture Technique
 
 * **Backend :** API RESTful développée en Python (framework Flask).
 * **Hébergement Cloud :** Déployé sur Render (PaaS).
 * **Interface Client (Frontend) :** Apple iOS (Application Raccourcis / Siri).
 * **Stabilité et Haute Disponibilité :** Stratégie Keep-Alive via UptimeRobot pour envoyer des requêtes Ping toutes les 5 minutes, empêchant la mise en veille du serveur et annulant la latence de démarrage (Cold Start).
 
-## Fonctionnalités Centrales
+>## Fonctionnalités
 
-### 1. Le Rapport Matinal (/rapport/matin)
-Un briefing complet généré à la demande, qui compile :
-* **Météorologie :** Requête API vers Open-Meteo avec recommandations vestimentaires conditionnelles.
-* **Logistique Universitaire :** Parsing dynamique de l'emploi du temps (IUT d'Orléans) via un flux iCal contourné par Google Agenda pour des performances optimales.
-* **Logistique Professionnelle :** Extraction et lecture d'un fichier Google Sheets (format CSV public) ciblant la semaine en cours pour déterminer les horaires de travail en Drive.
-* **Logistique Sportive :** Paramétrage conditionnel des jours de coaching (U10-U11) et de matchs.
+### `GET /rapport/matin` : briefing du matin
 
-### 2. Le Rapport de Communication (/rapport/emails)
-Un audit automatisé de la boîte de réception Gmail :
-* **Connexion sécurisée :** Via le protocole IMAP4_SSL.
-* **Extraction et décodage :** Lecture (RFC822) des 10 derniers messages non lus.
-* **Filtre anti-bruit :** Rejet systématique des newsletters, spams et communications automatisées (Apple, Zalando, etc.).
-* **Tri algorithmique :** Catégorisation intelligente isolant les opportunités stratégiques (Cybersécurité, Aéronautique, Recrutement) des correspondances classiques.
+- **Météo** : conditions actuelles (Open-Meteo) et conseil adapté.
+- **Cours** : flux iCal filtré sur la journée, fuseau Europe/Paris.
+- **Horaires de travail** : Google Sheets en CSV, détection de la semaine puis du jour.
+- **Agenda sportif** : entraînements et matchs selon le jour.
+- **Variété** : intro, citation et conclusion aléatoires.
 
-## Liens et Endpoints Utiles
+### `GET /rapport/emails` : boîte de réception
 
-### Endpoints de l'API (Routage Flask)
-* **Serveur Racine :** `https://jarvis-api-kbox.onrender.com`
-* **Génération du Briefing Matin :** `/rapport/matin`
-* **Génération de l'Audit E-mail :** `/rapport/emails`
+- Connexion IMAP sur SSL, identifiants en variables d'environnement.
+- 10 derniers messages non lus.
+- Messages promotionnels comptés, non lus à voix haute.
+- Tri par mots-clés : professionnel d'un côté, autres de l'autre.
+- Décodage des en-têtes (accents, UTF-8).
 
-### Ressources Externes et Bases de Données
-* **Console de déploiement :** [Render Dashboard](https://dashboard.render.com)
-* **Système Keep-Alive :** [UptimeRobot](https://uptimerobot.com)
-* **Base Horaires Drive (Lecture Seule / CSV) :** [Google Sheets Public Export](https://docs.google.com/spreadsheets/d/e/2PACX-1vSHx5JoIBSJXZuYY22hS9ToHWcgy2Vyuw1cPtm_gIfw-I73RZOQ47HHh56ut9SOHInnWPZoUp90asvp/pub?gid=961193327&single=true&output=csv)
-* **API Météo :** [Open-Meteo API](https://open-meteo.com)
+---
+
+>## Défis techniques
+
+- **Cold start** : Render met le serveur en veille et le premier appel dure près d'une minute. Un ping UptimeRobot toutes les 5 minutes l'évite.
+- **Tableur irrégulier** : saisie manuelle, cellules vides, « 00:00 » pour les repos. Un parseur tolérant retrouve la semaine puis les créneaux.
+- **Fuseaux horaires** : serveur en UTC, événements en heure de Paris. Conversion avec `pytz`.
+- **Écrire pour l'oreille** : heures, listes et transitions reformulées pour la synthèse vocale.
+
+---
+
+>## Compétences acquises
+
+- Concevoir et déployer une API légère
+- Consommer des sources variées : iCal, CSV, JSON, IMAP
+- Gérer des contraintes réelles : veille, latence, fuseaux
+- Identifier les failles de sécurité de son propre projet
+
+---
+
+>## Pistes d'amélioration
+
+- [ ] Authentification de l'API par jeton
+- [ ] Lecture des mails sans les marquer comme lus
+- [ ] Tri des mails plus fiable
+- [ ] Réponse aux mails à la voix
+- [ ] Rapport du soir
+
