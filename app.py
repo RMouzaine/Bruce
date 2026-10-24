@@ -129,3 +129,201 @@ def obtenir_cours_du_jour():
         headers = {'User-Agent': 'Mozilla/5.0'}
         reponse = requests.get(URL_ADE, headers=headers)
         cal = Calendar.from_ical(reponse.content)
+        fuseau = pytz.timezone('Europe/Paris')
+        aujourd_hui = datetime.now(fuseau).date()
+        cours_liste = []
+        for composant in cal.walk():
+            if composant.name == "VEVENT":
+                debut = composant.get('dtstart').dt
+                date_evenement = debut.astimezone(fuseau).date() if hasattr(debut, 'astimezone') else (debut.date() if hasattr(debut, 'date') else debut)
+                if date_evenement == aujourd_hui:
+                    titre = str(composant.get('summary')).split('\n')[0].strip()
+                    heure_debut = debut.astimezone(fuseau).strftime("%Hh%M")
+                    fin = composant.get('dtend').dt.astimezone(fuseau).strftime("%Hh%M")
+                    cours_liste.append(f"{titre} ({heure_debut}-{fin})")
+        return " / ".join(cours_liste) if cours_liste else "Aucun cours aujourd'hui."
+    except Exception as e:
+        return f"Erreur ADE: {str(e)}"
+
+def obtenir_horaires_drive():
+    try:
+        reponse = requests.get(URL_DRIVE)
+        reponse.encoding = 'utf-8'
+        lecteur = list(csv.reader(StringIO(reponse.text)))
+        fuseau = pytz.timezone('Europe/Paris')
+        aujourd_hui = datetime.now(fuseau)
+        jour_py = aujourd_hui.weekday()
+        offset_jour = 0 if jour_py == 6 else jour_py + 1
+        semaine_actuelle = aujourd_hui.isocalendar()[1]
+        if jour_py == 6: semaine_actuelle += 1
+            
+        recherche_sem = f"sem {semaine_actuelle}"
+        dans_bonne_semaine = False
+        
+        for ligne in lecteur:
+            if not ligne: continue
+            texte_ligne0 = ligne[0].lower()
+            if "date:" in texte_ligne0 and recherche_sem in texte_ligne0:
+                dans_bonne_semaine = True
+                continue
+            if dans_bonne_semaine and "rayan" in texte_ligne0:
+                valeurs_jours = ligne[2:]
+                jours_extraits = []
+                i = 0
+                while len(jours_extraits) < 7 and i < len(valeurs_jours):
+                    val = valeurs_jours[i].strip()
+                    if val == "00:00" or val == "" or val.lower() == "repos":
+                        jours_extraits.append("Repos")
+                        if i + 2 < len(valeurs_jours):
+                            v2, v3 = valeurs_jours[i+1].strip(), valeurs_jours[i+2].strip()
+                            if (v2 == "00:00" or v2 == "") and (v3 == "00:00" or v3 == ""): i += 3
+                            else: i += 1
+                        else: i += 1
+                    else:
+                        if i + 1 < len(valeurs_jours):
+                            jours_extraits.append(f"{val} à {valeurs_jours[i+1].strip()}")
+                            i += 3
+                        else: break
+                return jours_extraits[offset_jour] if offset_jour < len(jours_extraits) else "Erreur colonnes"
+            if dans_bonne_semaine and "date:" in texte_ligne0 and recherche_sem not in texte_ligne0: break
+        return f"Erreur : Semaine {semaine_actuelle} introuvable."
+    except Exception as e:
+        return f"Erreur Drive: {str(e)}"
+
+def obtenir_derniers_mails():
+    utilisateur = os.environ.get("GMAIL_USER")
+    mot_de_passe = os.environ.get("GMAIL_PASS")
+    
+    if not utilisateur or not mot_de_passe:
+        return "Les identifiants de messagerie ne sont pas configurés sur le serveur."
+        
+    try:
+        mail = imaplib.IMAP4_SSL("imap.gmail.com")
+        mail.login(utilisateur, mot_de_passe)
+        mail.select("inbox")
+        
+        status, messages = mail.search(None, '(UNSEEN)')
+        if status != "OK":
+            return "Impossible d'accéder à la boîte de réception."
+            
+        id_list = messages[0].split()
+        if not id_list:
+            return "Vous n'avez aucun nouvel e-mail important."
+            
+        derniers_ids = id_list[-3:]
+        sujets_lus = []
+        
+        for i in derniers_ids:
+            res, msg_data = mail.fetch(i, "(RFC822)")
+            for response_part in msg_data:
+                if isinstance(response_part, tuple):
+                    msg = email.message_from_bytes(response_part[1])
+                    
+                    sujet_complet = msg["Subject"]
+                    sujet = "Sans objet"
+                    if sujet_complet:
+                        sujet_decode, encoding = decode_header(sujet_complet)[0]
+                        if isinstance(sujet_decode, bytes):
+                            sujet = sujet_decode.decode(encoding if encoding else "utf-8")
+                        else:
+                            sujet = str(sujet_decode)
+                        
+                    expediteur_complet = msg.get("From")
+                    exp_nom = "Quelqu'un"
+                    if expediteur_complet:
+                        exp_decode, enc_exp = decode_header(expediteur_complet)[0]
+                        if isinstance(exp_decode, bytes):
+                            expediteur = exp_decode.decode(enc_exp if enc_exp else "utf-8")
+                        else:
+                            expediteur = str(exp_decode)
+                        exp_nom = expediteur.split('<')[0].strip()
+                        
+                    sujets_lus.append(f"Un message de {exp_nom} concernant : {sujet}. ")
+        
+        mail.logout()
+        return " ".join(sujets_lus)
+        
+    except Exception as e:
+        return f"Erreur de connexion : {str(e)}"
+
+@app.route('/rapport/matin', methods=['GET'])
+def route_matin():
+    titre_choisi = random.choice(TITRES)
+    accroche = random.choice(ACCROCHES)
+    titre_complet = f"{accroche} {titre_choisi}."
+    
+    intro_vocale = f"{titre_complet} Je suis Brousse, votre assistant personnel."
+    
+    cours_str = obtenir_cours_du_jour()
+    drive_str = obtenir_horaires_drive()
+    meteo_conseil = obtenir_meteo_et_conseil()
+    
+    fuseau = pytz.timezone('Europe/Paris')
+    jour_py = datetime.now(fuseau).weekday()
+    
+    if jour_py == 0: coaching = "18h30 à 19h45 (Séance physique)"
+    elif jour_py == 2: coaching = "18h30 à 19h45 (Séance tactique/ludique)"
+    else: coaching = "Pas de coaching"
+        
+    if jour_py == 5: match = "Jour de match"
+    else: match = "Pas de match prévu"
+    
+    corps = (
+        f"Cours : {cours_str}\n"
+        f"Drive : {drive_str}\n"
+        f"Coaching : {coaching}\n"
+        f"Match : {match}"
+    )
+    
+    citation = random.choice(CITATIONS_MOTIVANTES)
+    transition = random.choice(TRANSITIONS_PROGRAMME)
+    
+    cours_vocal = "Aucun cours à l'université aujourd'hui." if "Aucun" in cours_str else f"Côté université, vous avez : {cours_str}."
+    drive_vocal = "Vous êtes en repos au Drive." if "Repos" in drive_str else f"Pour Auchan Drive, vous travaillez de {drive_str}."
+    
+    phrase_programme = f"{cours_vocal} {drive_vocal}"
+    if coaching != "Pas de coaching":
+        phrase_programme += f" Vous donnez entraînement de {coaching}."
+    if match != "Pas de match prévu":
+        phrase_programme += " Et vous avez un match aujourd'hui."
+        
+    annonce_mails = random.choice(ANNONCES_MAILS).format(titre=titre_choisi)
+    conclusion = random.choice(CONCLUSIONS)
+    
+    phrase_vocale = f"{intro_vocale} {meteo_conseil} {transition} {phrase_programme} {annonce_mails} {citation} {conclusion}"
+    
+    return jsonify({
+        "sous_titre": titre_complet,
+        "corps": corps,
+        "phrase_vocale": phrase_vocale
+    })
+
+@app.route('/rapport/emails', methods=['GET'])
+def route_emails():
+    titre_choisi = random.choice(TITRES)
+    
+    intros_mails = [
+        f"Re-bonjour {titre_choisi}. Il est 10 heures, voici le point sur votre boîte de réception. ",
+        f"Je suis de retour {titre_choisi}. Voici votre briefing e-mails de 10 heures. ",
+        f"Connexion établie {titre_choisi}. Je vous lis vos messages importants. "
+    ]
+    
+    conclusions_mails = [
+        f"C'est tout pour le moment {titre_choisi}. Retour aux opérations normales.",
+        f"Fin du rapport de communication {titre_choisi}. Je reste en veille.",
+        f"Vos communications sont à jour {titre_choisi}. Bonne continuation."
+    ]
+    
+    intro = random.choice(intros_mails)
+    conclusion = random.choice(conclusions_mails)
+    contenu_mails = obtenir_derniers_mails()
+    
+    phrase_vocale = f"{intro} {contenu_mails} {conclusion}"
+    
+    return jsonify({
+        "phrase_vocale": phrase_vocale
+    })
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
