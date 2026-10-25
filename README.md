@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./banner.svg" width="100%" alt="Bruce AI Assistant">
+  <img src="BruceAi/banner.svg" width="100%" alt="Bruce AI Assistant">
 </p>
 
 # BRUCE, Votre Assistant IA Personnel
