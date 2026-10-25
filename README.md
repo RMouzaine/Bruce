@@ -8,7 +8,13 @@
 
 > **[Ouvrir la console de démonstration interactive](https://rmouzaine.github.io/Bruce-AIAssistant/)**
 
-**Créateur :** RMouzaine | **Statut :** Opérationnel | **Version :** 1.1 (bêta) | **Website** : https://rmouzaine.github.io/Bruce-AIAssistant/
+**Créateur :** RMouzaine 
+
+**Statut :** Opérationnel 
+
+**Version :** 1.1 (bêta) 
+
+**Website** : https://rmouzaine.github.io/Bruce-AIAssistant/
 
 ---
 
