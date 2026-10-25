@@ -29,10 +29,10 @@
   --dp-typography-label: 12px;
   --dp-typography-body-leading: 1.6;
   --dp-spacing-grid-gap: 24px;
-  --dp-radius-panel: 12px;
+  --dp-radius-panel: 14px;
   --dp-border-hairline: 1px;
   --dp-motion-interaction: 160ms;
-  --dp-motion-easing: ease-out;
+  --dp-motion-easing: cubic-bezier(0.16, 1, 0.3, 1);
 
   --font-display: 'Host Grotesk', var(--dp-typography-fallback);
   --font-body: 'Instrument Sans', var(--dp-typography-fallback);
@@ -53,38 +53,38 @@ body {
 h1, h2, h3, h4, .display-font {
   font-family: var(--font-display);
   color: var(--dp-color-ink);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
 }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--dp-spacing-grid-gap); }
 
 /* Buttons */
 .btn {
-  display: inline-flex; justify-content: center; align-items: center;
+  display: inline-flex; justify-content: center; align-items: center; gap: 8px;
   font-family: var(--font-body); font-weight: 500; font-size: var(--dp-typography-interface);
-  padding: 10px 20px; border-radius: 8px; cursor: pointer;
+  padding: 11px 22px; border-radius: 8px; cursor: pointer;
   transition: all var(--dp-motion-interaction) var(--dp-motion-easing);
   text-decoration: none; border: var(--dp-border-hairline) solid transparent;
 }
 .btn:focus-visible { outline: 2px solid var(--dp-color-accent); outline-offset: 2px; }
 .btn-primary { background-color: var(--dp-color-accent); color: var(--dp-color-on-accent); }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); }
 .btn-secondary { background-color: transparent; color: var(--dp-color-ink); border-color: var(--dp-color-rule); }
-.btn-secondary:hover { background-color: var(--dp-color-ground-muted); }
+.btn-secondary:hover { background-color: var(--dp-color-ground-muted); border-color: var(--dp-color-ink-secondary); }
 
 /* Header */
-header { padding: 32px 0; display: flex; justify-content: space-between; align-items: center; }
-.logo-link { display: inline-flex; align-items: center; text-decoration: none; gap: 10px; }
-.header-logo { height: 38px; width: auto; display: block; object-fit: contain; }
+header { padding: 36px 0; display: flex; justify-content: space-between; align-items: center; }
+.logo-link { display: inline-flex; align-items: center; text-decoration: none; gap: 12px; }
+.header-logo { height: 36px; width: auto; display: block; object-fit: contain; }
 
 /* Hero Section */
-.hero { padding: 60px 0 80px; display: grid; grid-template-columns: 1.45fr 1fr; gap: 60px; align-items: center; }
+.hero { padding: 70px 0 90px; display: grid; grid-template-columns: 1.35fr 1fr; gap: 64px; align-items: center; }
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 14px 6px 8px;
+  padding: 6px 16px 6px 8px;
   background: var(--dp-color-ground-muted);
   border: var(--dp-border-hairline) solid var(--dp-color-rule);
   border-radius: 999px;
@@ -94,105 +94,389 @@ header { padding: 32px 0; display: flex; justify-content: space-between; align-i
   margin-bottom: 24px;
 }
 .hero-badge-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   display: block;
 }
-.hero-content h1 { font-size: 3.5rem; margin-bottom: 24px; }
-.hero-content p { font-size: 1.125rem; color: var(--dp-color-ink-secondary); margin-bottom: 32px; max-width: 90%; }
-.hero-diagram { background: var(--dp-color-ground-muted); border-radius: var(--dp-radius-panel); padding: 40px; text-align: center; position: relative; border: var(--dp-border-hairline) solid var(--dp-color-rule); }
-.diagram-svg { width: 100%; height: auto; }
+.hero-content h1 { font-size: 3.5rem; margin-bottom: 24px; font-weight: 700; }
+.hero-content p { font-size: 1.15rem; color: var(--dp-color-ink-secondary); margin-bottom: 34px; max-width: 92%; line-height: 1.6; }
+.hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 
-/* Features (Pale field) */
-.features-section { background-color: var(--dp-color-ground-muted); padding: 80px 0; border-top: var(--dp-border-hairline) solid var(--dp-color-rule); }
-.section-header { text-align: center; margin-bottom: 48px; }
-.section-header h2 { font-size: 2.25rem; margin-bottom: 16px; }
-.section-header p { color: var(--dp-color-ink-secondary); max-width: 600px; margin: 0 auto; }
+.hero-diagram {
+  background: var(--dp-color-ground-muted);
+  border-radius: var(--dp-radius-panel);
+  padding: 36px;
+  text-align: center;
+  position: relative;
+  border: var(--dp-border-hairline) solid var(--dp-color-rule);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+.diagram-svg { width: 100%; height: auto; display: block; }
+
+/* Features Section */
+.features-section { background-color: var(--dp-color-ground-muted); padding: 90px 0; border-top: var(--dp-border-hairline) solid var(--dp-color-rule); }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-header h2 { font-size: 2.35rem; margin-bottom: 16px; font-weight: 700; }
+.section-header p { color: var(--dp-color-ink-secondary); max-width: 620px; margin: 0 auto; font-size: 1.05rem; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--dp-spacing-grid-gap); }
-.card { background: var(--dp-color-panel); border: var(--dp-border-hairline) solid var(--dp-color-rule); border-radius: var(--dp-radius-panel); padding: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.card {
+  background: var(--dp-color-panel);
+  border: var(--dp-border-hairline) solid var(--dp-color-rule);
+  border-radius: var(--dp-radius-panel);
+  padding: 36px 30px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.05); }
+.card-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--dp-color-ground-muted);
+  border: 1px solid var(--dp-color-rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--dp-color-ink);
+}
 .card h3 { font-size: 1.25rem; margin-bottom: 12px; }
-.card p { font-size: var(--dp-typography-small); color: var(--dp-color-ink-secondary); }
+.card p { font-size: var(--dp-typography-small); color: var(--dp-color-ink-secondary); line-height: 1.6; }
 
-/* Demo (Dark field) - Allégé et Haute Lisibilité */
-.demo-section { background-color: var(--dp-color-field); color: var(--dp-color-on-field); padding: 80px 0; }
-.demo-section h2 { color: var(--dp-color-on-field); }
-.demo-section p { color: var(--dp-color-on-field-secondary); }
-.demo-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.demo-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-.live-dot { width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); animation: pulse 2s infinite; }
-@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+/* Demo / Simulation Section (Dark Field) */
+.demo-section {
+  background-color: var(--dp-color-field);
+  color: var(--dp-color-on-field);
+  padding: 90px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.demo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.demo-title-wrap { display: flex; align-items: center; gap: 12px; }
+.demo-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.35; } 100% { opacity: 1; } }
 
 .controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.btn-group { display: inline-flex; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; padding: 2px; }
-.btn-group button { background: transparent; color: var(--dp-color-on-field-secondary); border: none; padding: 7px 15px; border-radius: 6px; font-family: var(--font-body); font-size: var(--dp-typography-small); font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+.btn-group {
+  display: inline-flex;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 3px;
+  gap: 2px;
+}
+.btn-group button {
+  background: transparent;
+  color: var(--dp-color-on-field-secondary);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: var(--dp-typography-small);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 .btn-group button:hover { color: var(--dp-color-on-field); background: rgba(255,255,255,0.06); }
 .btn-group button[aria-pressed="true"] { background: #ffffff; color: var(--dp-color-field); font-weight: 600; }
 
-.demo-content { display: grid; grid-template-columns: 360px 1fr; gap: 40px; align-items: start; }
-.cadran-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; padding: 24px; text-align: center; }
-#cadran { width: 100%; max-width: 310px; margin: 0 auto; display: block; }
-.piste { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 14; }
+/* Interactive Voice Briefing Bar */
+.audio-player-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.audio-player-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+}
+.audio-player-card.is-playing {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.player-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--dp-color-field);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.player-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+}
+.player-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.player-info {
+  flex-grow: 1;
+  min-width: 0;
+}
+.player-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.player-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.player-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dp-color-on-field);
+}
+.player-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--dp-color-on-field-secondary);
+  font-weight: 600;
+}
+.player-status {
+  font-size: 12px;
+  color: var(--dp-color-on-field-secondary);
+}
+
+/* Sound Wave Equalizer */
+.waveform-container {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+  width: 100%;
+}
+.wave-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  transition: height 0.2s ease, background 0.2s ease;
+}
+.is-playing .wave-bar {
+  background: #ffffff;
+  animation: wavePulse 0.9s ease-in-out infinite alternate;
+}
+.is-playing .wave-bar:nth-child(2n) { animation-duration: 0.75s; animation-delay: 0.1s; }
+.is-playing .wave-bar:nth-child(3n) { animation-duration: 1.05s; animation-delay: 0.2s; }
+.is-playing .wave-bar:nth-child(4n) { animation-duration: 0.65s; animation-delay: 0.3s; }
+.is-playing .wave-bar:nth-child(5n) { animation-duration: 1.15s; animation-delay: 0.15s; }
+
+@keyframes wavePulse {
+  0% { height: 3px; }
+  50% { height: 18px; }
+  100% { height: 6px; }
+}
+
+/* Content Layout */
+.demo-content { display: grid; grid-template-columns: 350px 1fr; gap: 36px; align-items: start; }
+.cadran-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--dp-radius-panel);
+  padding: 26px;
+  text-align: center;
+}
+#cadran { width: 100%; max-width: 290px; margin: 0 auto; display: block; }
+.piste { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 14; }
 .graduation { stroke: var(--dp-color-on-field-secondary); stroke-width: 1; opacity: 0.2; }
-.heure-cadran { font-size: 12px; fill: var(--dp-color-on-field-secondary); text-anchor: middle; dominant-baseline: middle; }
+.heure-cadran { font-size: 11px; fill: var(--dp-color-on-field-secondary); text-anchor: middle; dominant-baseline: middle; }
 .arc { fill: none; stroke-width: 14; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: tracer 1s ease-out forwards; }
 @keyframes tracer { to { stroke-dashoffset: 0; } }
-.centre-jour { font-size: 22px; font-family: var(--font-display); font-weight: 700; fill: var(--dp-color-on-field); text-anchor: middle; }
+.centre-jour { font-size: 20px; font-family: var(--font-display); font-weight: 700; fill: var(--dp-color-on-field); text-anchor: middle; }
 
-.cadran-legend { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.06); font-size: 13px; color: var(--dp-color-on-field-secondary); }
+.cadran-legend {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  color: var(--dp-color-on-field-secondary);
+}
 .legend-item { display: inline-flex; align-items: center; gap: 6px; }
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 
 .dash-container { display: flex; flex-direction: column; gap: 18px; }
-.dash-card { background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; padding: 24px; }
+.dash-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--dp-radius-panel);
+  padding: 24px;
+}
 .dash-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .dash-card-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; color: var(--dp-color-on-field-secondary); }
-.day-chip { background: rgba(255, 255, 255, 0.08); color: var(--dp-color-on-field); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
+.day-chip { background: rgba(255, 255, 255, 0.08); color: var(--dp-color-on-field); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
 
 .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.metric-item { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 14px 16px; }
-.metric-label { font-size: 12px; color: var(--dp-color-on-field-secondary); margin-bottom: 6px; display: block; font-weight: 500; }
+.metric-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.metric-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--dp-color-on-field-secondary);
+}
+.metric-icon { width: 15px; height: 15px; stroke: currentColor; opacity: 0.8; }
+.metric-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
 .metric-value { font-size: 15px; font-weight: 500; color: var(--dp-color-on-field); line-height: 1.4; }
 
-.status-banner { border-radius: 10px; padding: 16px 20px; display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.5; }
+.status-banner {
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
 .status-banner.ok { background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: #a7f3d0; }
 .status-banner.warning { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #fca5a5; }
-.status-icon { font-weight: 700; font-size: 16px; line-height: 1.3; }
+.status-icon-svg { width: 18px; height: 18px; stroke: currentColor; flex-shrink: 0; margin-top: 2px; }
 
 /* Emails View */
 .demo-emails-container { display: flex; flex-direction: column; gap: 20px; }
-.email-stat-banner { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--dp-color-on-field); }
-.email-stat-badge { background: rgba(239, 68, 68, 0.15); color: #f87171; font-weight: 600; padding: 3px 10px; border-radius: 999px; font-size: 12px; }
+.email-stat-banner {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--dp-color-on-field);
+}
+.email-stat-badge {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
 .emails-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .email-count-pill { background: rgba(255, 255, 255, 0.08); color: var(--dp-color-on-field-secondary); font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
 .email-card-list { display: flex; flex-direction: column; gap: 10px; }
-.email-item { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-left: 3px solid #818CF8; border-radius: 8px; padding: 14px 16px; }
+.email-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #818CF8;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
 .email-item.perso { border-left-color: #34D399; }
 .email-subject { font-size: 14px; font-weight: 500; color: var(--dp-color-on-field); margin-bottom: 4px; }
 .email-sender { font-size: 13px; color: var(--dp-color-on-field-secondary); }
 
 /* Pricing Section */
-.pricing-section { padding: 80px 0; background-color: var(--dp-color-ground); }
+.pricing-section { padding: 90px 0; background-color: var(--dp-color-ground); }
 .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-.pricing-card { background: var(--dp-color-panel); border: var(--dp-border-hairline) solid var(--dp-color-rule); border-radius: var(--dp-radius-panel); padding: 40px 32px; display: flex; flex-direction: column; }
-.pricing-card.featured { border-color: var(--dp-color-accent); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); position: relative; }
-.badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--dp-color-accent); color: var(--dp-color-on-accent); font-size: var(--dp-typography-label); font-weight: 600; padding: 4px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; }
-.pricing-name { font-size: 1.25rem; font-family: var(--font-display); margin-bottom: 8px; }
+.pricing-card {
+  background: var(--dp-color-panel);
+  border: var(--dp-border-hairline) solid var(--dp-color-rule);
+  border-radius: var(--dp-radius-panel);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+}
+.pricing-card.featured {
+  border-color: var(--dp-color-accent);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+.badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--dp-color-accent);
+  color: var(--dp-color-on-accent);
+  font-size: var(--dp-typography-label);
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.pricing-name { font-size: 1.3rem; font-family: var(--font-display); margin-bottom: 8px; font-weight: 700; }
 .pricing-price { font-size: 2.5rem; font-family: var(--font-display); font-weight: 700; margin-bottom: 8px; color: var(--dp-color-ink); }
 .pricing-price span { font-size: 1rem; font-weight: 400; color: var(--dp-color-ink-secondary); font-family: var(--font-body); }
 .pricing-desc { color: var(--dp-color-ink-secondary); font-size: var(--dp-typography-small); margin-bottom: 24px; line-height: 1.5; }
 .pricing-features { list-style: none; margin-bottom: 32px; flex-grow: 1; }
-.pricing-features li { display: flex; gap: 8px; margin-bottom: 12px; font-size: var(--dp-typography-small); color: var(--dp-color-ink); }
-.pricing-features li::before { content: "✓"; color: var(--dp-color-accent); font-weight: 700; }
+.pricing-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: var(--dp-typography-small);
+  color: var(--dp-color-ink);
+}
+.pricing-check-icon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--dp-color-ink);
+  stroke-width: 2.5;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
 
 /* Footer */
 footer {
   background-color: var(--dp-color-field);
   color: var(--dp-color-on-field-secondary);
-  padding: 48px 0;
+  padding: 56px 0;
   text-align: center;
   font-size: var(--dp-typography-small);
-  border-top: var(--dp-border-hairline) solid rgba(255,255,255,0.1);
+  border-top: var(--dp-border-hairline) solid rgba(255,255,255,0.08);
 }
 .footer-container {
   display: flex;
@@ -211,19 +495,20 @@ footer {
 @media (max-width: 1050px) {
   .hero { gap: 40px; }
   .grid-3, .pricing-grid { gap: 16px; }
-  .demo-content { grid-template-columns: 320px 1fr; gap: 28px; }
+  .demo-content { grid-template-columns: 310px 1fr; gap: 24px; }
 }
 @media (max-width: 900px) {
   .demo-content, .emails-grid { grid-template-columns: 1fr; gap: 24px; }
   .metrics-grid { grid-template-columns: 1fr; }
-  .cadran-card { max-width: 400px; margin: 0 auto; width: 100%; }
+  .cadran-card { max-width: 380px; margin: 0 auto; width: 100%; }
 }
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; text-align: center; padding: 40px 0; }
   .hero-badge { margin-left: auto; margin-right: auto; }
   .hero-content p { margin: 0 auto 32px; }
+  .hero-actions { justify-content: center; }
   .grid-3 { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
 }
 </style>
 </head>
@@ -246,7 +531,10 @@ footer {
       </div>
       <h1>Votre matinée. Optimisée. Automatisée. Dictée.</h1>
       <p>Orayzis centralise silencieusement vos agendas, vos contraintes logistiques et vos communications pour générer un briefing tactique dès votre réveil.</p>
-      <a href="#demo" class="btn btn-primary">Tester l'assistant</a>
+      <div class="hero-actions">
+        <a href="#demo" class="btn btn-primary">Tester l'assistant</a>
+        <a href="#tarifs" class="btn btn-secondary">Consulter les tarifs</a>
+      </div>
     </div>
     <div class="hero-diagram">
       <svg class="diagram-svg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -285,14 +573,32 @@ footer {
       </div>
       <div class="grid-3">
         <div class="card">
+          <div class="card-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
           <h3>Convergence absolue</h3>
           <p>Se connecte silencieusement à votre écosystème : extraction en temps réel d'agendas complexes (iCal), plannings collaboratifs (Sheets) et météorologie locale.</p>
         </div>
         <div class="card">
+          <div class="card-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
           <h3>Moteur de conflits logistiques</h3>
           <p>Un algorithme d'analyse temporelle croise vos activités. Si un temps de trajet est critique (&lt; 25 min), le système lève immédiatement une vigilance de transit.</p>
         </div>
         <div class="card">
+          <div class="card-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
           <h3>Filtrage chirurgical</h3>
           <p>Les communications automatisées et promotionnelles sont écartées sous silence. Seules les urgences et opportunités vous sont présentées.</p>
         </div>
@@ -300,11 +606,13 @@ footer {
     </div>
   </section>
 
-  <!-- Demo (Dark Field) - Allégé et Haute Lisibilité -->
+  <!-- Demo (Dark Field) - Console Interactive & Synthèse Vocale -->
   <section id="demo" class="demo-section">
     <div class="container">
       <div class="demo-header">
-        <div class="demo-title"><span class="live-dot"></span> Simulation interactive</div>
+        <div class="demo-title-wrap">
+          <div class="demo-title"><span class="live-dot"></span> Console de simulation interactive</div>
+        </div>
         <div class="controls">
           <div class="btn-group" role="group">
             <button type="button" data-vue="matin" aria-pressed="true">Rapport Matin</button>
@@ -315,6 +623,53 @@ footer {
             <button type="button" data-jour="mercredi" aria-pressed="false">Mer</button>
             <button type="button" data-jour="jeudi" aria-pressed="false">Jeu</button>
             <button type="button" data-jour="samedi" aria-pressed="false">Sam</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lecteur Audio Interactif -->
+      <div class="audio-player-card" id="audioPlayer">
+        <button type="button" class="player-btn" id="btnPlayAudio" aria-label="Écouter le briefing vocal">
+          <svg id="iconPlay" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg id="iconPause" viewBox="0 0 24 24" style="display:none;">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+        </button>
+        <div class="player-info">
+          <div class="player-meta">
+            <div class="player-title-row">
+              <span class="player-title">Briefing Vocal Interactif</span>
+              <span class="player-tag">Audio IA</span>
+            </div>
+            <span class="player-status" id="playerStatus">Cliquer sur lecture pour écouter</span>
+          </div>
+          <div class="waveform-container" id="waveform">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
           </div>
         </div>
       </div>
@@ -335,33 +690,70 @@ footer {
         <div class="dash-container">
           <div class="dash-card">
             <div class="dash-card-header">
-              <span class="dash-card-title">Variables extraites & synthèse</span>
+              <span class="dash-card-title">Variables extraites &amp; synthèse</span>
               <span id="badgeJour" class="day-chip">Lundi</span>
             </div>
             <div class="metrics-grid">
               <div class="metric-item">
-                <span class="metric-label">🌤 Météo locale</span>
-                <span class="metric-value" id="valMeteo">--</span>
+                <div class="metric-header">
+                  <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  </svg>
+                  <span class="metric-label">Météo locale</span>
+                </div>
+                <div class="metric-value" id="valMeteo">--</div>
               </div>
+
               <div class="metric-item">
-                <span class="metric-label">🎯 Obligation principale</span>
-                <span class="metric-value" id="valCours">--</span>
+                <div class="metric-header">
+                  <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  <span class="metric-label">Obligation principale</span>
+                </div>
+                <div class="metric-value" id="valCours">--</div>
               </div>
+
               <div class="metric-item">
-                <span class="metric-label">💼 Créneau professionnel</span>
-                <span class="metric-value" id="valTravail">--</span>
+                <div class="metric-header">
+                  <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                  <span class="metric-label">Créneau professionnel</span>
+                </div>
+                <div class="metric-value" id="valTravail">--</div>
               </div>
+
               <div class="metric-item">
-                <span class="metric-label">🏃 Activité annexe</span>
-                <span class="metric-value" id="valActivite">--</span>
+                <div class="metric-header">
+                  <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                  <span class="metric-label">Activité annexe</span>
+                </div>
+                <div class="metric-value" id="valActivite">--</div>
               </div>
             </div>
           </div>
 
           <!-- Analyse des conflits -->
           <div id="boxConflits" class="status-banner ok">
-            <span class="status-icon">✓</span>
-            <div class="status-text" id="texteConflits">Aucun conflit d'horaires ni tension logistique détectée.</div>
+            <svg class="status-icon-svg" id="statusIconSvg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <div id="texteConflits">Aucun conflit d'horaires ni tension logistique détectée.</div>
           </div>
         </div>
       </div>
@@ -408,11 +800,26 @@ footer {
           <div class="pricing-price">39,99€ <span>/ mois</span></div>
           <p class="pricing-desc">Pour profiter de la puissance d'Orayzis avec une flexibilité totale.</p>
           <ul class="pricing-features">
-            <li>Déploiement de l'API Orayzis</li>
-            <li>Connexion iCal, Météo & Gmail</li>
-            <li>Anticipation logistique standard</li>
-            <li>Sans engagement</li>
-            <li>Résiliation à tout moment</li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Déploiement de l'API Orayzis</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Connexion iCal, Météo &amp; Gmail</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Anticipation logistique standard</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Sans engagement</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Résiliation à tout moment</span>
+            </li>
           </ul>
           <a href="mailto:rayanmouzaine@gmail.com" class="btn btn-secondary">Sélectionner</a>
         </div>
@@ -424,10 +831,22 @@ footer {
           <div class="pricing-price">24,99€ <span>/ mois</span></div>
           <p class="pricing-desc">La formule complète pour structurer votre quotidien sur le long terme.</p>
           <ul class="pricing-features">
-            <li>Toutes les fonctionnalités Liberté</li>
-            <li>Maintenance serveur incluse (Keep-Alive)</li>
-            <li>Mises à jour de sécurité</li>
-            <li>Engagement 1 an</li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Toutes les fonctionnalités Liberté</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Maintenance serveur incluse (Keep-Alive)</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Mises à jour de sécurité</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Engagement 1 an</span>
+            </li>
           </ul>
           <a href="mailto:rayanmouzaine@gmail.com" class="btn btn-primary">Sélectionner</a>
         </div>
@@ -438,10 +857,22 @@ footer {
           <div class="pricing-price">Sur Devis</div>
           <p class="pricing-desc">Une architecture IA développée spécifiquement pour votre métier.</p>
           <ul class="pricing-features">
-            <li>Audit de vos processus</li>
-            <li>Intégration d'API spécifiques métiers</li>
-            <li>Modules personnalisés (CRM, Finance)</li>
-            <li>Hébergement dédié</li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Audit complet de vos processus</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Intégration d'API spécifiques métiers</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Modules personnalisés (CRM, Finance)</span>
+            </li>
+            <li>
+              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Hébergement dédié</span>
+            </li>
           </ul>
           <a href="mailto:rayanmouzaine@gmail.com" class="btn btn-secondary">Demander un devis</a>
         </div>
@@ -572,12 +1003,58 @@ function dessinerCadran(j) {
 // --- Contrôle et Mise à jour de l'Affichage ---
 let vue = "matin", jour = "lundi";
 
+function genererTexteBriefing() {
+  if (vue === "matin") {
+    const j = JOURS[jour];
+    let t = `Salutations. Je suis votre assistant Orayzis. Voici le briefing de votre ${j.nom}. `;
+    if (j.meteo.code === 61) {
+      t += "Alerte météo : pluie battante avec 9 degrés. Prévoyez vos équipements. ";
+    } else if (j.meteo.code === 0) {
+      t += `Ciel totalement dégagé avec ${j.meteo.temp} degrés. Conditions idéales. `;
+    } else {
+      t += `Temps modéré avec ${j.meteo.temp} degrés. `;
+    }
+
+    if (j.cours.length) {
+      t += `Obligation principale de ${hhmm(j.cours[0].d)} à ${hhmm(j.cours[0].f)}. `;
+    } else {
+      t += "Aucune obligation majeure sur votre agenda. ";
+    }
+
+    if (j.travail !== "Repos") {
+      t += `Activité professionnelle de ${j.travail}. `;
+    } else {
+      t += "Vous êtes en repos professionnel. ";
+    }
+
+    if (j.activite) {
+      t += `Activité annexe : ${j.activite.texte}. `;
+    }
+
+    const conflits = analyserConflits(j);
+    if (conflits.length > 0) {
+      t += "Vigilance logistique requise : " + conflits.map(c => c.replace(/<[^>]*>/g, "")).join(" ") + " ";
+    } else {
+      t += "Tous vos indicateurs de transit sont au vert. ";
+    }
+
+    t += "Fin du briefing tactique.";
+    return t;
+  } else {
+    return "Synthèse des correspondances par Orayzis. Cinq courriels automatisés ont été écartés sous silence. Deux opportunités professionnelles majeures requièrent votre attention, et une correspondance générale est à jour. Boîte de réception stabilisée.";
+  }
+}
+
 function afficher() {
+  arreterAudio();
   const estMatin = vue === "matin";
   
   document.getElementById("vueMatin").hidden = !estMatin;
   document.getElementById("vueEmails").hidden = estMatin;
   document.getElementById("jours").hidden = !estMatin;
+
+  const playerStatus = document.getElementById("playerStatus");
+  playerStatus.textContent = estMatin ? `Prêt &bull; Briefing vocal du ${JOURS[jour].nom}` : "Prêt &bull; Synthèse vocale de l'audit e-mails";
 
   if (estMatin) {
     const j = JOURS[jour];
@@ -591,12 +1068,15 @@ function afficher() {
 
     const conflits = analyserConflits(j);
     const box = document.getElementById("boxConflits");
+    const icon = document.getElementById("statusIconSvg");
     if (conflits.length > 0) {
       box.className = "status-banner warning";
-      box.innerHTML = `<span class="status-icon">⚠️</span><div>${conflits.join(" ")}</div>`;
+      icon.innerHTML = `<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>`;
+      document.getElementById("texteConflits").innerHTML = conflits.join(" ");
     } else {
       box.className = "status-banner ok";
-      box.innerHTML = `<span class="status-icon">✓</span><div><strong>Flux optimal :</strong> Trajets fluides, aucune anomalie de planning.</div>`;
+      icon.innerHTML = `<polyline points="20 6 9 17 4 12"/>`;
+      document.getElementById("texteConflits").innerHTML = "<strong>Flux optimal :</strong> Trajets fluides, aucune anomalie de planning.";
     }
   } else {
     document.getElementById("proCount").textContent = COURRIELS.pro.length;
@@ -619,6 +1099,56 @@ function afficher() {
 
   document.querySelectorAll("[data-vue]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.vue === vue)));
   document.querySelectorAll("[data-jour]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.jour === jour)));
+}
+
+// --- Synthèse Vocale Interactive avec Visualiseur d'Ondes ---
+const btnPlay = document.getElementById("btnPlayAudio");
+const iconPlay = document.getElementById("iconPlay");
+const iconPause = document.getElementById("iconPause");
+const playerCard = document.getElementById("audioPlayer");
+const playerStatus = document.getElementById("playerStatus");
+const synthese = window.speechSynthesis;
+
+function arreterAudio() {
+  if (synthese) synthese.cancel();
+  playerCard.classList.remove("is-playing");
+  iconPlay.style.display = "block";
+  iconPause.style.display = "none";
+}
+
+if (synthese) {
+  btnPlay.addEventListener("click", () => {
+    if (playerCard.classList.contains("is-playing")) {
+      arreterAudio();
+      playerStatus.innerHTML = "Lecture interrompue &bull; Cliquer pour relancer";
+      return;
+    }
+
+    synthese.cancel();
+    const texte = genererTexteBriefing();
+    const u = new SpeechSynthesisUtterance(texte);
+    u.lang = "fr-FR";
+    
+    // Voix française optimale si disponible
+    const voix = synthese.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
+    if (voix) u.voice = voix;
+
+    u.onstart = () => {
+      playerCard.classList.add("is-playing");
+      iconPlay.style.display = "none";
+      iconPause.style.display = "block";
+      playerStatus.innerHTML = "<strong style='color:#ffffff;'>Lecture audio en cours...</strong> (Cliquer pour mettre en pause)";
+    };
+
+    u.onend = u.onerror = () => {
+      playerCard.classList.remove("is-playing");
+      iconPlay.style.display = "block";
+      iconPause.style.display = "none";
+      playerStatus.innerHTML = "Briefing vocal terminé &bull; Prêt pour réécoute";
+    };
+
+    synthese.speak(u);
+  });
 }
 
 document.querySelectorAll("[data-vue]").forEach(b => b.addEventListener("click", () => { vue = b.dataset.vue; afficher(); }));
