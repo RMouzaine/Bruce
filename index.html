@@ -3,373 +3,710 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Orayzis, Votre Assistant IA Personnel</title>
+<title>Orayzis &bull; Bruce AI Assistant</title>
 <link rel="icon" type="image/png" href="assets/orayzis-symbol-clean.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --dp-color-ground: #fcfcfd;
-  --dp-color-ink: #16191f;
-  --dp-color-ink-secondary: #454c58;
-  --dp-color-ground-muted: #f3f4f6;
-  --dp-color-rule: #dde0e6;
-  --dp-color-accent: #000000;
-  --dp-color-field: #16191f;
-  --dp-color-on-field: #fcfcfd;
-  --dp-color-on-field-secondary: #d0d4dd;
-  --dp-color-panel: #ffffff;
-  --dp-color-on-accent: #ffffff;
-  --dp-typography-fallback: sans-serif;
-  --dp-typography-body: 16px;
-  --dp-typography-interface: 15px;
-  --dp-typography-small: 14px;
-  --dp-typography-metadata: 13px;
-  --dp-typography-label: 12px;
-  --dp-typography-body-leading: 1.6;
-  --dp-spacing-grid-gap: 24px;
-  --dp-radius-panel: 14px;
-  --dp-border-hairline: 1px;
-  --dp-motion-interaction: 160ms;
-  --dp-motion-easing: cubic-bezier(0.16, 1, 0.3, 1);
+  --color-ground: #0A0C0E;
+  --color-ground-secondary: #101317;
+  --color-ink: #EDE7DC;
+  --color-ink-secondary: #9EA5A8;
+  --color-muted: #6C7378;
+  --color-amber: #E8913C;
+  --color-teal: #2E6B72;
+  --hairline: rgba(237, 231, 220, 0.13);
+  --hairline-light: rgba(237, 231, 220, 0.22);
 
-  --font-display: 'Host Grotesk', var(--dp-typography-fallback);
-  --font-body: 'Instrument Sans', var(--dp-typography-fallback);
+  --font-display: 'Syne', sans-serif;
+  --font-sans: 'Sora', sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background-color: var(--color-ground); color: var(--color-ink); }
 [hidden] { display: none !important; }
 
 body {
-  background-color: var(--dp-color-ground);
-  color: var(--dp-color-ink);
-  font-family: var(--font-body);
-  font-size: var(--dp-typography-body);
-  line-height: var(--dp-typography-body-leading);
+  background-color: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  selection-background-color: var(--color-amber);
+  selection-color: var(--color-ground);
+}
+
+::selection {
+  background: var(--color-amber);
+  color: var(--color-ground);
 }
 
 h1, h2, h3, h4, .display-font {
   font-family: var(--font-display);
-  color: var(--dp-color-ink);
+  color: var(--color-ink);
   letter-spacing: -0.025em;
-  line-height: 1.15;
+  line-height: 1.1;
+  font-weight: 700;
 }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--dp-spacing-grid-gap); }
-
-/* Buttons */
-.btn {
-  display: inline-flex; justify-content: center; align-items: center; gap: 8px;
-  font-family: var(--font-body); font-weight: 500; font-size: var(--dp-typography-interface);
-  padding: 11px 22px; border-radius: 8px; cursor: pointer;
-  transition: all var(--dp-motion-interaction) var(--dp-motion-easing);
-  text-decoration: none; border: var(--dp-border-hairline) solid transparent;
+.label-caps {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--color-muted);
 }
-.btn:focus-visible { outline: 2px solid var(--dp-color-accent); outline-offset: 2px; }
-.btn-primary { background-color: var(--dp-color-accent); color: var(--dp-color-on-accent); }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); }
-.btn-secondary { background-color: transparent; color: var(--dp-color-ink); border-color: var(--dp-color-rule); }
-.btn-secondary:hover { background-color: var(--dp-color-ground-muted); border-color: var(--dp-color-ink-secondary); }
 
-/* Header */
-header { padding: 36px 0; display: flex; justify-content: space-between; align-items: center; }
-.logo-link { display: inline-flex; align-items: center; text-decoration: none; gap: 12px; }
-.header-logo { height: 36px; width: auto; display: block; object-fit: contain; }
+.amber-text { color: var(--color-amber); }
+.teal-text { color: var(--color-teal); }
 
-/* Hero Section */
-.hero { padding: 70px 0 90px; display: grid; grid-template-columns: 1.35fr 1fr; gap: 64px; align-items: center; }
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 16px 6px 8px;
-  background: var(--dp-color-ground-muted);
-  border: var(--dp-border-hairline) solid var(--dp-color-rule);
-  border-radius: 999px;
-  font-size: var(--dp-typography-metadata);
-  font-weight: 500;
-  color: var(--dp-color-ink);
-  margin-bottom: 24px;
-}
-.hero-badge-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: block;
-}
-.hero-content h1 { font-size: 3.5rem; margin-bottom: 24px; font-weight: 700; }
-.hero-content p { font-size: 1.15rem; color: var(--dp-color-ink-secondary); margin-bottom: 34px; max-width: 92%; line-height: 1.6; }
-.hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
 
-.hero-diagram {
-  background: var(--dp-color-ground-muted);
-  border-radius: var(--dp-radius-panel);
-  padding: 36px;
-  text-align: center;
-  position: relative;
-  border: var(--dp-border-hairline) solid var(--dp-color-rule);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-}
-.diagram-svg { width: 100%; height: auto; display: block; }
-
-/* Features Section */
-.features-section { background-color: var(--dp-color-ground-muted); padding: 90px 0; border-top: var(--dp-border-hairline) solid var(--dp-color-rule); }
-.section-header { text-align: center; margin-bottom: 56px; }
-.section-header h2 { font-size: 2.35rem; margin-bottom: 16px; font-weight: 700; }
-.section-header p { color: var(--dp-color-ink-secondary); max-width: 620px; margin: 0 auto; font-size: 1.05rem; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--dp-spacing-grid-gap); }
-.card {
-  background: var(--dp-color-panel);
-  border: var(--dp-border-hairline) solid var(--dp-color-rule);
-  border-radius: var(--dp-radius-panel);
-  padding: 36px 30px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.02);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.05); }
-.card-icon-wrap {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: var(--dp-color-ground-muted);
-  border: 1px solid var(--dp-color-rule);
+/* Navigation */
+nav.top-nav {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  height: 58px;
+  background: rgba(10, 12, 14, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hairline);
+  z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  color: var(--dp-color-ink);
 }
-.card h3 { font-size: 1.25rem; margin-bottom: 12px; }
-.card p { font-size: var(--dp-typography-small); color: var(--dp-color-ink-secondary); line-height: 1.6; }
-
-/* Demo / Simulation Section (Dark Field) */
-.demo-section {
-  background-color: var(--dp-color-field);
-  color: var(--dp-color-on-field);
-  padding: 90px 0;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-.demo-header {
+.nav-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 36px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  width: 100%;
 }
-.demo-title-wrap { display: flex; align-items: center; gap: 12px; }
-.demo-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-.live-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #10b981;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
-  animation: pulse 2s infinite;
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
 }
-@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.35; } 100% { opacity: 1; } }
+.nav-brand-logo {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+.nav-brand-dot { color: var(--color-amber); }
 
-.controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.btn-group {
-  display: inline-flex;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--color-ink-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.nav-link:hover { color: var(--color-amber); }
+
+.nav-pill-btn {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-light);
+  color: var(--color-ink);
+  text-decoration: none;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+.nav-pill-btn:hover {
+  background: var(--color-ink);
+  color: var(--color-ground);
+  border-color: var(--color-ink);
+}
+
+/* PORTAL HERO */
+.portal-hero-wrapper {
+  position: relative;
+  height: 250vh; /* Scroll length drives portal parting */
+  background: var(--color-ground);
+}
+.portal-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Layer 1: Backdrop Background */
+.portal-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, #182026 0%, #0c1014 60%, #07090b 100%);
+  transform: scale(1.15);
+  transform-origin: center center;
+  will-change: transform;
+  z-index: 1;
+}
+.portal-emblem-bg {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(680px, 80vw);
+  height: min(680px, 80vw);
+  opacity: 0.18;
+  filter: grayscale(100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Layer 2: Duotone Wash */
+.portal-duotone {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--color-teal) 0%, transparent 60%, var(--color-amber) 100%);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Layer 3: Radial Darkening Veil */
+.portal-veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 35%, rgba(10, 12, 14, 0.85) 90%);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Layer 4: Two Solid Parting Panels */
+.portal-panel {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50.5vw;
+  background: var(--color-ground);
+  z-index: 5;
+  will-change: transform;
+}
+.panel-left { left: 0; border-right: 1px solid var(--hairline); }
+.panel-right { right: 0; border-left: 1px solid var(--hairline); }
+
+/* Layer 5: Accent Dots */
+.portal-dot {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  z-index: 6;
+  pointer-events: none;
+  will-change: transform;
+}
+.portal-dot-amber { background: var(--color-amber); }
+.portal-dot-teal { background: var(--color-teal); }
+
+/* Layer 6: Splitting Portal Title */
+.portal-title-wrap {
+  position: absolute;
+  z-index: 7;
+  text-align: center;
+  pointer-events: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.portal-subhead {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-amber);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.portal-title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 11vw, 150px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, letter-spacing;
+}
+.portal-word-left { display: inline-block; will-change: transform; }
+.portal-word-right { display: inline-block; will-change: transform; }
+
+.portal-tagline {
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1.4vw, 17px);
+  color: var(--color-ink-secondary);
+  max-width: 540px;
+  margin-top: 24px;
+  font-weight: 400;
+}
+
+/* Layer 7: Corner Metadata */
+.portal-meta {
+  position: absolute;
+  z-index: 8;
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-muted);
+  pointer-events: none;
+}
+.meta-tl { top: 80px; left: 36px; }
+.meta-tr { top: 80px; right: 36px; text-align: right; }
+.meta-bl { bottom: 36px; left: 36px; }
+.meta-br { bottom: 36px; right: 36px; text-align: right; display: flex; align-items: center; gap: 8px; }
+.scroll-indicator-rule { width: 32px; height: 1px; background: var(--color-amber); display: inline-block; }
+
+/* STATEMENT FOLD */
+.statement-section {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--hairline);
+  background: var(--color-ground);
+  padding: 120px 0;
+}
+.statement-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.statement-index {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 8vw, 110px);
+  font-weight: 800;
+  line-height: 0.8;
+  -webkit-text-stroke: 1px rgba(237, 231, 220, 0.22);
+  color: transparent;
+  user-select: none;
+}
+.statement-body {
+  max-width: 780px;
+}
+.statement-text {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.8vw, 54px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
+  margin-top: 20px;
+  margin-bottom: 36px;
+}
+.statement-desc {
+  font-size: 17px;
+  color: var(--color-ink-secondary);
+  line-height: 1.7;
+  max-width: 620px;
+}
+.drifting-emblem {
+  position: absolute;
+  right: -80px;
+  top: 20%;
+  width: 440px;
+  height: 440px;
+  opacity: 0.08;
+  filter: grayscale(100%);
+  pointer-events: none;
+  transform: rotate(0deg);
+  will-change: transform;
+}
+
+/* RELEASES / THROWABLE DECK SECTION */
+.deck-section {
+  padding: 120px 0;
+  border-top: 1px solid var(--hairline);
+  background: var(--color-ground-secondary);
+  position: relative;
+}
+.deck-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.deck-info h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  margin: 16px 0 24px;
+}
+.deck-info p {
+  color: var(--color-ink-secondary);
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+.deck-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Physical Throwable Deck */
+.deck-viewport {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: 460px;
+  margin: 0 auto;
+}
+.deck-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  user-select: none;
+  outline: none;
+}
+.deck-card {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: #14181E;
+  border: 1px solid var(--hairline-light);
+  border-radius: 16px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: grab;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  will-change: transform;
+}
+.deck-card:active { cursor: grabbing; }
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-code {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--color-amber);
+  font-weight: 600;
+}
+.card-seq {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--color-muted);
+}
+.card-content { margin: auto 0; }
+.card-tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-teal);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.card-content h3 {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+.card-content p {
+  color: var(--color-ink-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.card-footer-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--hairline);
+  padding-top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.deck-hint {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+}
+.deck-dots {
+  display: flex;
+  gap: 8px;
+}
+.deck-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--hairline-light);
+  transition: background 0.2s ease;
+}
+.deck-dot.active { background: var(--color-amber); }
+
+/* INTERACTIVE LIVE CONSOLE (BRUCE AI AUDIO ENGINE) */
+.console-section {
+  padding: 120px 0;
+  border-top: 1px solid var(--hairline);
+  background: var(--color-ground);
+}
+.console-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--hairline);
+}
+.console-header h2 { font-size: clamp(28px, 3.2vw, 42px); }
+
+.console-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pill-group {
+  display: inline-flex;
+  background: rgba(237, 231, 220, 0.04);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
   padding: 3px;
   gap: 2px;
 }
-.btn-group button {
+.pill-btn {
   background: transparent;
-  color: var(--dp-color-on-field-secondary);
+  color: var(--color-ink-secondary);
   border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-family: var(--font-body);
-  font-size: var(--dp-typography-small);
-  font-weight: 500;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.btn-group button:hover { color: var(--dp-color-on-field); background: rgba(255,255,255,0.06); }
-.btn-group button[aria-pressed="true"] { background: #ffffff; color: var(--dp-color-field); font-weight: 600; }
+.pill-btn:hover { color: var(--color-ink); }
+.pill-btn[aria-pressed="true"] {
+  background: var(--color-ink);
+  color: var(--color-ground);
+}
 
-/* Interactive Voice Briefing Bar */
-.audio-player-card {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin-bottom: 30px;
+/* Audio Player Bar */
+.audio-bar {
+  background: #111419;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 36px;
   display: flex;
   align-items: center;
-  gap: 20px;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  gap: 24px;
+  transition: border-color 0.2s ease;
 }
-.audio-player-card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.04);
-}
-.audio-player-card.is-playing {
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.05);
-}
+.audio-bar:hover { border-color: var(--hairline-light); }
+.audio-bar.is-playing { border-color: rgba(232, 145, 60, 0.4); }
 
-.player-btn {
-  width: 46px;
-  height: 46px;
+.audio-trigger-btn {
+  width: 50px; height: 50px;
   border-radius: 50%;
-  background: #ffffff;
-  color: var(--dp-color-field);
+  background: var(--color-ink);
+  color: var(--color-ground);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s ease, background 0.2s ease;
 }
-.player-btn:hover {
+.audio-trigger-btn:hover {
   transform: scale(1.06);
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+  background: var(--color-amber);
 }
-.player-btn svg { width: 18px; height: 18px; fill: currentColor; }
+.audio-trigger-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
-.player-info {
-  flex-grow: 1;
-  min-width: 0;
-}
-.player-meta {
+.audio-track-info { flex-grow: 1; min-width: 0; }
+.audio-title-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
   gap: 8px;
 }
-.player-title-row {
+.audio-identity {
   display: flex;
   align-items: center;
   gap: 10px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-ink);
 }
-.player-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--dp-color-on-field);
-}
-.player-tag {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--dp-color-on-field-secondary);
-  font-weight: 600;
-}
-.player-status {
+.audio-status-text {
   font-size: 12px;
-  color: var(--dp-color-on-field-secondary);
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  text-transform: uppercase;
 }
 
-/* Sound Wave Equalizer */
-.waveform-container {
+.equalizer-wave {
   display: flex;
   align-items: center;
   gap: 3px;
-  height: 20px;
+  height: 22px;
   width: 100%;
 }
-.wave-bar {
+.eq-bar {
   flex: 1;
   height: 3px;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(237, 231, 220, 0.16);
   border-radius: 2px;
   transition: height 0.2s ease, background 0.2s ease;
 }
-.is-playing .wave-bar {
-  background: #ffffff;
+.is-playing .eq-bar {
+  background: var(--color-ink);
   animation: wavePulse 0.9s ease-in-out infinite alternate;
 }
-.is-playing .wave-bar:nth-child(2n) { animation-duration: 0.75s; animation-delay: 0.1s; }
-.is-playing .wave-bar:nth-child(3n) { animation-duration: 1.05s; animation-delay: 0.2s; }
-.is-playing .wave-bar:nth-child(4n) { animation-duration: 0.65s; animation-delay: 0.3s; }
-.is-playing .wave-bar:nth-child(5n) { animation-duration: 1.15s; animation-delay: 0.15s; }
+.is-playing .eq-bar:nth-child(2n) { animation-duration: 0.7s; animation-delay: 0.1s; background: var(--color-amber); }
+.is-playing .eq-bar:nth-child(3n) { animation-duration: 1.1s; animation-delay: 0.2s; }
+.is-playing .eq-bar:nth-child(4n) { animation-duration: 0.8s; animation-delay: 0.15s; }
+.is-playing .eq-bar:nth-child(5n) { animation-duration: 1.2s; animation-delay: 0.25s; background: var(--color-teal); }
 
 @keyframes wavePulse {
   0% { height: 3px; }
-  50% { height: 18px; }
-  100% { height: 6px; }
+  50% { height: 20px; }
+  100% { height: 5px; }
 }
 
-/* Content Layout */
-.demo-content { display: grid; grid-template-columns: 350px 1fr; gap: 36px; align-items: start; }
-.cadran-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--dp-radius-panel);
-  padding: 26px;
+/* Console Workspace */
+.console-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.cadran-wrapper {
+  background: #111419;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 32px 24px;
   text-align: center;
 }
-#cadran { width: 100%; max-width: 290px; margin: 0 auto; display: block; }
-.piste { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 14; }
-.graduation { stroke: var(--dp-color-on-field-secondary); stroke-width: 1; opacity: 0.2; }
-.heure-cadran { font-size: 11px; fill: var(--dp-color-on-field-secondary); text-anchor: middle; dominant-baseline: middle; }
+#cadran { width: 100%; max-width: 300px; margin: 0 auto; display: block; }
+.piste { fill: none; stroke: rgba(237,231,220,0.06); stroke-width: 14; }
+.graduation { stroke: var(--color-ink-secondary); stroke-width: 1; opacity: 0.15; }
+.heure-cadran { font-size: 11px; fill: var(--color-muted); text-anchor: middle; dominant-baseline: middle; font-family: var(--font-sans); }
 .arc { fill: none; stroke-width: 14; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: tracer 1s ease-out forwards; }
 @keyframes tracer { to { stroke-dashoffset: 0; } }
-.centre-jour { font-size: 20px; font-family: var(--font-display); font-weight: 700; fill: var(--dp-color-on-field); text-anchor: middle; }
+.centre-jour { font-size: 22px; font-family: var(--font-display); font-weight: 700; fill: var(--color-ink); text-anchor: middle; }
 
-.cadran-legend {
+.cadran-legend-row {
   display: flex;
   justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  font-size: 12px;
-  color: var(--dp-color-on-field-secondary);
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
 }
-.legend-item { display: inline-flex; align-items: center; gap: 6px; }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.leg-item { display: inline-flex; align-items: center; gap: 6px; }
+.leg-dot { width: 7px; height: 7px; border-radius: 50%; }
 
-.dash-container { display: flex; flex-direction: column; gap: 18px; }
-.dash-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--dp-radius-panel);
-  padding: 24px;
-}
-.dash-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.dash-card-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; color: var(--dp-color-on-field-secondary); }
-.day-chip { background: rgba(255, 255, 255, 0.08); color: var(--dp-color-on-field); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
-
-.metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.metric-item {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 16px;
+.console-body {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 20px;
 }
-.metric-header {
+.console-panel {
+  background: #111419;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 28px;
+}
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--hairline);
+}
+.metrics-quad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.quad-cell {
+  background: rgba(237, 231, 220, 0.02);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 18px;
+}
+.quad-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
-  color: var(--dp-color-on-field-secondary);
 }
-.metric-icon { width: 15px; height: 15px; stroke: currentColor; opacity: 0.8; }
-.metric-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
-.metric-value { font-size: 15px; font-weight: 500; color: var(--dp-color-on-field); line-height: 1.4; }
+.quad-val {
+  font-size: 15px;
+  color: var(--color-ink);
+  font-weight: 500;
+  line-height: 1.4;
+}
 
-.status-banner {
+.alert-strip {
   border-radius: 10px;
   padding: 16px 20px;
   display: flex;
@@ -377,520 +714,601 @@ header { padding: 36px 0; display: flex; justify-content: space-between; align-i
   gap: 14px;
   font-size: 14px;
   line-height: 1.5;
+  border: 1px solid var(--hairline);
 }
-.status-banner.ok { background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: #a7f3d0; }
-.status-banner.warning { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #fca5a5; }
-.status-icon-svg { width: 18px; height: 18px; stroke: currentColor; flex-shrink: 0; margin-top: 2px; }
+.alert-strip.ok {
+  background: rgba(46, 107, 114, 0.12);
+  border-color: rgba(46, 107, 114, 0.35);
+  color: #B2D8DC;
+}
+.alert-strip.warning {
+  background: rgba(232, 145, 60, 0.12);
+  border-color: rgba(232, 145, 60, 0.35);
+  color: #F8C394;
+}
 
-/* Emails View */
-.demo-emails-container { display: flex; flex-direction: column; gap: 20px; }
-.email-stat-banner {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  color: var(--dp-color-on-field);
+/* ROSTER & DATES (PRICING & ARCHITECTURE TABLE) */
+.roster-section {
+  padding: 120px 0;
+  border-top: 1px solid var(--hairline);
+  background: var(--color-ground);
 }
-.email-stat-badge {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
+.roster-title-row {
+  margin-bottom: 56px;
 }
-.emails-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.email-count-pill { background: rgba(255, 255, 255, 0.08); color: var(--dp-color-on-field-secondary); font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
-.email-card-list { display: flex; flex-direction: column; gap: 10px; }
-.email-item {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-left: 3px solid #818CF8;
-  border-radius: 8px;
-  padding: 14px 16px;
-}
-.email-item.perso { border-left-color: #34D399; }
-.email-subject { font-size: 14px; font-weight: 500; color: var(--dp-color-on-field); margin-bottom: 4px; }
-.email-sender { font-size: 13px; color: var(--dp-color-on-field-secondary); }
+.roster-title-row h2 { font-size: clamp(28px, 3.5vw, 44px); margin-top: 12px; }
 
-/* Pricing Section */
-.pricing-section { padding: 90px 0; background-color: var(--dp-color-ground); }
-.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-.pricing-card {
-  background: var(--dp-color-panel);
-  border: var(--dp-border-hairline) solid var(--dp-color-rule);
-  border-radius: var(--dp-radius-panel);
-  padding: 40px 32px;
-  display: flex;
-  flex-direction: column;
+/* Hairline Roster Rows */
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
 }
-.pricing-card.featured {
-  border-color: var(--dp-color-accent);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  position: relative;
-}
-.badge {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--dp-color-accent);
-  color: var(--dp-color-on-accent);
-  font-size: var(--dp-typography-label);
-  font-weight: 600;
-  padding: 4px 14px;
-  border-radius: 999px;
+.roster-table th {
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.15em;
+  color: var(--color-muted);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--hairline);
 }
-.pricing-name { font-size: 1.3rem; font-family: var(--font-display); margin-bottom: 8px; font-weight: 700; }
-.pricing-price { font-size: 2.5rem; font-family: var(--font-display); font-weight: 700; margin-bottom: 8px; color: var(--dp-color-ink); }
-.pricing-price span { font-size: 1rem; font-weight: 400; color: var(--dp-color-ink-secondary); font-family: var(--font-body); }
-.pricing-desc { color: var(--dp-color-ink-secondary); font-size: var(--dp-typography-small); margin-bottom: 24px; line-height: 1.5; }
-.pricing-features { list-style: none; margin-bottom: 32px; flex-grow: 1; }
-.pricing-features li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 12px;
-  font-size: var(--dp-typography-small);
-  color: var(--dp-color-ink);
+.roster-row {
+  border-bottom: 1px solid var(--hairline);
+  transition: background 0.2s ease;
 }
-.pricing-check-icon {
-  width: 16px;
-  height: 16px;
-  stroke: var(--dp-color-ink);
-  stroke-width: 2.5;
-  flex-shrink: 0;
-  margin-top: 3px;
+.roster-row:hover { background: rgba(237, 231, 220, 0.02); }
+.roster-cell {
+  padding: 28px 20px;
+  vertical-align: middle;
+}
+.roster-plan {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+.roster-tag {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-amber);
+  margin-left: 10px;
+  padding: 2px 8px;
+  border: 1px solid rgba(232, 145, 60, 0.3);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+.roster-price {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+.roster-price span {
+  font-size: 13px;
+  font-family: var(--font-sans);
+  color: var(--color-muted);
+  font-weight: 400;
+}
+.roster-desc {
+  font-size: 14px;
+  color: var(--color-ink-secondary);
+  line-height: 1.5;
+  max-width: 440px;
 }
 
-/* Footer */
-footer {
-  background-color: var(--dp-color-field);
-  color: var(--dp-color-on-field-secondary);
-  padding: 56px 0;
-  text-align: center;
-  font-size: var(--dp-typography-small);
-  border-top: var(--dp-border-hairline) solid rgba(255,255,255,0.08);
+/* CLOSE & BOTTOM WORDMARK */
+.close-section {
+  padding: 120px 0 0;
+  border-top: 1px solid var(--hairline);
+  background: var(--color-ground-secondary);
+  position: relative;
+  overflow: hidden;
 }
-.footer-container {
+.close-content {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 80px;
+}
+.close-left h2 {
+  font-size: clamp(32px, 4vw, 56px);
+  margin-bottom: 16px;
+}
+.close-left p {
+  color: var(--color-ink-secondary);
+  font-size: 16px;
+  max-width: 500px;
+}
+.close-actions {
+  display: flex;
   gap: 16px;
 }
-.footer-logo {
-  height: 30px;
-  width: auto;
-  opacity: 0.9;
-  display: block;
+
+.footer-strip {
+  border-top: 1px solid var(--hairline);
+  padding: 28px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+}
+.footer-strip a { color: var(--color-ink-secondary); text-decoration: none; transition: color 0.2s; }
+.footer-strip a:hover { color: var(--color-amber); }
+
+/* Signature Cropped Wordmark */
+.giant-wordmark-wrap {
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  line-height: 0.76;
+  user-select: none;
+  pointer-events: none;
+}
+.giant-wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 20vw, 290px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: rgba(237, 231, 220, 0.05);
+  transform: translateY(22%);
+  display: inline-block;
+  white-space: nowrap;
 }
 
-/* Responsive */
-@media (max-width: 1050px) {
-  .hero { gap: 40px; }
-  .grid-3, .pricing-grid { gap: 16px; }
-  .demo-content { grid-template-columns: 310px 1fr; gap: 24px; }
-}
-@media (max-width: 900px) {
-  .demo-content, .emails-grid { grid-template-columns: 1fr; gap: 24px; }
-  .metrics-grid { grid-template-columns: 1fr; }
-  .cadran-card { max-width: 380px; margin: 0 auto; width: 100%; }
-}
-@media (max-width: 760px) {
-  .hero { grid-template-columns: 1fr; text-align: center; padding: 40px 0; }
-  .hero-badge { margin-left: auto; margin-right: auto; }
-  .hero-content p { margin: 0 auto 32px; }
-  .hero-actions { justify-content: center; }
-  .grid-3 { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .deck-grid { grid-template-columns: 1fr; gap: 48px; }
+  .console-grid { grid-template-columns: 1fr; }
+  .statement-grid { grid-template-columns: 1fr; }
+  .metrics-quad { grid-template-columns: 1fr; }
+  .roster-table, .roster-table tbody, .roster-row, .roster-cell { display: block; width: 100%; }
+  .roster-table thead { display: none; }
+  .roster-cell { padding: 12px 0; }
+  .roster-row { padding: 24px 0; }
+  .nav-links { display: none; }
 }
 </style>
 </head>
 <body>
 
-<header class="container">
-  <a href="#" class="logo-link">
-    <img src="assets/orayzis-logo-clean.png" alt="Orayzis IA" class="header-logo">
-  </a>
-  <a href="#tarifs" class="btn btn-secondary">Voir les offres</a>
-</header>
+<!-- Navigation -->
+<nav class="top-nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-brand">
+      <img src="assets/orayzis-logo-white.png" alt="Orayzis" class="nav-brand-logo">
+      <span>Orayzis<span class="nav-brand-dot">.</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#portal" class="nav-link">Portail</a></li>
+      <li><a href="#statement" class="nav-link">Protocole</a></li>
+      <li><a href="#capacites" class="nav-link">Capacités</a></li>
+      <li><a href="#simulation" class="nav-link">Console Bruce</a></li>
+      <li><a href="#tarifs" class="nav-link">Architecture</a></li>
+    </ul>
+    <a href="#simulation" class="nav-pill-btn">Écouter Bruce</a>
+  </div>
+</nav>
 
-<main>
-  <!-- Hero -->
-  <section class="hero container">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <img src="assets/orayzis-symbol-clean.png" alt="Orayzis" class="hero-badge-icon">
-        <span>Orayzis IA &bull; Assistant Tactique Personnel</span>
+<!-- PORTAL HERO -->
+<section id="portal" class="portal-hero-wrapper">
+  <div class="portal-stage">
+    <!-- Back to front layers -->
+    <div class="portal-bg" id="portalBg"></div>
+    <img src="assets/orayzis-symbol-white.png" alt="" class="portal-emblem-bg">
+    <div class="portal-duotone" id="portalDuotone"></div>
+    <div class="portal-veil"></div>
+
+    <!-- The two parting panels -->
+    <div class="portal-panel panel-left" id="panelLeft"></div>
+    <div class="portal-panel panel-right" id="panelRight"></div>
+
+    <!-- Accent dots traveling outward -->
+    <div class="portal-dot portal-dot-amber" id="dotAmber"></div>
+    <div class="portal-dot portal-dot-teal" id="dotTeal"></div>
+
+    <!-- Center wordmark splitting and growing -->
+    <div class="portal-title-wrap">
+      <div class="portal-subhead">Architecture IA Personnelle &bull; Propulsée par Orayzis</div>
+      <div class="portal-title" id="portalTitle">
+        <span class="portal-word-left" id="titleLeft">ORAY</span>
+        <span class="portal-word-right" id="titleRight">ZIS</span>
       </div>
-      <h1>Votre matinée. Optimisée. Automatisée. Dictée.</h1>
-      <p>Orayzis centralise silencieusement vos agendas, vos contraintes logistiques et vos communications pour générer un briefing tactique dès votre réveil.</p>
-      <div class="hero-actions">
-        <a href="#demo" class="btn btn-primary">Tester l'assistant</a>
-        <a href="#tarifs" class="btn btn-secondary">Consulter les tarifs</a>
+      <p class="portal-tagline">
+        L'intelligence artificielle <strong style="color:var(--color-ink);">Bruce</strong> orchestre vos flux, résout vos contraintes logistiques et synthétise votre journée avant même votre premier pas.
+      </p>
+    </div>
+
+    <!-- Corner pinned metadata -->
+    <div class="portal-meta meta-tl">01 &bull; PROTOCOLE MATINAL</div>
+    <div class="portal-meta meta-tr">BRUCE ENGINE V1.2</div>
+    <div class="portal-meta meta-bl">ORAYZIS ENTERPRISE SYSTEMS</div>
+    <div class="portal-meta meta-br">
+      <span class="scroll-indicator-rule"></span>
+      <span>DÉFILER POUR OUVRIR LE PORTAIL</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT FOLD -->
+<section id="statement" class="statement-section">
+  <div class="container statement-grid">
+    <div class="statement-index">01</div>
+    <div class="statement-body">
+      <div class="label-caps">La solution au bruit ambiant</div>
+      <div class="statement-text">
+        Bruce n'est pas une application de plus. C'est une architecture backend invisible qui <span class="amber-text">anticipe votre charge mentale</span> pendant que vous dormez.
+      </div>
+      <p class="statement-desc">
+        Chaque matin, sans aucune manipulation requise, le moteur Bruce rassemble vos calendriers professionnels, croise vos trajets critiques, neutralise le spam informationnel et formule un briefing vocal net et opératoire.
+      </p>
+    </div>
+  </div>
+  <img src="assets/orayzis-symbol-clean.png" alt="" class="drifting-emblem" id="driftingEmblem">
+</section>
+
+<!-- CAPACITÉS & PHYSICAL THROWABLE CARD DECK -->
+<section id="capacites" class="deck-section">
+  <div class="container deck-grid">
+    <div class="deck-info">
+      <div class="label-caps amber-text">Catalogue de Capacités &bull; Bruce AI</div>
+      <h2>La rigueur d'un état-major dans votre poche.</h2>
+      <p>
+        Manipulez les cartes du catalogue pour explorer les quatre piliers fondamentaux forgés au cœur de l'écosystème Orayzis. Glissez une carte ou utilisez les touches fléchées pour feuilleter le deck physique.
+      </p>
+      <div class="deck-actions">
+        <a href="#simulation" class="nav-pill-btn">Lancer la console</a>
+        <a href="#tarifs" class="nav-link" style="color:var(--color-ink);">Voir les architectures &rarr;</a>
       </div>
     </div>
-    <div class="hero-diagram">
-      <svg class="diagram-svg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <path d="M50 150 C 150 150, 150 150, 200 150" stroke="var(--dp-color-rule)" stroke-width="2" stroke-dasharray="4 4"/>
-        <path d="M100 50 C 150 50, 180 120, 200 150" stroke="var(--dp-color-rule)" stroke-width="2" stroke-dasharray="4 4"/>
-        <path d="M100 250 C 150 250, 180 180, 200 150" stroke="var(--dp-color-rule)" stroke-width="2" stroke-dasharray="4 4"/>
-        <path d="M200 150 L 320 150" stroke="var(--dp-color-accent)" stroke-width="3"/>
-        
-        <!-- Input nodes -->
-        <rect x="30" y="130" width="40" height="40" rx="8" fill="var(--dp-color-panel)" stroke="var(--dp-color-rule)"/>
-        <text x="50" y="154" font-family="sans-serif" font-size="10" text-anchor="middle" fill="var(--dp-color-ink)">Mails</text>
-        
-        <rect x="70" y="30" width="40" height="40" rx="8" fill="var(--dp-color-panel)" stroke="var(--dp-color-rule)"/>
-        <text x="90" y="54" font-family="sans-serif" font-size="10" text-anchor="middle" fill="var(--dp-color-ink)">iCal</text>
-        
-        <rect x="70" y="230" width="40" height="40" rx="8" fill="var(--dp-color-panel)" stroke="var(--dp-color-rule)"/>
-        <text x="90" y="254" font-family="sans-serif" font-size="10" text-anchor="middle" fill="var(--dp-color-ink)">Météo</text>
-        
-        <!-- Central Processor (Orayzis) -->
-        <circle cx="200" cy="150" r="32" fill="var(--dp-color-panel)" stroke="var(--dp-color-accent)" stroke-width="2.5"/>
-        <image href="assets/orayzis-symbol-clean.png" xlink:href="assets/orayzis-symbol-clean.png" x="174" y="124" width="52" height="52"/>
-        
-        <!-- Output -->
-        <rect x="320" y="110" width="50" height="80" rx="10" fill="var(--dp-color-panel)" stroke="var(--dp-color-ink)" stroke-width="2"/>
-        <circle cx="345" cy="178" r="4" fill="var(--dp-color-rule)"/>
-      </svg>
+
+    <!-- Deck Viewport -->
+    <div class="deck-viewport">
+      <div class="deck-stack" id="deckStack" tabindex="0" aria-label="Deck de cartes interactif">
+        <!-- Card 1 -->
+        <div class="deck-card" data-index="0">
+          <div class="card-top">
+            <span class="card-code">CAP-01 // AUD</span>
+            <span class="card-seq">01 / 04</span>
+          </div>
+          <div class="card-content">
+            <div class="card-tag">Restitution Audio</div>
+            <h3>Briefing Vocal Tactique</h3>
+            <p>À votre réveil, Bruce génère un rapport audio fluide et naturel. Contexte météo, arbitrage des réunions et priorités opérationnelles vous sont dictés directement.</p>
+          </div>
+          <div class="card-footer-strip">
+            <span>Synthèse iOS &bull; Voix Haute Définition</span>
+            <span class="amber-text">&bull; ACTIF</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="deck-card" data-index="1">
+          <div class="card-top">
+            <span class="card-code">CAP-02 // LOG</span>
+            <span class="card-seq">02 / 04</span>
+          </div>
+          <div class="card-content">
+            <div class="card-tag">Analyse Logistique</div>
+            <h3>Moteur de Conflits de Transit</h3>
+            <p>Calcul temporel prédictif de vos rendez-vous. Si un battement entre deux lieux descend sous le seuil de 25 minutes, Bruce émet immédiatement une alerte de transit.</p>
+          </div>
+          <div class="card-footer-strip">
+            <span>Matrice de déplacement en temps réel</span>
+            <span class="teal-text">&bull; SÉCURISÉ</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="deck-card" data-index="2">
+          <div class="card-top">
+            <span class="card-code">CAP-03 // FLT</span>
+            <span class="card-seq">03 / 04</span>
+          </div>
+          <div class="card-content">
+            <div class="card-tag">Filtrage Intelligent</div>
+            <h3>Neutralisation des E-mails</h3>
+            <p>Tri chirurgical des correspondances entrantes. Les sollicitations promotionnelles et courriels automatisés sont écartés sous silence. Seules les urgences remontent.</p>
+          </div>
+          <div class="card-footer-strip">
+            <span>Connexion Gmail / IMAP Sécurisée</span>
+            <span class="amber-text">&bull; ZERO SPAM</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="deck-card" data-index="3">
+          <div class="card-top">
+            <span class="card-code">CAP-04 // SYN</span>
+            <span class="card-seq">04 / 04</span>
+          </div>
+          <div class="card-content">
+            <div class="card-tag">Écosystème & Flux</div>
+            <h3>Convergence Multi-Sources</h3>
+            <p>Agrégation transparente de vos agendas partagés (iCal, Google Calendar), feuilles de route de travail et prévisions météorologiques locales.</p>
+          </div>
+          <div class="card-footer-strip">
+            <span>Infrastructure Python Asynchrone</span>
+            <span class="teal-text">&bull; STANDBY</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="deck-hint">
+        <span>Glisser la carte pour jeter</span>
+        <div class="deck-dots" id="deckDots">
+          <div class="deck-dot active"></div>
+          <div class="deck-dot"></div>
+          <div class="deck-dot"></div>
+          <div class="deck-dot"></div>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Features -->
-  <section class="features-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>La fin de la charge mentale matinale</h2>
-        <p>Ne perdez plus de temps à consulter cinq applications différentes. Laissez l'architecture backend préparer votre journée.</p>
+<!-- INTERACTIVE SIMULATION & BRUCE AUDIO ENGINE -->
+<section id="simulation" class="console-section">
+  <div class="container">
+    <div class="console-header">
+      <div>
+        <div class="label-caps teal-text">Console en temps réel &bull; Moteur Orayzis</div>
+        <h2>Écoutez Bruce en direct.</h2>
       </div>
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-icon-wrap">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-              <line x1="12" y1="22.08" x2="12" y2="12"/>
-            </svg>
-          </div>
-          <h3>Convergence absolue</h3>
-          <p>Se connecte silencieusement à votre écosystème : extraction en temps réel d'agendas complexes (iCal), plannings collaboratifs (Sheets) et météorologie locale.</p>
+      <div class="console-controls">
+        <div class="pill-group" role="group">
+          <button type="button" class="pill-btn" data-vue="matin" aria-pressed="true">Journée (24h)</button>
+          <button type="button" class="pill-btn" data-vue="emails" aria-pressed="false">Audit E-mails</button>
         </div>
-        <div class="card">
-          <div class="card-icon-wrap">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-          </div>
-          <h3>Moteur de conflits logistiques</h3>
-          <p>Un algorithme d'analyse temporelle croise vos activités. Si un temps de trajet est critique (&lt; 25 min), le système lève immédiatement une vigilance de transit.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon-wrap">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
-          <h3>Filtrage chirurgical</h3>
-          <p>Les communications automatisées et promotionnelles sont écartées sous silence. Seules les urgences et opportunités vous sont présentées.</p>
+        <div class="pill-group" id="joursGroup" role="group">
+          <button type="button" class="pill-btn" data-jour="lundi" aria-pressed="true">Lun</button>
+          <button type="button" class="pill-btn" data-jour="mercredi" aria-pressed="false">Mer</button>
+          <button type="button" class="pill-btn" data-jour="jeudi" aria-pressed="false">Jeu</button>
+          <button type="button" class="pill-btn" data-jour="samedi" aria-pressed="false">Sam</button>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Demo (Dark Field) - Console Interactive & Synthèse Vocale -->
-  <section id="demo" class="demo-section">
-    <div class="container">
-      <div class="demo-header">
-        <div class="demo-title-wrap">
-          <div class="demo-title"><span class="live-dot"></span> Console de simulation interactive</div>
+    <!-- Interactive Audio Briefing Bar -->
+    <div class="audio-bar" id="audioBar">
+      <button type="button" class="audio-trigger-btn" id="btnAudioTrigger" aria-label="Écouter le briefing vocal de Bruce">
+        <svg id="iconPlay" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <svg id="iconPause" viewBox="0 0 24 24" style="display:none;">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+      <div class="audio-track-info">
+        <div class="audio-title-line">
+          <div class="audio-identity">
+            <span>Bruce AI Assistant</span>
+            <span class="label-caps amber-text">&bull; Audio Synthèse</span>
+          </div>
+          <span class="audio-status-text" id="audioStatus">Prêt &bull; Cliquer pour entendre Bruce</span>
         </div>
-        <div class="controls">
-          <div class="btn-group" role="group">
-            <button type="button" data-vue="matin" aria-pressed="true">Rapport Matin</button>
-            <button type="button" data-vue="emails" aria-pressed="false">Audit E-mails</button>
-          </div>
-          <div class="btn-group" id="jours" role="group">
-            <button type="button" data-jour="lundi" aria-pressed="true">Lun</button>
-            <button type="button" data-jour="mercredi" aria-pressed="false">Mer</button>
-            <button type="button" data-jour="jeudi" aria-pressed="false">Jeu</button>
-            <button type="button" data-jour="samedi" aria-pressed="false">Sam</button>
-          </div>
+        <div class="equalizer-wave">
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Console Workspace Content -->
+    <div id="vueMatinContent" class="console-grid">
+      <!-- 24h Cadran Visualizer -->
+      <div class="cadran-wrapper">
+        <svg id="cadran" viewBox="-10 -10 420 420"></svg>
+        <div class="cadran-legend-row">
+          <span class="leg-item"><span class="leg-dot" style="background:#818CF8"></span>Obligations</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#F472B6"></span>Pro</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#34D399"></span>Activités</span>
         </div>
       </div>
 
-      <!-- Lecteur Audio Interactif -->
-      <div class="audio-player-card" id="audioPlayer">
-        <button type="button" class="player-btn" id="btnPlayAudio" aria-label="Écouter le briefing vocal">
-          <svg id="iconPlay" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
+      <!-- Metrics and Alert Panel -->
+      <div class="console-body">
+        <div class="console-panel">
+          <div class="panel-header">
+            <span class="label-caps">Variables Analysées par Bruce</span>
+            <span id="badgeJour" class="label-caps amber-text">Lundi</span>
+          </div>
+          <div class="metrics-quad">
+            <div class="quad-cell">
+              <div class="quad-label">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+                <span>Météo Locale</span>
+              </div>
+              <div class="quad-val" id="valMeteo">--</div>
+            </div>
+            <div class="quad-cell">
+              <div class="quad-label">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>Obligation Principale</span>
+              </div>
+              <div class="quad-val" id="valCours">--</div>
+            </div>
+            <div class="quad-cell">
+              <div class="quad-label">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                <span>Créneau Pro</span>
+              </div>
+              <div class="quad-val" id="valTravail">--</div>
+            </div>
+            <div class="quad-cell">
+              <div class="quad-label">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span>Activité Annexe</span>
+              </div>
+              <div class="quad-val" id="valActivite">--</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="boxConflits" class="alert-strip ok">
+          <svg id="statusIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0; margin-top:2px;">
+            <polyline points="20 6 9 17 4 12"/>
           </svg>
-          <svg id="iconPause" viewBox="0 0 24 24" style="display:none;">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-          </svg>
-        </button>
-        <div class="player-info">
-          <div class="player-meta">
-            <div class="player-title-row">
-              <span class="player-title">Briefing Vocal Interactif</span>
-              <span class="player-tag">Audio IA</span>
-            </div>
-            <span class="player-status" id="playerStatus">Cliquer sur lecture pour écouter</span>
-          </div>
-          <div class="waveform-container" id="waveform">
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Vue Journée (Matin) -->
-      <div id="vueMatin" class="demo-content">
-        <!-- Cadran visuel avec légende intégrée -->
-        <div class="cadran-card">
-          <svg id="cadran" viewBox="-10 -10 420 420"></svg>
-          <div class="cadran-legend">
-            <span class="legend-item"><span class="legend-dot" style="background:#818CF8"></span>Obligations</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#F472B6"></span>Professionnel</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#34D399"></span>Activités</span>
-          </div>
-        </div>
-
-        <!-- Dashboard du jour -->
-        <div class="dash-container">
-          <div class="dash-card">
-            <div class="dash-card-header">
-              <span class="dash-card-title">Variables extraites &amp; synthèse</span>
-              <span id="badgeJour" class="day-chip">Lundi</span>
-            </div>
-            <div class="metrics-grid">
-              <div class="metric-item">
-                <div class="metric-header">
-                  <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"/>
-                    <line x1="12" y1="1" x2="12" y2="3"/>
-                    <line x1="12" y1="21" x2="12" y2="23"/>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                    <line x1="1" y1="12" x2="3" y2="12"/>
-                    <line x1="21" y1="12" x2="23" y2="12"/>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                  </svg>
-                  <span class="metric-label">Météo locale</span>
-                </div>
-                <div class="metric-value" id="valMeteo">--</div>
-              </div>
-
-              <div class="metric-item">
-                <div class="metric-header">
-                  <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                  <span class="metric-label">Obligation principale</span>
-                </div>
-                <div class="metric-value" id="valCours">--</div>
-              </div>
-
-              <div class="metric-item">
-                <div class="metric-header">
-                  <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                  </svg>
-                  <span class="metric-label">Créneau professionnel</span>
-                </div>
-                <div class="metric-value" id="valTravail">--</div>
-              </div>
-
-              <div class="metric-item">
-                <div class="metric-header">
-                  <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                  </svg>
-                  <span class="metric-label">Activité annexe</span>
-                </div>
-                <div class="metric-value" id="valActivite">--</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Analyse des conflits -->
-          <div id="boxConflits" class="status-banner ok">
-            <svg class="status-icon-svg" id="statusIconSvg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-            <div id="texteConflits">Aucun conflit d'horaires ni tension logistique détectée.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Vue E-mails -->
-      <div id="vueEmails" class="demo-emails-container" hidden>
-        <div class="email-stat-banner">
-          <span class="email-stat-badge">Filtrage actif</span>
-          <span><strong>5 courriels publicitaires &amp; automatisés</strong> ont été écartés en amont sans vous solliciter.</span>
-        </div>
-        <div class="emails-grid">
-          <div class="dash-card">
-            <div class="dash-card-header">
-              <span class="dash-card-title">Opportunités &amp; Professionnel</span>
-              <span class="email-count-pill" id="proCount">2</span>
-            </div>
-            <div class="email-card-list" id="listePro"></div>
-          </div>
-          <div class="dash-card">
-            <div class="dash-card-header">
-              <span class="dash-card-title">Correspondances Générales</span>
-              <span class="email-count-pill" id="persoCount">1</span>
-            </div>
-            <div class="email-card-list" id="listePerso"></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Pricing Section -->
-  <section id="tarifs" class="pricing-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Obtenez votre propre assistant</h2>
-        <p>L'architecture Orayzis est prête à être déployée. Choisissez la formule adaptée à vos besoins ou contactez-moi pour une solution sur-mesure.</p>
-      </div>
-      
-      <div class="pricing-grid">
-        <!-- Sans Engagement -->
-        <div class="pricing-card">
-          <h3 class="pricing-name">Liberté</h3>
-          <div class="pricing-price">39,99€ <span>/ mois</span></div>
-          <p class="pricing-desc">Pour profiter de la puissance d'Orayzis avec une flexibilité totale.</p>
-          <ul class="pricing-features">
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Déploiement de l'API Orayzis</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Connexion iCal, Météo &amp; Gmail</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Anticipation logistique standard</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Sans engagement</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Résiliation à tout moment</span>
-            </li>
-          </ul>
-          <a href="mailto:rayanmouzaine@gmail.com" class="btn btn-secondary">Sélectionner</a>
-        </div>
-
-        <!-- Engagement 1 an (Featured) -->
-        <div class="pricing-card featured">
-          <div class="badge">Recommandé</div>
-          <h3 class="pricing-name">Orayzis Standard</h3>
-          <div class="pricing-price">24,99€ <span>/ mois</span></div>
-          <p class="pricing-desc">La formule complète pour structurer votre quotidien sur le long terme.</p>
-          <ul class="pricing-features">
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Toutes les fonctionnalités Liberté</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Maintenance serveur incluse (Keep-Alive)</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Mises à jour de sécurité</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Engagement 1 an</span>
-            </li>
-          </ul>
-          <a href="mailto:rayanmouzaine@gmail.com" class="btn btn-primary">Sélectionner</a>
-        </div>
-
-        <!-- Sur-mesure -->
-        <div class="pricing-card">
-          <h3 class="pricing-name">Assistant Sur-Mesure</h3>
-          <div class="pricing-price">Sur Devis</div>
-          <p class="pricing-desc">Une architecture IA développée spécifiquement pour votre métier.</p>
-          <ul class="pricing-features">
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Audit complet de vos processus</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Intégration d'API spécifiques métiers</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Modules personnalisés (CRM, Finance)</span>
-            </li>
-            <li>
-              <svg class="pricing-check-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Hébergement dédié</span>
-            </li>
-          </ul>
-          <a href="mailto:rayanmouzaine@gmail.com" class="btn btn-secondary">Demander un devis</a>
+          <div id="texteConflits">Flux optimal : Trajets fluides et aucune anomalie de planning.</div>
         </div>
       </div>
     </div>
-  </section>
 
-</main>
+    <!-- Email Audit View -->
+    <div id="vueEmailsContent" class="console-panel" hidden>
+      <div class="panel-header">
+        <span class="label-caps teal-text">Audit Heuristique des Correspondances</span>
+        <span class="label-caps">5 Courriels neutralisés</span>
+      </div>
+      <div class="metrics-quad" style="margin-bottom: 20px;">
+        <div class="quad-cell">
+          <div class="quad-label">Opportunités Pro</div>
+          <div class="quad-val">2 Détectées &bull; Suivi prioritaire</div>
+        </div>
+        <div class="quad-cell">
+          <div class="quad-label">Correspondances Générales</div>
+          <div class="quad-val">1 Archivée &bull; Dossier administratif validé</div>
+        </div>
+      </div>
+      <div id="listeEmailsDetails" style="display:flex; flex-direction:column; gap:12px;"></div>
+    </div>
+  </div>
+</section>
 
-<footer>
-  <div class="container footer-container">
-    <img src="assets/orayzis-logo-white.png" alt="Orayzis IA" class="footer-logo">
-    <p>Conçu et architecturé par Rayan Mouzaine. Infrastructure Python/Flask.</p>
+<!-- ROSTER & DATES (TARIFS & ARCHITECTURE TABLE) -->
+<section id="tarifs" class="roster-section">
+  <div class="container">
+    <div class="roster-title-row">
+      <div class="label-caps amber-text">Grille d'infrastructure &bull; Déploiement Orayzis</div>
+      <h2>Formules de déploiement Bruce AI</h2>
+    </div>
+
+    <table class="roster-table">
+      <thead>
+        <tr>
+          <th>Architecture</th>
+          <th>Spécifications & Intégrations</th>
+          <th>Tarification</th>
+          <th style="text-align: right;">Accès</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="roster-row">
+          <td class="roster-cell">
+            <span class="roster-plan">Liberté</span>
+          </td>
+          <td class="roster-cell">
+            <div class="roster-desc">Déploiement de l'API Bruce avec synchro iCal, flux météo et filtrage Gmail standard. Résiliation libre.</div>
+          </td>
+          <td class="roster-cell">
+            <div class="roster-price">39,99€ <span>/ mois</span></div>
+          </td>
+          <td class="roster-cell" style="text-align: right;">
+            <a href="mailto:contact@orayzis.com" class="nav-pill-btn">Sélectionner</a>
+          </td>
+        </tr>
+
+        <tr class="roster-row">
+          <td class="roster-cell">
+            <span class="roster-plan">Bruce Standard</span>
+            <span class="roster-tag">Recommandé</span>
+          </td>
+          <td class="roster-cell">
+            <div class="roster-desc">Toutes les fonctionnalités Liberté avec serveur de maintien de charge (Keep-Alive), mises à jour de sécurité prioritaires et support dédié.</div>
+          </td>
+          <td class="roster-cell">
+            <div class="roster-price">24,99€ <span>/ mois</span></div>
+          </td>
+          <td class="roster-cell" style="text-align: right;">
+            <a href="mailto:contact@orayzis.com" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground);">Activer</a>
+          </td>
+        </tr>
+
+        <tr class="roster-row">
+          <td class="roster-cell">
+            <span class="roster-plan">Sur-Mesure</span>
+          </td>
+          <td class="roster-cell">
+            <div class="roster-desc">Architecture IA dédiée, audit des processus métier, modules CRM/Finance sur-mesure et hébergement haute sécurité en infrastructure propre.</div>
+          </td>
+          <td class="roster-cell">
+            <div class="roster-price">Sur Devis</div>
+          </td>
+          <td class="roster-cell" style="text-align: right;">
+            <a href="mailto:contact@orayzis.com" class="nav-pill-btn">Étudier le projet</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CLOSE & CROPPED GIANT WORDMARK -->
+<footer class="close-section">
+  <div class="container">
+    <div class="close-content">
+      <div class="close-left">
+        <div class="label-caps teal-text">Architecture Prête au Déploiement</div>
+        <h2>Prenez le contrôle de vos matinées.</h2>
+        <p>L'intelligence Bruce est prête à être connectée à votre quotidien. Contactez l'ingénierie Orayzis pour amorcer votre installation.</p>
+      </div>
+      <div class="close-actions">
+        <a href="#simulation" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground);">Tester Bruce</a>
+        <a href="mailto:contact@orayzis.com" class="nav-pill-btn">Contacter Orayzis</a>
+      </div>
+    </div>
+
+    <div class="footer-strip">
+      <span>Conçu et architecturé par Orayzis &bull; Infrastructure Python Asynchrone</span>
+      <div style="display:flex; gap:24px;">
+        <a href="#portal">Haut de page</a>
+        <a href="#tarifs">Architecture</a>
+        <a href="#simulation">Console</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signature Cropped Wordmark -->
+  <div class="giant-wordmark-wrap">
+    <span class="giant-wordmark">ORAYZIS</span>
   </div>
 </footer>
 
 <script>
-// --- Données et Moteur de calcul ---
+// --- DONNÉES & LOGIQUE MÉTIER ---
 const JOURS = {
   lundi: {
     nom: "Lundi",
@@ -901,14 +1319,14 @@ const JOURS = {
   },
   mercredi: {
     nom: "Mercredi",
-    cours: [{ titre: "Réunion ou formation", d: "09:00", f: "12:00" }],
+    cours: [{ titre: "Formation stratégique", d: "09:00", f: "12:00" }],
     travail: "14:00 à 18:00",
     activite: null,
     meteo: { code: 3, temp: 14 }
   },
   jeudi: {
     nom: "Jeudi",
-    cours: [{ titre: "Projet stratégique", d: "14:00", f: "16:00" }],
+    cours: [{ titre: "Projet prioritaire", d: "14:00", f: "16:00" }],
     travail: "16:15 à 20:00",
     activite: null,
     meteo: { code: 0, temp: 22 }
@@ -940,12 +1358,6 @@ const extraireMinutes = str => {
 };
 const hhmm = s => s.replace(":", "h");
 
-function meteoTexte(code, temp) {
-  let cond = [0,1].includes(code) ? "Ciel dégagé" : [51,61].includes(code) ? "Pluie battante" : "Temps mitigé";
-  let conseil = temp < 10 ? "Couvrez-vous bien" : temp > 20 ? "Conditions optimales" : "Climat modéré";
-  return `${temp}°C &bull; ${cond} (${conseil})`;
-}
-
 function analyserConflits(j) {
   let blocks = [];
   j.cours.forEach(c => blocks.push({ s: extraireMinutes(c.d), e: extraireMinutes(c.f), nom: "Obligation principale" }));
@@ -970,7 +1382,163 @@ function analyserConflits(j) {
   return avertissements;
 }
 
-// --- Rendu Graphique (Dark Theme SVG) ---
+// --- PORTAL HERO SCROLL MOTION CONTROLLER ---
+const portalWrapper = document.getElementById("portal");
+const panelLeft = document.getElementById("panelLeft");
+const panelRight = document.getElementById("panelRight");
+const portalBg = document.getElementById("portalBg");
+const portalDuotone = document.getElementById("portalDuotone");
+const dotAmber = document.getElementById("dotAmber");
+const dotTeal = document.getElementById("dotTeal");
+const portalTitle = document.getElementById("portalTitle");
+const titleLeft = document.getElementById("titleLeft");
+const titleRight = document.getElementById("titleRight");
+const driftingEmblem = document.getElementById("driftingEmblem");
+
+function updatePortal() {
+  const rect = portalWrapper.getBoundingClientRect();
+  const progress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+
+  // 1. Panels part outward past their width
+  panelLeft.style.transform = `translateX(${-progress * 105}%)`;
+  panelRight.style.transform = `translateX(${progress * 105}%)`;
+
+  // 2. Background image settles from overscaled 1.18 to 1.0
+  const bgScale = 1.18 - progress * 0.18;
+  portalBg.style.transform = `scale(${bgScale})`;
+
+  // 3. Duotone overlay raises from 0 to 0.35
+  portalDuotone.style.opacity = (progress * 0.4).toFixed(3);
+
+  // 4. Accent dots travel outward to opposite corners
+  const dotX = progress * (window.innerWidth * 0.42);
+  const dotY = progress * (window.innerHeight * 0.38);
+  dotAmber.style.transform = `translate(calc(-50% + ${dotX}px), calc(-50% - ${dotY}px))`;
+  dotTeal.style.transform = `translate(calc(-50% - ${dotX}px), calc(-50% + ${dotY}px))`;
+
+  // 5. Signature Title: Grows, tracking tightens, and spans separate
+  const titleScale = 1 + progress * 0.22;
+  const tracking = -0.02 - progress * 0.035; // tightens from -.02em to -.055em
+  const spanSeparation = progress * (window.innerWidth * 0.16);
+
+  portalTitle.style.transform = `scale(${titleScale})`;
+  portalTitle.style.letterSpacing = `${tracking}em`;
+  titleLeft.style.transform = `translateX(${-spanSeparation}px)`;
+  titleRight.style.transform = `translateX(${spanSeparation}px)`;
+
+  // 6. Statement drifting emblem rotates smoothly
+  if (driftingEmblem) {
+    const scrollY = window.pageYOffset;
+    driftingEmblem.style.transform = `translateY(${scrollY * 0.1}px) rotate(${scrollY * 0.08}deg)`;
+  }
+}
+
+window.addEventListener("scroll", updatePortal, { passive: true });
+window.addEventListener("resize", updatePortal, { passive: true });
+updatePortal();
+
+// --- PHYSICAL THROWABLE CARD DECK ---
+const deckStack = document.getElementById("deckStack");
+const cards = Array.from(deckStack.querySelectorAll(".deck-card"));
+const deckDots = Array.from(document.querySelectorAll(".deck-dot"));
+let activeIndex = 0;
+let isDragging = false;
+let startX = 0, currentX = 0;
+
+function layoutDeck() {
+  const total = cards.length;
+  cards.forEach((card, idx) => {
+    // Relative position in cyclic stack
+    const relPos = (idx - activeIndex + total) % total;
+    card.style.transition = isDragging && relPos === 0 ? "none" : "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease";
+    
+    if (relPos === 0) {
+      card.style.zIndex = "4";
+      card.style.opacity = "1";
+      card.style.pointerEvents = "auto";
+      card.style.transform = `translate3d(0, 0, 0) scale(1) rotate(0deg)`;
+    } else if (relPos === 1) {
+      card.style.zIndex = "3";
+      card.style.opacity = "0.75";
+      card.style.pointerEvents = "none";
+      card.style.transform = `translate3d(14px, 14px, 0) scale(0.96) rotate(1.8deg)`;
+    } else if (relPos === 2) {
+      card.style.zIndex = "2";
+      card.style.opacity = "0.5";
+      card.style.pointerEvents = "none";
+      card.style.transform = `translate3d(28px, 28px, 0) scale(0.92) rotate(-1.5deg)`;
+    } else {
+      card.style.zIndex = "1";
+      card.style.opacity = "0";
+      card.style.pointerEvents = "none";
+      card.style.transform = `translate3d(40px, 40px, 0) scale(0.88)`;
+    }
+  });
+
+  deckDots.forEach((dot, i) => {
+    dot.classList.toggle("active", i === activeIndex);
+  });
+}
+
+function throwCard(direction) {
+  const topCard = cards[activeIndex];
+  const travel = direction * (deckStack.offsetWidth * 1.25);
+  const rot = direction * 28;
+  topCard.style.transition = "transform 0.38s ease-in, opacity 0.35s ease";
+  topCard.style.transform = `translate3d(${travel}px, -30px, 0) rotate(${rot}deg) scale(0.95)`;
+  topCard.style.opacity = "0";
+
+  setTimeout(() => {
+    activeIndex = (activeIndex + 1) % cards.length;
+    layoutDeck();
+  }, 220);
+}
+
+// Pointer Events for physical drag
+deckStack.addEventListener("pointerdown", (e) => {
+  isDragging = true;
+  startX = e.clientX;
+  currentX = startX;
+  deckStack.setPointerCapture(e.pointerId);
+});
+
+deckStack.addEventListener("pointermove", (e) => {
+  if (!isDragging) return;
+  currentX = e.clientX;
+  const diffX = currentX - startX;
+  const topCard = cards[activeIndex];
+  const rot = (diffX / deckStack.offsetWidth) * 18;
+  const scale = 1 + Math.min(0.04, Math.abs(diffX) / 1000);
+  topCard.style.transform = `translate3d(${diffX}px, 0, 0) rotate(${rot}deg) scale(${scale})`;
+});
+
+deckStack.addEventListener("pointerup", (e) => {
+  if (!isDragging) return;
+  isDragging = false;
+  deckStack.releasePointerCapture(e.pointerId);
+  const diffX = currentX - startX;
+  const threshold = deckStack.offsetWidth * 0.12;
+
+  if (Math.abs(diffX) > threshold) {
+    throwCard(diffX > 0 ? 1 : -1);
+  } else {
+    layoutDeck();
+  }
+});
+
+deckStack.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" || e.key === " ") {
+    e.preventDefault();
+    throwCard(1);
+  } else if (e.key === "ArrowLeft") {
+    e.preventDefault();
+    throwCard(-1);
+  }
+});
+
+layoutDeck();
+
+// --- 24H CADRAN SVG DRAWING ---
 const point = (r, m) => { const a = (m / 1440) * 2 * Math.PI - Math.PI / 2; return [200 + r * Math.cos(a), 200 + r * Math.sin(a)]; };
 const arc = (r, d, f) => { const [x1, y1] = point(r, d), [x2, y2] = point(r, f); return `M${x1.toFixed(2)} ${y1.toFixed(2)} A${r} ${r} 0 ${f - d > 720 ? 1 : 0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`; };
 const RAYONS = { cours: 158, travail: 136, activite: 114 };
@@ -1000,17 +1568,17 @@ function dessinerCadran(j) {
   document.getElementById("cadran").innerHTML = g;
 }
 
-// --- Contrôle et Mise à jour de l'Affichage ---
+// --- CONSOLE & BRUCE LIVE AUDIO SYNTHESIS ---
 let vue = "matin", jour = "lundi";
 
 function genererTexteBriefing() {
   if (vue === "matin") {
     const j = JOURS[jour];
-    let t = `Salutations. Je suis votre assistant Orayzis. Voici le briefing de votre ${j.nom}. `;
+    let t = `Salutations. Je suis Bruce, votre assistant personnel développé par Orayzis. Voici le briefing de votre ${j.nom}. `;
     if (j.meteo.code === 61) {
-      t += "Alerte météo : pluie battante avec 9 degrés. Prévoyez vos équipements. ";
+      t += "Alerte météorologique : pluie battante avec 9 degrés. Prévoyez vos équipements. ";
     } else if (j.meteo.code === 0) {
-      t += `Ciel totalement dégagé avec ${j.meteo.temp} degrés. Conditions idéales. `;
+      t += `Ciel totalement dégagé avec ${j.meteo.temp} degrés. Conditions optimales. `;
     } else {
       t += `Temps modéré avec ${j.meteo.temp} degrés. `;
     }
@@ -1018,7 +1586,7 @@ function genererTexteBriefing() {
     if (j.cours.length) {
       t += `Obligation principale de ${hhmm(j.cours[0].d)} à ${hhmm(j.cours[0].f)}. `;
     } else {
-      t += "Aucune obligation majeure sur votre agenda. ";
+      t += "Aucune obligation académique ou majeure sur votre agenda. ";
     }
 
     if (j.travail !== "Repos") {
@@ -1038,89 +1606,88 @@ function genererTexteBriefing() {
       t += "Tous vos indicateurs de transit sont au vert. ";
     }
 
-    t += "Fin du briefing tactique.";
+    t += "Fin du briefing tactique Bruce.";
     return t;
   } else {
-    return "Synthèse des correspondances par Orayzis. Cinq courriels automatisés ont été écartés sous silence. Deux opportunités professionnelles majeures requièrent votre attention, et une correspondance générale est à jour. Boîte de réception stabilisée.";
+    return "Synthèse des correspondances par Bruce. Cinq courriels automatisés et publicitaires ont été neutralisés. Deux opportunités professionnelles majeures sont en attente, et votre dossier administratif est validé. Boîte de réception stabilisée.";
   }
 }
 
-function afficher() {
+function afficherConsole() {
   arreterAudio();
   const estMatin = vue === "matin";
   
-  document.getElementById("vueMatin").hidden = !estMatin;
-  document.getElementById("vueEmails").hidden = estMatin;
-  document.getElementById("jours").hidden = !estMatin;
+  document.getElementById("vueMatinContent").hidden = !estMatin;
+  document.getElementById("vueEmailsContent").hidden = estMatin;
+  document.getElementById("joursGroup").hidden = !estMatin;
 
-  const playerStatus = document.getElementById("playerStatus");
-  playerStatus.textContent = estMatin ? `Prêt &bull; Briefing vocal du ${JOURS[jour].nom}` : "Prêt &bull; Synthèse vocale de l'audit e-mails";
+  const audioStatus = document.getElementById("audioStatus");
+  audioStatus.textContent = estMatin ? `Prêt &bull; Briefing du ${JOURS[jour].nom}` : "Prêt &bull; Synthèse de l'audit e-mails";
 
   if (estMatin) {
     const j = JOURS[jour];
     dessinerCadran(j);
-    
     document.getElementById("badgeJour").textContent = j.nom;
-    document.getElementById("valMeteo").innerHTML = meteoTexte(j.meteo.code, j.meteo.temp);
-    document.getElementById("valCours").textContent = j.cours.length ? j.cours.map(c => `${c.titre} (${hhmm(c.d)}-${hhmm(c.f)})`).join(" / ") : "Aucune obligation";
+    
+    let cond = [0,1].includes(j.meteo.code) ? "Ciel dégagé" : [51,61].includes(j.meteo.code) ? "Pluie battante" : "Temps mitigé";
+    document.getElementById("valMeteo").textContent = `${j.meteo.temp}°C &bull; ${cond}`;
+    document.getElementById("valCours").textContent = j.cours.length ? j.cours.map(c => `${c.titre} (${hhmm(c.d)}-${hhmm(c.f)})`).join(" / ") : "Aucune";
     document.getElementById("valTravail").textContent = j.travail;
     document.getElementById("valActivite").textContent = j.activite ? j.activite.texte : "Aucune";
 
     const conflits = analyserConflits(j);
     const box = document.getElementById("boxConflits");
-    const icon = document.getElementById("statusIconSvg");
+    const icon = document.getElementById("statusIcon");
     if (conflits.length > 0) {
-      box.className = "status-banner warning";
+      box.className = "alert-strip warning";
       icon.innerHTML = `<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>`;
       document.getElementById("texteConflits").innerHTML = conflits.join(" ");
     } else {
-      box.className = "status-banner ok";
+      box.className = "alert-strip ok";
       icon.innerHTML = `<polyline points="20 6 9 17 4 12"/>`;
       document.getElementById("texteConflits").innerHTML = "<strong>Flux optimal :</strong> Trajets fluides, aucune anomalie de planning.";
     }
   } else {
-    document.getElementById("proCount").textContent = COURRIELS.pro.length;
-    document.getElementById("persoCount").textContent = COURRIELS.perso.length;
-
-    document.getElementById("listePro").innerHTML = COURRIELS.pro.map(m => `
-      <div class="email-item">
-        <div class="email-subject">${m.objet}</div>
-        <div class="email-sender">Expéditeur : ${m.de}</div>
-      </div>
-    `).join("");
-
-    document.getElementById("listePerso").innerHTML = COURRIELS.perso.map(m => `
-      <div class="email-item perso">
-        <div class="email-subject">${m.objet}</div>
-        <div class="email-sender">Expéditeur : ${m.de}</div>
-      </div>
-    `).join("");
+    document.getElementById("listeEmailsDetails").innerHTML = [
+      ...COURRIELS.pro.map(m => `
+        <div style="padding:14px 16px; background:rgba(237,231,220,0.02); border-left:3px solid var(--color-teal); border-radius:6px;">
+          <div style="font-weight:600; color:var(--color-ink); font-size:14px;">${m.objet}</div>
+          <div style="font-size:12px; color:var(--color-muted); margin-top:2px;">Expéditeur : ${m.de} &bull; Priorité Pro</div>
+        </div>
+      `),
+      ...COURRIELS.perso.map(m => `
+        <div style="padding:14px 16px; background:rgba(237,231,220,0.02); border-left:3px solid var(--color-amber); border-radius:6px;">
+          <div style="font-weight:600; color:var(--color-ink); font-size:14px;">${m.objet}</div>
+          <div style="font-size:12px; color:var(--color-muted); margin-top:2px;">Expéditeur : ${m.de} &bull; Correspondance Générale</div>
+        </div>
+      `)
+    ].join("");
   }
 
   document.querySelectorAll("[data-vue]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.vue === vue)));
   document.querySelectorAll("[data-jour]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.jour === jour)));
 }
 
-// --- Synthèse Vocale Interactive avec Visualiseur d'Ondes ---
-const btnPlay = document.getElementById("btnPlayAudio");
+// --- AUDIO TRIGGER & VOICE REACTION ---
+const btnAudioTrigger = document.getElementById("btnAudioTrigger");
 const iconPlay = document.getElementById("iconPlay");
 const iconPause = document.getElementById("iconPause");
-const playerCard = document.getElementById("audioPlayer");
-const playerStatus = document.getElementById("playerStatus");
+const audioBar = document.getElementById("audioBar");
+const audioStatus = document.getElementById("audioStatus");
 const synthese = window.speechSynthesis;
 
 function arreterAudio() {
   if (synthese) synthese.cancel();
-  playerCard.classList.remove("is-playing");
+  audioBar.classList.remove("is-playing");
   iconPlay.style.display = "block";
   iconPause.style.display = "none";
 }
 
 if (synthese) {
-  btnPlay.addEventListener("click", () => {
-    if (playerCard.classList.contains("is-playing")) {
+  btnAudioTrigger.addEventListener("click", () => {
+    if (audioBar.classList.contains("is-playing")) {
       arreterAudio();
-      playerStatus.innerHTML = "Lecture interrompue &bull; Cliquer pour relancer";
+      audioStatus.textContent = "Interrompu &bull; Cliquer pour réécouter Bruce";
       return;
     }
 
@@ -1129,31 +1696,30 @@ if (synthese) {
     const u = new SpeechSynthesisUtterance(texte);
     u.lang = "fr-FR";
     
-    // Voix française optimale si disponible
     const voix = synthese.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
     if (voix) u.voice = voix;
 
     u.onstart = () => {
-      playerCard.classList.add("is-playing");
+      audioBar.classList.add("is-playing");
       iconPlay.style.display = "none";
       iconPause.style.display = "block";
-      playerStatus.innerHTML = "<strong style='color:#ffffff;'>Lecture audio en cours...</strong> (Cliquer pour mettre en pause)";
+      audioStatus.innerHTML = "<span class='amber-text'>Bruce parle en direct...</span> (Cliquer pour stopper)";
     };
 
     u.onend = u.onerror = () => {
-      playerCard.classList.remove("is-playing");
+      audioBar.classList.remove("is-playing");
       iconPlay.style.display = "block";
       iconPause.style.display = "none";
-      playerStatus.innerHTML = "Briefing vocal terminé &bull; Prêt pour réécoute";
+      audioStatus.textContent = "Briefing terminé &bull; Prêt pour réécoute";
     };
 
     synthese.speak(u);
   });
 }
 
-document.querySelectorAll("[data-vue]").forEach(b => b.addEventListener("click", () => { vue = b.dataset.vue; afficher(); }));
-document.querySelectorAll("[data-jour]").forEach(b => b.addEventListener("click", () => { jour = b.dataset.jour; afficher(); }));
-afficher();
+document.querySelectorAll("[data-vue]").forEach(b => b.addEventListener("click", () => { vue = b.dataset.vue; afficherConsole(); }));
+document.querySelectorAll("[data-jour]").forEach(b => b.addEventListener("click", () => { jour = b.dataset.jour; afficherConsole(); }));
+afficherConsole();
 </script>
 </body>
 </html>
