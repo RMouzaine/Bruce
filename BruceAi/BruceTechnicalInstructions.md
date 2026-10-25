@@ -1,7 +1,7 @@
-<p align="center"><strong>Fiche Technique</strong>
+<p align="center"><strong>Technical Instructions</strong>
 
 <p align="center">
-  <img src="./banner.svg" width="100%" alt="Bruce AI Assistant">
+  <img src="../banner.svg" width="100%" alt="Bruce AI Assistant">
 </p>
 
 # Bruce : AI Personnel Assistant
