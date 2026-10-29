@@ -229,11 +229,14 @@ nav.top-nav {
 .freight-nav-brand {
   font-family: 'Exo 2', sans-serif;
   font-weight: 800;
-  font-size: calc(22 * var(--u));
+  font-size: calc(20 * var(--u));
   letter-spacing: 0.04em;
   color: #F7F5EF;
   text-decoration: none;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 .freight-nav-actions {
   display: flex;
@@ -389,7 +392,7 @@ nav.top-nav {
   position: relative;
   margin-top: -34vh;
   z-index: 10;
-  background: linear-gradient(to bottom, transparent 0, #e2dedd 34vh, #e2dedd 100%);
+  background: linear-gradient(to bottom, transparent 0, #e2dedd 34vh, #e2dedd calc(100% - 160px), #07090c 100%);
   color: #141516;
 }
 
@@ -525,9 +528,12 @@ nav.top-nav {
 
 /* INTERACTIVE LIVE CONSOLE (BRUCE AI AUDIO ENGINE) */
 .console-section {
-  padding: 120px 0;
-  border-top: 1px solid var(--hairline);
-  background: var(--color-ground);
+  padding: 130px 0;
+  background: #07090c;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(46, 107, 114, 0.16), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 40%, rgba(232, 145, 60, 0.06), transparent 70%);
+  border-top: 1px solid rgba(237, 231, 220, 0.08);
 }
 .console-header {
   display: flex;
@@ -537,7 +543,7 @@ nav.top-nav {
   gap: 24px;
   margin-bottom: 48px;
   padding-bottom: 24px;
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid rgba(237, 231, 220, 0.1);
 }
 .console-header h2 { font-size: clamp(28px, 3.2vw, 42px); }
 
@@ -549,17 +555,17 @@ nav.top-nav {
 }
 .pill-group {
   display: inline-flex;
-  background: rgba(237, 231, 220, 0.04);
-  border: 1px solid var(--hairline);
+  background: rgba(237, 231, 220, 0.05);
+  border: 1px solid rgba(237, 231, 220, 0.12);
   border-radius: 999px;
-  padding: 3px;
+  padding: 4px;
   gap: 2px;
 }
 .pill-btn {
   background: transparent;
   color: var(--color-ink-secondary);
   border: none;
-  padding: 7px 16px;
+  padding: 8px 18px;
   border-radius: 999px;
   font-family: var(--font-sans);
   font-size: 11px;
@@ -573,48 +579,106 @@ nav.top-nav {
 .pill-btn[aria-pressed="true"] {
   background: var(--color-ink);
   color: var(--color-ground);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 /* Audio Player Bar */
 .audio-bar {
-  background: #111419;
-  border: 1px solid var(--hairline);
-  border-radius: 14px;
-  padding: 20px 24px;
-  margin-bottom: 36px;
+  background: linear-gradient(135deg, rgba(22, 27, 34, 0.9) 0%, rgba(13, 16, 21, 0.98) 100%);
+  border: 1px solid rgba(237, 231, 220, 0.14);
+  border-radius: 18px;
+  padding: 22px 28px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
   gap: 24px;
-  transition: border-color 0.2s ease;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.audio-bar:hover { border-color: var(--hairline-light); }
-.audio-bar.is-playing { border-color: rgba(232, 145, 60, 0.4); }
+.audio-bar:hover {
+  border-color: rgba(232, 145, 60, 0.35);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.55), 0 0 25px rgba(232, 145, 60, 0.08);
+}
+.audio-bar.is-playing {
+  border-color: rgba(232, 145, 60, 0.65);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.6), 0 0 35px rgba(232, 145, 60, 0.2);
+}
 
 .audio-trigger-btn {
-  width: 50px; height: 50px;
+  position: relative;
+  width: 54px; height: 54px;
   border-radius: 50%;
-  background: var(--color-ink);
-  color: var(--color-ground);
+  background: linear-gradient(135deg, #EDE7DC 0%, #D8CFBE 100%);
+  color: #0A0C0E;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.15s ease, background 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 .audio-trigger-btn:hover {
-  transform: scale(1.06);
+  transform: scale(1.08);
   background: var(--color-amber);
+  color: #0A0C0E;
+  box-shadow: 0 0 25px rgba(232, 145, 60, 0.5);
 }
-.audio-trigger-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.audio-trigger-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+.btn-pulse-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(232, 145, 60, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+.is-playing .btn-pulse-ring {
+  animation: pulseRing 1.8s infinite cubic-bezier(0.2, 0.8, 0.4, 1);
+}
+@keyframes pulseRing {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.live-led {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+  margin-right: 8px;
+  animation: ledBlink 3s ease-in-out infinite;
+}
+@keyframes ledBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.is-playing .live-led {
+  background: #E8913C;
+  box-shadow: 0 0 12px #E8913C;
+}
+.audio-tag-chip {
+  font-size: 9.5px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(46, 107, 114, 0.25);
+  color: #72D2DC;
+  border: 1px solid rgba(46, 107, 114, 0.4);
+}
 
 .audio-track-info { flex-grow: 1; min-width: 0; }
 .audio-title-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
   gap: 8px;
 }
@@ -637,8 +701,8 @@ nav.top-nav {
 .equalizer-wave {
   display: flex;
   align-items: center;
-  gap: 3px;
-  height: 22px;
+  gap: 3.5px;
+  height: 24px;
   width: 100%;
 }
 .eq-bar {
@@ -659,7 +723,7 @@ nav.top-nav {
 
 @keyframes wavePulse {
   0% { height: 3px; }
-  50% { height: 20px; }
+  50% { height: 22px; }
   100% { height: 5px; }
 }
 
@@ -671,11 +735,12 @@ nav.top-nav {
   align-items: start;
 }
 .cadran-wrapper {
-  background: #111419;
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  padding: 32px 24px;
+  background: linear-gradient(180deg, rgba(22, 26, 33, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%);
+  border: 1px solid rgba(237, 231, 220, 0.12);
+  border-radius: 20px;
+  padding: 34px 26px;
   text-align: center;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.35);
 }
 #cadran { width: 100%; max-width: 300px; margin: 0 auto; display: block; }
 .piste { fill: none; stroke: rgba(237,231,220,0.06); stroke-width: 14; }
@@ -691,7 +756,7 @@ nav.top-nav {
   gap: 16px;
   margin-top: 24px;
   padding-top: 18px;
-  border-top: 1px solid var(--hairline);
+  border-top: 1px solid rgba(237, 231, 220, 0.1);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -706,10 +771,11 @@ nav.top-nav {
   gap: 20px;
 }
 .console-panel {
-  background: #111419;
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  padding: 28px;
+  background: linear-gradient(180deg, rgba(22, 26, 33, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%);
+  border: 1px solid rgba(237, 231, 220, 0.12);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.35);
 }
 .panel-header {
   display: flex;
@@ -717,7 +783,7 @@ nav.top-nav {
   align-items: center;
   margin-bottom: 24px;
   padding-bottom: 14px;
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid rgba(237, 231, 220, 0.1);
 }
 .metrics-quad {
   display: grid;
@@ -725,10 +791,15 @@ nav.top-nav {
   gap: 16px;
 }
 .quad-cell {
-  background: rgba(237, 231, 220, 0.02);
-  border: 1px solid var(--hairline);
-  border-radius: 10px;
+  background: rgba(237, 231, 220, 0.03);
+  border: 1px solid rgba(237, 231, 220, 0.08);
+  border-radius: 12px;
   padding: 18px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.quad-cell:hover {
+  border-color: rgba(232, 145, 60, 0.25);
+  transform: translateY(-2px);
 }
 .quad-label {
   font-size: 11px;
@@ -748,103 +819,237 @@ nav.top-nav {
 }
 
 .alert-strip {
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 16px 20px;
   display: flex;
   align-items: flex-start;
   gap: 14px;
   font-size: 14px;
   line-height: 1.5;
-  border: 1px solid var(--hairline);
+  border: 1px solid rgba(237, 231, 220, 0.12);
 }
 .alert-strip.ok {
-  background: rgba(46, 107, 114, 0.12);
-  border-color: rgba(46, 107, 114, 0.35);
+  background: rgba(46, 107, 114, 0.14);
+  border-color: rgba(46, 107, 114, 0.4);
   color: #B2D8DC;
 }
 .alert-strip.warning {
-  background: rgba(232, 145, 60, 0.12);
-  border-color: rgba(232, 145, 60, 0.35);
+  background: rgba(232, 145, 60, 0.14);
+  border-color: rgba(232, 145, 60, 0.4);
   color: #F8C394;
 }
 
-/* ROSTER & DATES (PRICING & ARCHITECTURE TABLE) */
+/* =========================================================
+   ROSTER & PRICING GRID (3 HIGH-END CARDS)
+   ========================================================= */
 .roster-section {
-  padding: 120px 0;
-  border-top: 1px solid var(--hairline);
-  background: var(--color-ground);
+  padding: 140px 0;
+  background: #06080b;
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% 10%, rgba(232, 145, 60, 0.09), transparent 75%),
+    radial-gradient(ellipse 60% 50% at 10% 80%, rgba(46, 107, 114, 0.06), transparent 70%);
+  border-top: 1px solid rgba(237, 231, 220, 0.08);
 }
 .roster-title-row {
   margin-bottom: 56px;
+  text-align: center;
 }
-.roster-title-row h2 { font-size: clamp(28px, 3.5vw, 44px); margin-top: 12px; }
+.roster-title-row h2 {
+  font-size: clamp(30px, 3.8vw, 48px);
+  margin-top: 12px;
+}
 
-/* Hairline Roster Rows */
-.roster-table {
-  width: 100%;
-  border-collapse: collapse;
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: stretch;
+  margin-top: 48px;
 }
-.roster-table th {
-  text-align: left;
-  font-family: var(--font-sans);
-  font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--color-muted);
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--hairline);
+.pricing-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(22, 26, 33, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%);
+  border: 1px solid rgba(237, 231, 220, 0.12);
+  border-radius: 22px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.35);
 }
-.roster-row {
-  border-bottom: 1px solid var(--hairline);
-  transition: background 0.2s ease;
+.pricing-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(237, 231, 220, 0.28);
+  box-shadow: 0 24px 50px rgba(0,0,0,0.5);
 }
-.roster-row:hover { background: rgba(237, 231, 220, 0.02); }
-.roster-cell {
-  padding: 28px 20px;
-  vertical-align: middle;
+.pricing-card.featured {
+  background: linear-gradient(180deg, rgba(32, 26, 21, 0.95) 0%, rgba(14, 16, 20, 0.98) 100%);
+  border: 1px solid rgba(232, 145, 60, 0.65);
+  box-shadow: 0 0 50px rgba(232, 145, 60, 0.15), 0 24px 50px rgba(0,0,0,0.6);
+  transform: scale(1.02);
 }
-.roster-plan {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--color-ink);
+.pricing-card.featured:hover {
+  transform: scale(1.02) translateY(-6px);
+  box-shadow: 0 0 65px rgba(232, 145, 60, 0.25), 0 30px 60px rgba(0,0,0,0.7);
 }
-.roster-tag {
+
+.card-badge-top {
   display: inline-block;
+  align-self: flex-start;
   font-size: 10px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-amber);
-  margin-left: 10px;
-  padding: 2px 8px;
-  border: 1px solid rgba(232, 145, 60, 0.3);
+  padding: 4px 12px;
   border-radius: 999px;
-  vertical-align: middle;
+  background: rgba(237, 231, 220, 0.06);
+  color: var(--color-ink-secondary);
+  border: 1px solid rgba(237, 231, 220, 0.12);
+  margin-bottom: 20px;
 }
-.roster-price {
+.card-badge-top.teal {
+  background: rgba(46, 107, 114, 0.2);
+  color: #72D2DC;
+  border-color: rgba(46, 107, 114, 0.4);
+}
+.card-badge-featured {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 10px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(232, 145, 60, 0.2);
+  color: var(--color-amber);
+  border: 1px solid rgba(232, 145, 60, 0.5);
+  margin-bottom: 20px;
+}
+
+.card-title {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--color-ink);
+  margin-bottom: 8px;
 }
-.roster-price span {
-  font-size: 13px;
-  font-family: var(--font-sans);
-  color: var(--color-muted);
-  font-weight: 400;
-}
-.roster-desc {
-  font-size: 14px;
+.card-desc {
+  font-size: 13.5px;
   color: var(--color-ink-secondary);
   line-height: 1.5;
-  max-width: 440px;
+  margin-bottom: 24px;
+  min-height: 42px;
+}
+.card-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.card-price {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+}
+.card-price-unit {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-muted);
+}
+.card-strike-note {
+  font-size: 11px;
+  color: var(--color-amber);
+  letter-spacing: 0.06em;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+.card-divider {
+  height: 1px;
+  background: rgba(237, 231, 220, 0.1);
+  margin: 20px 0;
+}
+.card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex-grow: 1;
+}
+.card-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13.5px;
+  color: var(--color-ink-secondary);
+  line-height: 1.45;
+}
+.card-features li strong {
+  color: var(--color-ink);
+}
+.check-icon {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  color: var(--color-ink-secondary);
+  margin-top: 1px;
+}
+.check-icon.amber {
+  color: var(--color-amber);
+}
+.check-icon.teal {
+  color: #72D2DC;
 }
 
-/* CLOSE & BOTTOM WORDMARK */
+.pricing-cta-btn {
+  display: block;
+  text-align: center;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: transparent;
+  color: var(--color-ink);
+  border: 1px solid rgba(237, 231, 220, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pricing-cta-btn:hover {
+  background: rgba(237, 231, 220, 0.1);
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+.pricing-cta-btn.primary {
+  background: var(--color-amber);
+  color: #0A0C0E;
+  border: none;
+  box-shadow: 0 8px 24px rgba(232, 145, 60, 0.35);
+}
+.pricing-cta-btn.primary:hover {
+  background: #f0a356;
+  transform: scale(1.02);
+  box-shadow: 0 12px 30px rgba(232, 145, 60, 0.5);
+}
+
+/* =========================================================
+   CLOSE & FOOTER & CONTACT
+   ========================================================= */
 .close-section {
-  padding: 120px 0 0;
-  border-top: 1px solid var(--hairline);
-  background: var(--color-ground-secondary);
+  padding: 140px 0 0;
+  background: #040507;
+  background-image:
+    radial-gradient(circle at 50% 100%, rgba(232, 145, 60, 0.08) 0%, transparent 70%);
+  border-top: 1px solid rgba(237, 231, 220, 0.08);
   position: relative;
   overflow: hidden;
 }
@@ -870,9 +1075,87 @@ nav.top-nav {
   gap: 16px;
 }
 
+/* Contact & Deployment Request Form */
+.contact-form-card {
+  background: linear-gradient(180deg, rgba(22, 26, 33, 0.9) 0%, rgba(12, 14, 18, 0.98) 100%);
+  border: 1px solid rgba(237, 231, 220, 0.14);
+  border-radius: 22px;
+  padding: 44px 40px;
+  margin-top: 48px;
+  margin-bottom: 64px;
+  max-width: 720px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+.form-input, .form-textarea {
+  background: rgba(237, 231, 220, 0.03);
+  border: 1px solid rgba(237, 231, 220, 0.12);
+  border-radius: 8px;
+  padding: 13px 15px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-ink);
+  transition: all 0.2s ease;
+  outline: none;
+}
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--color-amber);
+  box-shadow: 0 0 0 3px rgba(232, 145, 60, 0.15);
+  background: rgba(237, 231, 220, 0.05);
+}
+.form-textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+.form-status {
+  font-size: 12px;
+  margin-top: 12px;
+  min-height: 20px;
+}
+.form-status.success { color: #a7f3d0; }
+.form-status.error { color: #fca5a5; }
+
+.contact-guarantees {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(237, 231, 220, 0.08);
+  font-size: 11.5px;
+  color: var(--color-muted);
+}
+.guarantee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.guarantee-item svg {
+  width: 15px; height: 15px;
+  color: var(--color-amber);
+  flex-shrink: 0;
+}
+
 .footer-strip {
-  border-top: 1px solid var(--hairline);
-  padding: 28px 0;
+  border-top: 1px solid rgba(237, 231, 220, 0.1);
+  padding: 32px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -898,7 +1181,7 @@ nav.top-nav {
   font-size: clamp(80px, 20vw, 290px);
   font-weight: 800;
   letter-spacing: -0.03em;
-  color: rgba(237, 231, 220, 0.05);
+  color: rgba(237, 231, 220, 0.04);
   transform: translateY(22%);
   display: inline-block;
   white-space: nowrap;
@@ -906,71 +1189,13 @@ nav.top-nav {
 
 /* Responsive adjustments */
 @media (max-width: 960px) {
-  .deck-grid { grid-template-columns: 1fr; gap: 48px; }
   .console-grid { grid-template-columns: 1fr; }
-  .statement-grid { grid-template-columns: 1fr; }
   .metrics-quad { grid-template-columns: 1fr; }
-  .roster-table, .roster-table tbody, .roster-row, .roster-cell { display: block; width: 100%; }
-  .roster-table thead { display: none; }
-  .roster-cell { padding: 12px 0; }
-  .roster-row { padding: 24px 0; }
-  .nav-links { display: none; }
+  .pricing-grid { grid-template-columns: 1fr; gap: 32px; }
+  .pricing-card.featured { transform: none; }
+  .pricing-card.featured:hover { transform: translateY(-4px); }
   .form-grid { grid-template-columns: 1fr !important; }
 }
-
-/* Contact & Deployment Request Form (Sanitized & Hardened) */
-.contact-form-card {
-  background: #111419;
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  padding: 36px;
-  margin-top: 48px;
-  margin-bottom: 56px;
-  max-width: 680px;
-}
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.form-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-muted);
-  font-weight: 600;
-}
-.form-input, .form-textarea {
-  background: rgba(237, 231, 220, 0.03);
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
-  padding: 12px 14px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--color-ink);
-  transition: border-color 0.2s;
-  outline: none;
-}
-.form-input:focus, .form-textarea:focus {
-  border-color: var(--color-amber);
-}
-.form-textarea {
-  resize: vertical;
-  min-height: 90px;
-}
-.form-status {
-  font-size: 12px;
-  margin-top: 12px;
-  min-height: 20px;
-}
-.form-status.success { color: #a7f3d0; }
-.form-status.error { color: #fca5a5; }
 </style>
 </head>
 <body>
@@ -997,22 +1222,25 @@ nav.top-nav {
   <div class="content" id="freightContent">
     <!-- Top Nav -->
     <nav class="freight-nav">
-      <a href="#" class="freight-nav-brand">LOGISTICS</a>
+      <a href="#" class="freight-nav-brand">
+        <img src="assets/orayzis-symbol-white.png" alt="Orayzis Logo" style="height:22px; width:22px; vertical-align:middle; display:inline-block;">
+        <span>BRUCE // ORAYZIS</span>
+      </a>
       <div class="freight-nav-actions">
         <a href="admin.html" class="freight-nav-link">&rarr; Log In</a>
-        <a href="#tarifs" class="freight-nav-link">Pricing</a>
-        <a href="#simulation" class="nav-pill-btn" style="background:#F7F5EF; color:#0a0b0c; border:none; padding:7px 18px; font-weight:700;">Get Started</a>
+        <a href="#tarifs" class="freight-nav-link">Offres</a>
+        <a href="#simulation" class="nav-pill-btn" style="background:#F7F5EF; color:#0a0b0c; border:none; padding:7px 18px; font-weight:700;">Tester Bruce</a>
       </div>
     </nav>
 
     <!-- Intro Block: top 940/8 vh (117.5vh) -->
     <div class="intro-block" id="introBlock">
-      <div class="intro-eyebrow">WHY US</div>
+      <div class="intro-eyebrow">ASSISTANT PERSONNEL &bull; ORAYZIS</div>
       <h1 class="freight-headline">
-        <span>LOGISTICS</span>
-        <span>THAT WORKS</span>
-        <span>AS HARD AS</span>
-        <span>YOU DO.</span>
+        <span>L'INTELLIGENCE</span>
+        <span>QUI TRAVAILLE</span>
+        <span>AUSSI DUR</span>
+        <span>QUE VOUS.</span>
       </h1>
     </div>
 
@@ -1027,8 +1255,8 @@ nav.top-nav {
           <line x1="6.5" y1="17" x2="27.5" y2="17" stroke="#F9F9F9" stroke-width="1.2" />
         </svg>
       </div>
-      <div class="feature-title">ONE POINT<br>OF CONTACT</div>
-      <div class="feature-body">No more chasing multiple vendors. One<br>team manages your entire end-to-end flow,<br>origin to destination.</div>
+      <div class="feature-title">BRIEFING VOCAL<br>DU MATIN</div>
+      <div class="feature-body">Fini d'ouvrir cinq applications au réveil. Bruce<br>synthétise vos agendas, trajets et urgences<br>en un seul point d'écoute matinal.</div>
     </div>
 
     <!-- Feature 2: Right column, left-aligned, 78u right of axis -->
@@ -1043,8 +1271,8 @@ nav.top-nav {
           <rect x="11" y="3" width="12" height="9" rx="1.5" stroke="#F9F9F9" stroke-width="1.5" fill="none" />
         </svg>
       </div>
-      <div class="feature-title">FULL SUPPLY CHAIN<br>VISIBILITY</div>
-      <div class="feature-body">Track your freight in real time and get<br>proactive updates before issues become<br>delays.</div>
+      <div class="feature-title">VISIBILITÉ TOTALE<br>DU PLANNING</div>
+      <div class="feature-body">Suivez vos engagements en temps réel et<br>anticipez les retards de trajet avant même<br>qu'ils ne perturbent votre journée.</div>
     </div>
 
     <!-- Row 2: top 1759/8 vh (219.875vh) -->
@@ -1057,19 +1285,19 @@ nav.top-nav {
           <path d="M12.5 17L15.5 20L21.5 14" stroke="#0a0b0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
-      <div class="feature-title">COMPLIANCE<br>YOU CAN TRUST</div>
-      <div class="feature-body">Licensed customs brokers keep your<br>shipments moving within every regulatory<br>requirement, border to border.</div>
+      <div class="feature-title">CONFIDENTIALITÉ &bull;<br>LECTURE FURTIVE</div>
+      <div class="feature-body">Protocole IMAP avancé (BODY.PEEK) : vos<br>courriels urgents sont analysés sans jamais<br>être marqués comme lus.</div>
     </div>
 
     <!-- Feature 4: Right column, left-aligned, 88u right of axis -->
     <div class="feature-block feature-row-2-right" id="featureBlock4">
       <div class="feature-icon-wrap">
         <svg viewBox="0 0 34 34" fill="none">
-          <text x="17" y="26" font-family="'Exo 2', sans-serif" font-weight="800" font-size="28" fill="#F9F9F9" text-anchor="middle">$</text>
+          <text x="17" y="26" font-family="'Exo 2', sans-serif" font-weight="800" font-size="28" fill="#F9F9F9" text-anchor="middle">&euro;</text>
         </svg>
       </div>
-      <div class="feature-title">COMPETITIVE,<br>TRANSPARENT PRICING</div>
-      <div class="feature-body">No hidden fees. Clear, competitive pricing<br>backed by responsive sales support<br>throughout the shipment.</div>
+      <div class="feature-title">TARIFICATION CLAIRE<br>&amp; SANS SURPRISE</div>
+      <div class="feature-body">Aucun frais caché. Des formules fixes dès<br>24,99€/mois ou sur devis pour des architectures<br>d'entreprise sur-mesure.</div>
     </div>
 
     <!-- Row 3: top 2063/8 vh (257.875vh) -->
@@ -1081,8 +1309,8 @@ nav.top-nav {
           <path d="M17 8L26 17L17 26" stroke="#F9F9F9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
-      <div class="feature-title">FAST ISSUE<br>RESOLUTION</div>
-      <div class="feature-body">When something unexpected happens, we<br>do not point fingers, we solve it. Our team<br>acts at once to protect your timeline.</div>
+      <div class="feature-title">RÉSOLUTION IMMÉDIATE<br>DES CONFLITS</div>
+      <div class="feature-body">Quand un imprévu ou un chevauchement<br>survient, Bruce réorganise vos priorités<br>et vous alerte aussitôt.</div>
     </div>
   </div>
 </div>
@@ -1092,12 +1320,12 @@ nav.top-nav {
   <div class="trust-container">
     <div class="trust-header">
       <div class="trust-title">
-        TRUSTED<br>
-        BY BUSINESSES<br>
-        <span class="trust-title-grey">ACROSS THE REGION</span>
+        PLÉBISCITÉ<br>
+        PAR LES DÉCIDEURS<br>
+        <span class="trust-title-grey">&amp; ENTREPRENEURS</span>
       </div>
       <div class="trust-note">
-        From first-time importers to high-volume shippers, our customers stay because every consignment is treated like it matters.
+        Des dirigeants de PME aux professionnels sursollicités, nos utilisateurs démarrent chaque journée avec un temps d'avance.
       </div>
     </div>
 
@@ -1105,10 +1333,10 @@ nav.top-nav {
     <div class="quote-row">
       <div>
         <div class="quote-author">Thomas Reid</div>
-        <div class="quote-role">Director, Harbour Fit Group</div>
+        <div class="quote-role">Fondateur, Studio Transat</div>
       </div>
       <div class="quote-text">
-        &ldquo;My business would not function without this team. They treat every consignment on its own merits, and our account managers know our business well enough to answer before we ask. We have never had that from a bigger carrier.&rdquo;
+        &ldquo;Mon quotidien ne tournerait plus sans Bruce. Il arbitre mes priorités avant mon réveil et calcule mes trajets au millimètre. Je n'ai plus jamais raté un départ.&rdquo;
       </div>
     </div>
 
@@ -1116,10 +1344,10 @@ nav.top-nav {
     <div class="quote-row">
       <div>
         <div class="quote-author">Ana Park</div>
-        <div class="quote-role">Supply Chain Lead, Northline Projects</div>
+        <div class="quote-role">Responsable Opérations &amp; Projets</div>
       </div>
       <div class="quote-text">
-        &ldquo;As a first-time shipper on a major infrastructure job, we were in unfamiliar territory. They planned the whole route with us, flagged every risk early, and our first delivery reached site on the day they promised.&rdquo;
+        &ldquo;Gérer trois agendas partagés et des flux d'e-mails continus était devenu insoutenable. Bruce a tout unifié en un briefing vocal de 90 secondes chaque matin.&rdquo;
       </div>
     </div>
 
@@ -1127,10 +1355,10 @@ nav.top-nav {
     <div class="quote-row">
       <div>
         <div class="quote-author">Liam Carter</div>
-        <div class="quote-role">Operations Manager, Coastline Foods</div>
+        <div class="quote-role">Directeur d'Exploitation</div>
       </div>
       <div class="quote-text">
-        &ldquo;One contact, one dashboard, no surprises. When a vessel slipped two days, we heard about it before our customers did, and the new plan was already in place.&rdquo;
+        &ldquo;Un seul briefing, zéro friction, aucune surprise. Quand un créneau s'annule ou se chevauche, je suis prévenu avant même d'ouvrir mon ordinateur.&rdquo;
       </div>
     </div>
   </div>
@@ -1158,9 +1386,10 @@ nav.top-nav {
       </div>
     </div>
 
-    <!-- Interactive Audio Briefing Bar -->
+    <!-- Interactive Audio Briefing Bar (Glassmorphic Luxury Deck) -->
     <div class="audio-bar" id="audioBar">
       <button type="button" class="audio-trigger-btn" id="btnAudioTrigger" aria-label="Écouter le briefing vocal de Bruce">
+        <div class="btn-pulse-ring"></div>
         <svg id="iconPlay" viewBox="0 0 24 24">
           <path d="M8 5v14l11-7z"/>
         </svg>
@@ -1171,12 +1400,17 @@ nav.top-nav {
       <div class="audio-track-info">
         <div class="audio-title-line">
           <div class="audio-identity">
+            <span class="live-led"></span>
             <span>Bruce AI Assistant</span>
-            <span class="label-caps amber-text">&bull; Briefing vocal du jour</span>
+            <span class="audio-tag-chip">Briefing vocal temps réel</span>
           </div>
           <span class="audio-status-text" id="audioStatus">Prêt &bull; Cliquez sur lecture pour entendre Bruce</span>
         </div>
         <div class="equalizer-wave">
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
           <div class="eq-bar"></div>
           <div class="eq-bar"></div>
           <div class="eq-bar"></div>
@@ -1290,71 +1524,125 @@ nav.top-nav {
   </div>
 </section>
 
-<!-- ROSTER & DATES (TARIFS ET FORMULES) -->
+<!-- ROSTER & TARIFS (3 LUXURY CARDS) -->
 <section id="tarifs" class="roster-section">
   <div class="container">
     <div class="roster-title-row">
-      <div class="label-caps amber-text">Formules d'accès &bull; Bruce AI</div>
+      <div class="label-caps amber-text">Formules &bull; Bruce AI</div>
       <h2>Des solutions adaptées à votre quotidien</h2>
+      <p style="color:var(--color-ink-secondary); font-size:15px; margin-top:12px; max-width:600px; margin-left:auto; margin-right:auto;">
+        Démarrez immédiatement sans engagement ou personnalisez l'assistant selon les processus de votre organisation.
+      </p>
     </div>
 
-    <table class="roster-table">
-      <thead>
-        <tr>
-          <th>Formule</th>
-          <th>Services inclus</th>
-          <th>Tarification</th>
-          <th style="text-align: right;">Accès</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="roster-row">
-          <td class="roster-cell">
-            <span class="roster-plan">Essentielle</span>
-          </td>
-          <td class="roster-cell">
-            <div class="roster-desc">Synchronisation de vos calendriers (iCal, Google Calendar), météo locale quotidienne et tri des e-mails prioritaires. Briefing matinal automatique. Sans engagement.</div>
-          </td>
-          <td class="roster-cell">
-            <div class="roster-price">39,99€ <span>/ mois</span></div>
-          </td>
-          <td class="roster-cell" style="text-align: right;">
-            <a href="mailto:contact@orayzis.com" class="nav-pill-btn">Sélectionner</a>
-          </td>
-        </tr>
+    <div class="pricing-grid">
+      <!-- Card 1: Essentielle -->
+      <div class="pricing-card">
+        <div>
+          <div class="card-badge-top">DÉMARRAGE</div>
+          <div class="card-title">Essentielle</div>
+          <div class="card-desc">L'essentiel pour structurer votre journée dès l'aube en toute autonomie.</div>
+          <div class="card-price-wrap">
+            <span class="card-price">39,99€</span>
+            <span class="card-price-unit">/ mois</span>
+          </div>
+          <div class="card-divider"></div>
+          <ul class="card-features">
+            <li>
+              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Briefing matinal automatique</span>
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Synchronisation Google Calendar &amp; iCal</span>
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Météo locale quotidienne</span>
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Tri des e-mails avec lecture furtive</span>
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Sans engagement, résiliable à tout moment</span>
+            </li>
+          </ul>
+        </div>
+        <a href="#contactSection" class="pricing-cta-btn">Sélectionner</a>
+      </div>
 
-        <tr class="roster-row">
-          <td class="roster-cell">
-            <span class="roster-plan">Bruce Pro</span>
-            <span class="roster-tag">Recommandé</span>
-          </td>
-          <td class="roster-cell">
-            <div class="roster-desc">Toutes les fonctionnalités Essentielles avec calcul des temps de trajet, alertes de transit prédictives, vocalisation haute définition et support dédié.</div>
-          </td>
-          <td class="roster-cell">
-            <div class="roster-price">24,99€ <span>/ mois</span></div>
-          </td>
-          <td class="roster-cell" style="text-align: right;">
-            <a href="mailto:contact@orayzis.com" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground);">Activer</a>
-          </td>
-        </tr>
+      <!-- Card 2: Bruce Pro (Featured) -->
+      <div class="pricing-card featured">
+        <div>
+          <div class="card-badge-featured">RECOMMANDÉ // OFFRE ANNUELLE</div>
+          <div class="card-title">Bruce Pro</div>
+          <div class="card-desc">L'assistant complet avec arbitrage en temps réel et vocalisation haute définition.</div>
+          <div class="card-price-wrap">
+            <span class="card-price">24,99€</span>
+            <span class="card-price-unit">/ mois</span>
+          </div>
+          <div class="card-strike-note">Économisez 50% sur l'abonnement initial</div>
+          <div class="card-divider"></div>
+          <ul class="card-features">
+            <li>
+              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Toutes les fonctions Essentielles incluses</strong></span>
+            </li>
+            <li>
+              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Vocalisation neuronale Bruce HD</strong></span>
+            </li>
+            <li>
+              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Calcul prédictif des temps de trajet</strong></span>
+            </li>
+            <li>
+              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Résolution instantanée des conflits d'agenda</span>
+            </li>
+            <li>
+              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Support technique prioritaire dédié 7j/7</span>
+            </li>
+          </ul>
+        </div>
+        <a href="#contactSection" class="pricing-cta-btn primary">Activer Bruce Pro</a>
+      </div>
 
-        <tr class="roster-row">
-          <td class="roster-cell">
-            <span class="roster-plan">Sur-Mesure</span>
-          </td>
-          <td class="roster-cell">
-            <div class="roster-desc">Intégration d'outils d'entreprise (CRM, plannings partagés complexes), règles métier spécifiques et accompagnement personnalisé par Orayzis.</div>
-          </td>
-          <td class="roster-cell">
-            <div class="roster-price">Sur Devis</div>
-          </td>
-          <td class="roster-cell" style="text-align: right;">
-            <a href="mailto:contact@orayzis.com" class="nav-pill-btn">Étudier le projet</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <!-- Card 3: Sur-Mesure -->
+      <div class="pricing-card">
+        <div>
+          <div class="card-badge-top teal">ENTREPRISE &amp; FLOTTES</div>
+          <div class="card-title">Sur-Mesure</div>
+          <div class="card-desc">Pour les directions, flottes de collaborateurs et organisations exigeantes.</div>
+          <div class="card-price-wrap">
+            <span class="card-price">Sur Devis</span>
+          </div>
+          <div class="card-divider"></div>
+          <ul class="card-features">
+            <li>
+              <svg class="check-icon teal" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Multi-comptes &amp; agendas synchronisés d'équipe</span>
+            </li>
+            <li>
+              <svg class="check-icon teal" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Connecteurs CRM, ERP et SI d'entreprise</span>
+            </li>
+            <li>
+              <svg class="check-icon teal" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Règles d'arbitrage et API privées Orayzis</span>
+            </li>
+            <li>
+              <svg class="check-icon teal" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Déploiement dédié &amp; SLA contractuel garanti</span>
+            </li>
+          </ul>
+        </div>
+        <a href="#contactSection" class="pricing-cta-btn">Étudier le projet</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1376,8 +1664,8 @@ nav.top-nav {
     <!-- Contact & Access Request Form -->
     <div class="contact-form-card" id="contactSection">
       <div class="label-caps amber-text" style="margin-bottom:8px;">Contact &bull; Accès Privilégié</div>
-      <h3 style="font-size:22px; margin-bottom:12px;">Demander un accès à Bruce</h3>
-      <p style="color:var(--color-ink-secondary); font-size:14px; margin-bottom:24px; line-height:1.5;">
+      <h3 style="font-size:24px; margin-bottom:12px; font-family:var(--font-display);">Demander un accès à Bruce</h3>
+      <p style="color:var(--color-ink-secondary); font-size:14px; margin-bottom:28px; line-height:1.5;">
         Indiquez votre besoin ou posez vos questions à l'équipe Orayzis. Nous vous répondrons dans les plus brefs délais.
       </p>
       <form id="secureContactForm" novalidate autocomplete="off">
@@ -1391,25 +1679,43 @@ nav.top-nav {
             <input type="email" id="contactEmail" class="form-input" maxlength="80" placeholder="alex@domaine.com" required>
           </div>
         </div>
-        <div class="form-group" style="margin-bottom:20px;">
+        <div class="form-group" style="margin-bottom:24px;">
           <label for="contactMessage" class="form-label">Votre message</label>
-          <textarea id="contactMessage" class="form-textarea" maxlength="400" placeholder="Décrivez votre projet (synchronisation d'agendas, briefing vocal matinal, intégration d'équipe)..." required></textarea>
+          <textarea id="contactMessage" class="form-textarea" maxlength="400" placeholder="Décrivez votre besoin (synchronisation d'agendas, briefing vocal matinal, intégration d'équipe)..." required></textarea>
         </div>
-        <button type="submit" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground); width:auto; border:none; cursor:pointer;" id="btnSubmitContact">
+        <button type="submit" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground); width:auto; border:none; cursor:pointer; font-weight:700; padding:12px 28px;" id="btnSubmitContact">
           Envoyer la demande
         </button>
         <div class="form-status" id="formStatus" aria-live="polite"></div>
+
+        <div class="contact-guarantees">
+          <div class="guarantee-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Chiffrement local AES-256</span>
+          </div>
+          <div class="guarantee-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Conformité RGPD intégrale</span>
+          </div>
+          <div class="guarantee-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Activation sous 24h ouvrées</span>
+          </div>
+        </div>
       </form>
     </div>
 
     <div class="footer-strip">
-      <span>Orayzis &bull; Bruce AI Assistant</span>
+      <div style="display:flex; align-items:center;">
+        <img src="assets/orayzis-symbol-white.png" alt="Orayzis Logo" style="height:20px; width:20px; vertical-align:middle; margin-right:10px; opacity:0.85;">
+        <span>Orayzis &bull; Bruce AI Assistant</span>
+      </div>
       <div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
-        <a href="#portal">Accueil</a>
-        <a href="#capacites">Capacités</a>
+        <a href="#freightTrack">Accueil</a>
+        <a href="#featureBlock1">Capacités</a>
         <a href="#simulation">Démonstration</a>
         <a href="#tarifs">Offres</a>
-        <a href="admin.html" class="admin-link" style="color:var(--color-muted); text-decoration:none; font-size:11px; border:1px solid var(--hairline); padding:4px 10px; border-radius:12px; transition:all .2s ease;">Espace Admin &rarr;</a>
+        <a href="admin.html" class="admin-link" style="color:var(--color-muted); text-decoration:none; font-size:11px; border:1px solid rgba(237,231,220,0.15); padding:5px 12px; border-radius:12px; transition:all .2s ease;">Espace Admin &rarr;</a>
       </div>
     </div>
   </div>
