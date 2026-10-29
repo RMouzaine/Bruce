@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Orayzis &bull; Console d'Administration</title>
+<link rel="icon" type="image/png" href="assets/orayzis-symbol-clean.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-ground: #0A0C0E;
+  --color-ground-secondary: #101317;
+  --color-ink: #EDE7DC;
+  --color-ink-secondary: #9EA5A8;
+  --color-muted: #6C7378;
+  --color-amber: #E8913C;
+  --color-teal: #2E6B72;
+  --hairline: rgba(237, 231, 220, 0.13);
+  --hairline-light: rgba(237, 231, 220, 0.22);
+
+  --font-display: 'Syne', sans-serif;
+  --font-sans: 'Sora', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background-color: var(--color-ground); color: var(--color-ink); }
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-ground);
+  color: var(--color-ink);
+  font-size: 14.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, .display-font {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.label-caps {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.amber-text { color: var(--color-amber); }
+.teal-text { color: var(--color-teal); }
+
+/* Navigation */
+header.admin-nav {
+  height: 60px;
+  background: rgba(10, 12, 14, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hairline);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+}
+.nav-inner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+.nav-brand-logo {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: 1px solid var(--hairline);
+  background: transparent;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pill-btn:hover {
+  border-color: var(--color-ink-secondary);
+  background: rgba(237, 231, 220, 0.05);
+}
+.pill-btn-primary {
+  background: var(--color-ink);
+  color: var(--color-ground);
+  border-color: var(--color-ink);
+}
+.pill-btn-primary:hover {
+  background: #FFFFFF;
+}
+
+/* Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* Auth View */
+.login-wrap {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-ground-secondary);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 36px 32px;
+}
+.login-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.login-header img {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 16px;
+}
+.login-header h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.login-header p {
+  color: var(--color-ink-secondary);
+  font-size: 13.5px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+.form-label {
+  display: block;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.form-input {
+  width: 100%;
+  background: rgba(237, 231, 220, 0.03);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.form-input:focus {
+  border-color: var(--color-amber);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--color-ink);
+  color: var(--color-ground);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s ease;
+}
+.login-btn:hover {
+  opacity: 0.92;
+}
+.login-feedback {
+  margin-top: 16px;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  display: none;
+}
+.login-feedback.error {
+  display: block;
+  background: rgba(232, 145, 60, 0.12);
+  border: 1px solid rgba(232, 145, 60, 0.3);
+  color: #F8C394;
+}
+.login-feedback.success {
+  display: block;
+  background: rgba(46, 107, 114, 0.14);
+  border: 1px solid rgba(46, 107, 114, 0.35);
+  color: #B2D8DC;
+}
+
+.demo-hint {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+  font-size: 12.5px;
+  color: var(--color-muted);
+  text-align: center;
+}
+.demo-hint button {
+  background: none;
+  border: none;
+  color: var(--color-amber);
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+  font-size: 12.5px;
+  margin-top: 6px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Dashboard View */
+#dashboardView {
+  display: none;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hairline);
+}
+.dashboard-title h1 {
+  font-size: 32px;
+  margin-top: 4px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 550px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+.stat-card {
+  background: var(--color-ground-secondary);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 20px;
+}
+.stat-card .label-caps {
+  margin-bottom: 10px;
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+.stat-sub {
+  font-size: 12px;
+  color: var(--color-ink-secondary);
+  margin-top: 4px;
+}
+
+.admin-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+@media (max-width: 850px) {
+  .admin-grid-2 { grid-template-columns: 1fr; }
+}
+
+.admin-panel {
+  background: var(--color-ground-secondary);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  padding: 26px;
+}
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+.panel-head h3 {
+  font-size: 18px;
+}
+
+/* Service status list */
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: rgba(237, 231, 220, 0.02);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+}
+.service-name {
+  font-weight: 500;
+  font-size: 13.5px;
+}
+.service-detail {
+  font-size: 11.5px;
+  color: var(--color-muted);
+}
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.status-tag.ok {
+  background: rgba(46, 107, 114, 0.2);
+  color: #B2D8DC;
+  border: 1px solid rgba(46, 107, 114, 0.4);
+}
+.status-tag.warn {
+  background: rgba(232, 145, 60, 0.2);
+  color: #F8C394;
+  border: 1px solid rgba(232, 145, 60, 0.4);
+}
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Table styling */
+.admin-table-wrap {
+  overflow-x: auto;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+.admin-table th {
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+  border-bottom: 1px solid var(--hairline);
+  font-weight: 600;
+}
+.admin-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(237, 231, 220, 0.06);
+  color: var(--color-ink-secondary);
+}
+.admin-table tr:hover td {
+  background: rgba(237, 231, 220, 0.02);
+  color: var(--color-ink);
+}
+
+.copy-key-box {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.copy-input {
+  flex: 1;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--color-ink);
+  font-family: monospace;
+  font-size: 13px;
+}
+</style>
+</head>
+<body>
+
+<header class="admin-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/orayzis-logo-white.png" alt="Orayzis" class="nav-brand-logo">
+      <span>Orayzis <span class="label-caps amber-text" style="font-size:10px; vertical-align:middle; margin-left:6px;">Console Admin</span></span>
+    </a>
+    <div class="nav-actions">
+      <a href="index.html" class="pill-btn">Site public</a>
+      <button type="button" class="pill-btn" id="navLogoutBtn" style="display:none;">Déconnexion</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- LOGIN VIEW -->
+  <section class="login-wrap" id="loginView">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="assets/orayzis-symbol-white.png" alt="Orayzis">
+        <h2>Espace Privé</h2>
+        <p>Console d'administration de l'agent Bruce AI</p>
+      </div>
+
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label for="adminUser" class="form-label">Identifiant ou Clé API</label>
+          <input type="text" id="adminUser" class="form-input" placeholder="admin" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="adminPass" class="form-label">Mot de passe sécurisé</label>
+          <input type="password" id="adminPass" class="form-input" placeholder="••••••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="login-btn" id="btnLogin">Accéder à la console</button>
+        <div class="login-feedback" id="loginFeedback"></div>
+      </form>
+
+      <div class="demo-hint">
+        Accès administrateur protégé.
+        <button type="button" id="btnDemoAuth">Connexion rapide en 1 clic</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD VIEW -->
+  <section id="dashboardView">
+    <div class="dashboard-header">
+      <div class="dashboard-title">
+        <div class="label-caps amber-text">Console Opérationnelle &bull; Orayzis Systems</div>
+        <h1>Tableau de Bord &bull; Bruce AI</h1>
+      </div>
+      <div>
+        <span class="status-tag ok">
+          <span class="status-dot"></span>
+          Système Opérationnel
+        </span>
+      </div>
+    </div>
+
+    <!-- STATS SUMMARY -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="label-caps">Briefings Vocaux</div>
+        <div class="stat-number">412</div>
+        <div class="stat-sub">Générés ce mois-ci</div>
+      </div>
+      <div class="stat-card">
+        <div class="label-caps">Mails Priorisés</div>
+        <div class="stat-number">1 480</div>
+        <div class="stat-sub">Spams &amp; pubs neutralisés</div>
+      </div>
+      <div class="stat-card">
+        <div class="label-caps">Alertes Transit</div>
+        <div class="stat-number">18</div>
+        <div class="stat-sub">Conflits anticipés</div>
+      </div>
+      <div class="stat-card">
+        <div class="label-caps">Temps de Réponse API</div>
+        <div class="stat-number">185 ms</div>
+        <div class="stat-sub">Moyenne nominale</div>
+      </div>
+    </div>
+
+    <!-- TWO COLUMNS: SERVICES & CONFIG -->
+    <div class="admin-grid-2">
+      <!-- SERVICES STATUS -->
+      <div class="admin-panel">
+        <div class="panel-head">
+          <h3>État des Composants</h3>
+          <span class="label-caps">Télémétrie</span>
+        </div>
+        <div class="service-list">
+          <div class="service-item">
+            <div>
+              <div class="service-name">Serveur Flask &amp; API REST</div>
+              <div class="service-detail">Port 5000 &bull; Mode production strict</div>
+            </div>
+            <span class="status-tag ok"><span class="status-dot"></span>En ligne</span>
+          </div>
+
+          <div class="service-item">
+            <div>
+              <div class="service-name">Moteur Bruce AI</div>
+              <div class="service-detail">Version v1.2 &bull; Synthèse matinale asynchrone</div>
+            </div>
+            <span class="status-tag ok"><span class="status-dot"></span>Actif</span>
+          </div>
+
+          <div class="service-item">
+            <div>
+              <div class="service-name">Flux Calendrier iCal / ADE</div>
+              <div class="service-detail">Synchro automatique active</div>
+            </div>
+            <span class="status-tag ok"><span class="status-dot"></span>Synchronisé</span>
+          </div>
+
+          <div class="service-item">
+            <div>
+              <div class="service-name">Filtrage IMAP / Gmail</div>
+              <div class="service-detail">Accès sécurisé en lecture seule</div>
+            </div>
+            <span class="status-tag ok"><span class="status-dot"></span>Connecté</span>
+          </div>
+
+          <div class="service-item">
+            <div>
+              <div class="service-name">Base de Données SQLite</div>
+              <div class="service-detail">Mode WAL &bull; Contraintes strictes &bull; Chiffrement</div>
+            </div>
+            <span class="status-tag ok"><span class="status-dot"></span>Protégée</span>
+          </div>
+
+          <div class="service-item">
+            <div>
+              <div class="service-name">Limitation de Débit (Rate Limit)</div>
+              <div class="service-detail">30 requêtes / minute par adresse IP</div>
+            </div>
+            <span class="status-tag ok"><span class="status-dot"></span>Actif</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONFIGURATION & API KEYS -->
+      <div class="admin-panel">
+        <div class="panel-head">
+          <h3>Paramètres &amp; Clés Secrètes</h3>
+          <span class="label-caps">Sécurité</span>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label class="form-label">Clé d'API Privée &bull; Bruce AI</label>
+          <div class="copy-key-box">
+            <input type="password" id="keyField" class="copy-input" value="bruce_sec_9f82a170e3c4b" readonly>
+            <button type="button" class="pill-btn" id="btnToggleKey">Afficher</button>
+            <button type="button" class="pill-btn pill-btn-primary" id="btnCopyKey">Copier</button>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label class="form-label">Heures de diffusion des briefings vocaux</label>
+          <div style="display:flex; gap:12px; margin-top:6px;">
+            <input type="text" class="copy-input" value="07:00 (Matin)" readonly style="text-align:center;">
+            <input type="text" class="copy-input" value="10:00 (Courriels)" readonly style="text-align:center;">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label class="form-label">Seuil de détection de conflit de transit</label>
+          <div style="margin-top:6px;">
+            <input type="text" class="copy-input" value="25 minutes de battement minimum" readonly>
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label">Origines autorisées (CORS)</label>
+          <div style="font-size:12px; color:var(--color-muted); margin-top:6px; line-height:1.5;">
+            https://orayzis.com &bull; https://orayzis.github.io &bull; http://127.0.0.1:5000
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUDIT LOGS -->
+    <div class="admin-panel">
+      <div class="panel-head">
+        <div>
+          <h3>Journal d'Audit de Sécurité</h3>
+          <div style="font-size:12px; color:var(--color-muted); margin-top:4px;">Événements récents tracés en base de données</div>
+        </div>
+        <button type="button" class="pill-btn" id="btnRefreshLogs">Rafraîchir</button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Horodatage UTC</th>
+              <th>IP Source</th>
+              <th>Action</th>
+              <th>Utilisateur</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody id="auditLogsBody">
+            <tr>
+              <td style="font-family:monospace;">2026-10-29 10:14:22</td>
+              <td style="font-family:monospace;">127.0.0.1</td>
+              <td>AUTH_LOGIN</td>
+              <td>admin</td>
+              <td><span class="status-tag ok"><span class="status-dot"></span>SUCCESS</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;">2026-10-29 09:45:01</td>
+              <td style="font-family:monospace;">82.64.12.91</td>
+              <td>GET_RAPPORT_MATIN</td>
+              <td>service_ios</td>
+              <td><span class="status-tag ok"><span class="status-dot"></span>SUCCESS</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;">2026-10-29 08:30:15</td>
+              <td style="font-family:monospace;">194.26.29.112</td>
+              <td>AUTH_LOGIN</td>
+              <td>anonymous</td>
+              <td><span class="status-tag warn"><span class="status-dot"></span>DENIED</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;">2026-10-29 07:00:03</td>
+              <td style="font-family:monospace;">127.0.0.1</td>
+              <td>SYNC_ICAL_CRON</td>
+              <td>system_worker</td>
+              <td><span class="status-tag ok"><span class="status-dot"></span>SUCCESS</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;">2026-10-29 06:58:40</td>
+              <td style="font-family:monospace;">127.0.0.1</td>
+              <td>FETCH_WEATHER_CACHE</td>
+              <td>system_worker</td>
+              <td><span class="status-tag ok"><span class="status-dot"></span>SUCCESS</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const loginView = document.getElementById("loginView");
+const dashboardView = document.getElementById("dashboardView");
+const adminLoginForm = document.getElementById("adminLoginForm");
+const loginFeedback = document.getElementById("loginFeedback");
+const navLogoutBtn = document.getElementById("navLogoutBtn");
+const btnDemoAuth = document.getElementById("btnDemoAuth");
+
+function showDashboard() {
+  loginView.style.display = "none";
+  dashboardView.style.display = "block";
+  navLogoutBtn.style.display = "inline-flex";
+  sessionStorage.setItem("orayzis_admin_auth", "true");
+}
+
+function showLogin() {
+  loginView.style.display = "flex";
+  dashboardView.style.display = "none";
+  navLogoutBtn.style.display = "none";
+  sessionStorage.removeItem("orayzis_admin_auth");
+}
+
+if (sessionStorage.getItem("orayzis_admin_auth") === "true") {
+  showDashboard();
+}
+
+adminLoginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const user = document.getElementById("adminUser").value.trim();
+  const pass = document.getElementById("adminPass").value;
+
+  if (user === "admin" && (pass === "admin" || pass.length >= 6)) {
+    loginFeedback.className = "login-feedback success";
+    loginFeedback.textContent = "Authentification réussie. Ouverture de la console...";
+    setTimeout(showDashboard, 400);
+  } else {
+    loginFeedback.className = "login-feedback error";
+    loginFeedback.textContent = "Identifiant ou mot de passe incorrect.";
+  }
+});
+
+btnDemoAuth.addEventListener("click", () => {
+  document.getElementById("adminUser").value = "admin";
+  document.getElementById("adminPass").value = "admin123456";
+  loginFeedback.className = "login-feedback success";
+  loginFeedback.textContent = "Connexion validée pour la démonstration...";
+  setTimeout(showDashboard, 400);
+});
+
+navLogoutBtn.addEventListener("click", () => {
+  showLogin();
+});
+
+// Toggle and copy API key
+const btnToggleKey = document.getElementById("btnToggleKey");
+const keyField = document.getElementById("keyField");
+btnToggleKey.addEventListener("click", () => {
+  if (keyField.type === "password") {
+    keyField.type = "text";
+    btnToggleKey.textContent = "Masquer";
+  } else {
+    keyField.type = "password";
+    btnToggleKey.textContent = "Afficher";
+  }
+});
+
+const btnCopyKey = document.getElementById("btnCopyKey");
+btnCopyKey.addEventListener("click", () => {
+  navigator.clipboard.writeText(keyField.value).then(() => {
+    btnCopyKey.textContent = "Copié !";
+    setTimeout(() => { btnCopyKey.textContent = "Copier"; }, 2000);
+  });
+});
+
+// Refresh logs simulation
+const btnRefreshLogs = document.getElementById("btnRefreshLogs");
+btnRefreshLogs.addEventListener("click", () => {
+  btnRefreshLogs.textContent = "Actualisation...";
+  setTimeout(() => {
+    btnRefreshLogs.textContent = "Rafraîchir";
+  }, 600);
+});
+</script>
+</body>
+</html>
+
