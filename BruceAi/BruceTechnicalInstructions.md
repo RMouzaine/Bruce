@@ -8,9 +8,9 @@
 
 > API Python qui regroupe planning, horaires, météo et e-mails en briefings vocaux, déclenchés chaque jour à 7h et 10h sur iOS.
 
-> **[Voir la démonstration interactive](https://rmouzaine.github.io/Bruce-AIAssistant/)**
+> **[Voir la démonstration interactive](https://orayzis.github.io/Bruce-AIAssistant/)**
 
-**Auteur :** RMouzaine
+**Auteur :** Orayzis
 
 **Statut :** en cours de maintenance
 

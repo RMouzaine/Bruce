@@ -6,15 +6,15 @@
 
 > **Votre matinée. Optimisée. Automatisée. Dictée.**
 
-> **[Ouvrir la console de démonstration interactive](https://rmouzaine.github.io/Bruce-AIAssistant/)**
+> **[Ouvrir la console de démonstration interactive](https://orayzis.github.io/Bruce-AIAssistant/)**
 
-**Créateur :** RMouzaine 
+**Créateur :** Orayzis 
 
 **Statut :** Opérationnel 
 
 **Version :** 1.1 (bêta) 
 
-**Website** : https://rmouzaine.github.io/Bruce-AIAssistant/
+**Website** : https://orayzis.github.io/Bruce-AIAssistant/
 
 ---
 
