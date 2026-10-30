@@ -840,208 +840,6 @@ nav.top-nav {
 }
 
 /* =========================================================
-   ROSTER & PRICING GRID (3 HIGH-END CARDS)
-   ========================================================= */
-.roster-section {
-  padding: 140px 0;
-  background: #06080b;
-  background-image:
-    radial-gradient(ellipse 90% 60% at 50% 10%, rgba(232, 145, 60, 0.09), transparent 75%),
-    radial-gradient(ellipse 60% 50% at 10% 80%, rgba(46, 107, 114, 0.06), transparent 70%);
-  border-top: 1px solid rgba(237, 231, 220, 0.08);
-}
-.roster-title-row {
-  margin-bottom: 56px;
-  text-align: center;
-}
-.roster-title-row h2 {
-  font-size: clamp(30px, 3.8vw, 48px);
-  margin-top: 12px;
-}
-
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  align-items: stretch;
-  margin-top: 48px;
-}
-.pricing-card {
-  position: relative;
-  background: linear-gradient(180deg, rgba(22, 26, 33, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%);
-  border: 1px solid rgba(237, 231, 220, 0.12);
-  border-radius: 22px;
-  padding: 40px 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 16px 36px rgba(0,0,0,0.35);
-}
-.pricing-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(237, 231, 220, 0.28);
-  box-shadow: 0 24px 50px rgba(0,0,0,0.5);
-}
-.pricing-card.featured {
-  background: linear-gradient(180deg, rgba(32, 26, 21, 0.95) 0%, rgba(14, 16, 20, 0.98) 100%);
-  border: 1px solid rgba(232, 145, 60, 0.65);
-  box-shadow: 0 0 50px rgba(232, 145, 60, 0.15), 0 24px 50px rgba(0,0,0,0.6);
-  transform: scale(1.02);
-}
-.pricing-card.featured:hover {
-  transform: scale(1.02) translateY(-6px);
-  box-shadow: 0 0 65px rgba(232, 145, 60, 0.25), 0 30px 60px rgba(0,0,0,0.7);
-}
-
-.card-badge-top {
-  display: inline-block;
-  align-self: flex-start;
-  font-size: 10px;
-  font-family: var(--font-sans);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: rgba(237, 231, 220, 0.06);
-  color: var(--color-ink-secondary);
-  border: 1px solid rgba(237, 231, 220, 0.12);
-  margin-bottom: 20px;
-}
-.card-badge-top.teal {
-  background: rgba(46, 107, 114, 0.2);
-  color: #72D2DC;
-  border-color: rgba(46, 107, 114, 0.4);
-}
-.card-badge-featured {
-  display: inline-block;
-  align-self: flex-start;
-  font-size: 10px;
-  font-family: var(--font-sans);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 999px;
-  background: rgba(232, 145, 60, 0.2);
-  color: var(--color-amber);
-  border: 1px solid rgba(232, 145, 60, 0.5);
-  margin-bottom: 20px;
-}
-
-.card-title {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--color-ink);
-  margin-bottom: 8px;
-}
-.card-desc {
-  font-size: 13.5px;
-  color: var(--color-ink-secondary);
-  line-height: 1.5;
-  margin-bottom: 24px;
-  min-height: 42px;
-}
-.card-price-wrap {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-.card-price {
-  font-family: var(--font-display);
-  font-size: 38px;
-  font-weight: 800;
-  color: var(--color-ink);
-  letter-spacing: -0.02em;
-}
-.card-price-unit {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--color-muted);
-}
-.card-strike-note {
-  font-size: 11px;
-  color: var(--color-amber);
-  letter-spacing: 0.06em;
-  margin-bottom: 18px;
-  font-weight: 600;
-}
-.card-divider {
-  height: 1px;
-  background: rgba(237, 231, 220, 0.1);
-  margin: 20px 0;
-}
-.card-features {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  flex-grow: 1;
-}
-.card-features li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: 13.5px;
-  color: var(--color-ink-secondary);
-  line-height: 1.45;
-}
-.card-features li strong {
-  color: var(--color-ink);
-}
-.check-icon {
-  width: 17px;
-  height: 17px;
-  flex-shrink: 0;
-  color: var(--color-ink-secondary);
-  margin-top: 1px;
-}
-.check-icon.amber {
-  color: var(--color-amber);
-}
-.check-icon.teal {
-  color: #72D2DC;
-}
-
-.pricing-cta-btn {
-  display: block;
-  text-align: center;
-  padding: 13px 24px;
-  border-radius: 999px;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: transparent;
-  color: var(--color-ink);
-  border: 1px solid rgba(237, 231, 220, 0.25);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.pricing-cta-btn:hover {
-  background: rgba(237, 231, 220, 0.1);
-  border-color: var(--color-ink);
-  color: var(--color-ink);
-}
-.pricing-cta-btn.primary {
-  background: var(--color-amber);
-  color: #0A0C0E;
-  border: none;
-  box-shadow: 0 8px 24px rgba(232, 145, 60, 0.35);
-}
-.pricing-cta-btn.primary:hover {
-  background: #f0a356;
-  transform: scale(1.02);
-  box-shadow: 0 12px 30px rgba(232, 145, 60, 0.5);
-}
-
-/* =========================================================
    CLOSE & FOOTER & CONTACT
    ========================================================= */
 .close-section {
@@ -1191,9 +989,6 @@ nav.top-nav {
 @media (max-width: 960px) {
   .console-grid { grid-template-columns: 1fr; }
   .metrics-quad { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; gap: 32px; }
-  .pricing-card.featured { transform: none; }
-  .pricing-card.featured:hover { transform: translateY(-4px); }
   .form-grid { grid-template-columns: 1fr !important; }
 }
 </style>
@@ -1224,12 +1019,12 @@ nav.top-nav {
     <nav class="freight-nav">
       <a href="#" class="freight-nav-brand">
         <img src="assets/orayzis-symbol-white.png" alt="Orayzis Logo" style="height:22px; width:22px; vertical-align:middle; display:inline-block;">
-        <span>BRUCE // ORAYZIS</span>
+        <span>BRUCE // PORTFOLIO</span>
       </a>
       <div class="freight-nav-actions">
-        <a href="admin.html" class="freight-nav-link">&rarr; Log In</a>
-        <a href="#tarifs" class="freight-nav-link">Offres</a>
-        <a href="#simulation" class="nav-pill-btn" style="background:#F7F5EF; color:#0a0b0c; border:none; padding:7px 18px; font-weight:700;">Tester Bruce</a>
+        <a href="admin.html" class="freight-nav-link">&rarr; Console Admin</a>
+        <a href="#simulation" class="freight-nav-link">Démonstration</a>
+        <a href="https://github.com/Orayzis" target="_blank" class="nav-pill-btn" style="background:#F7F5EF; color:#0a0b0c; border:none; padding:7px 18px; font-weight:700;">Code Source</a>
       </div>
     </nav>
 
@@ -1296,8 +1091,8 @@ nav.top-nav {
           <text x="17" y="26" font-family="'Exo 2', sans-serif" font-weight="800" font-size="28" fill="#F9F9F9" text-anchor="middle">&euro;</text>
         </svg>
       </div>
-      <div class="feature-title">TARIFICATION CLAIRE<br>&amp; SANS SURPRISE</div>
-      <div class="feature-body">Aucun frais caché. Des formules fixes dès<br>24,99€/mois ou sur devis pour des architectures<br>d'entreprise sur-mesure.</div>
+      <div class="feature-title">PROJET OPEN SOURCE<br>&amp; ACCESSIBLE</div>
+      <div class="feature-body">Une architecture étudiée pour être transparente.<br>L'intégralité du code et de la logique de<br>fonctionnement est documentée.</div>
     </div>
 
     <!-- Row 3: top 2063/8 vh (257.875vh) -->
@@ -1524,149 +1319,27 @@ nav.top-nav {
   </div>
 </section>
 
-<!-- ROSTER & TARIFS (3 LUXURY CARDS) -->
-<section id="tarifs" class="roster-section">
-  <div class="container">
-    <div class="roster-title-row">
-      <div class="label-caps amber-text">Formules &bull; Bruce AI</div>
-      <h2>Des solutions adaptées à votre quotidien</h2>
-      <p style="color:var(--color-ink-secondary); font-size:15px; margin-top:12px; max-width:600px; margin-left:auto; margin-right:auto;">
-        Démarrez immédiatement sans engagement ou personnalisez l'assistant selon les processus de votre organisation.
-      </p>
-    </div>
-
-    <div class="pricing-grid">
-      <!-- Card 1: Essentielle -->
-      <div class="pricing-card">
-        <div>
-          <div class="card-badge-top">DÉMARRAGE</div>
-          <div class="card-title">Essentielle</div>
-          <div class="card-desc">L'essentiel pour structurer votre journée dès l'aube en toute autonomie.</div>
-          <div class="card-price-wrap">
-            <span class="card-price">39,99€</span>
-            <span class="card-price-unit">/ mois</span>
-          </div>
-          <div class="card-divider"></div>
-          <ul class="card-features">
-            <li>
-              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Briefing matinal automatique</span>
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Synchronisation Google Calendar &amp; iCal</span>
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Météo locale quotidienne</span>
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Tri des e-mails avec lecture furtive</span>
-            </li>
-            <li>
-              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Sans engagement, résiliable à tout moment</span>
-            </li>
-          </ul>
-        </div>
-        <a href="#contactSection" class="pricing-cta-btn">Sélectionner</a>
-      </div>
-
-      <!-- Card 2: Bruce Pro (Featured) -->
-      <div class="pricing-card featured">
-        <div>
-          <div class="card-badge-featured">RECOMMANDÉ // OFFRE ANNUELLE</div>
-          <div class="card-title">Bruce Pro</div>
-          <div class="card-desc">L'assistant complet avec arbitrage en temps réel et vocalisation haute définition.</div>
-          <div class="card-price-wrap">
-            <span class="card-price">24,99€</span>
-            <span class="card-price-unit">/ mois</span>
-          </div>
-          <div class="card-strike-note">Économisez 50% sur l'abonnement initial</div>
-          <div class="card-divider"></div>
-          <ul class="card-features">
-            <li>
-              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span><strong>Toutes les fonctions Essentielles incluses</strong></span>
-            </li>
-            <li>
-              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span><strong>Vocalisation neuronale Bruce HD</strong></span>
-            </li>
-            <li>
-              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span><strong>Calcul prédictif des temps de trajet</strong></span>
-            </li>
-            <li>
-              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Résolution instantanée des conflits d'agenda</span>
-            </li>
-            <li>
-              <svg class="check-icon amber" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Support technique prioritaire dédié 7j/7</span>
-            </li>
-          </ul>
-        </div>
-        <a href="#contactSection" class="pricing-cta-btn primary">Activer Bruce Pro</a>
-      </div>
-
-      <!-- Card 3: Sur-Mesure -->
-      <div class="pricing-card">
-        <div>
-          <div class="card-badge-top teal">ENTREPRISE &amp; FLOTTES</div>
-          <div class="card-title">Sur-Mesure</div>
-          <div class="card-desc">Pour les directions, flottes de collaborateurs et organisations exigeantes.</div>
-          <div class="card-price-wrap">
-            <span class="card-price">Sur Devis</span>
-          </div>
-          <div class="card-divider"></div>
-          <ul class="card-features">
-            <li>
-              <svg class="check-icon teal" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Multi-comptes &amp; agendas synchronisés d'équipe</span>
-            </li>
-            <li>
-              <svg class="check-icon teal" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Connecteurs CRM, ERP et SI d'entreprise</span>
-            </li>
-            <li>
-              <svg class="check-icon teal" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Règles d'arbitrage et API privées Orayzis</span>
-            </li>
-            <li>
-              <svg class="check-icon teal" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              <span>Déploiement dédié &amp; SLA contractuel garanti</span>
-            </li>
-          </ul>
-        </div>
-        <a href="#contactSection" class="pricing-cta-btn">Étudier le projet</a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CLOSE & CROPPED GIANT WORDMARK -->
 <footer class="close-section">
   <div class="container">
     <div class="close-content">
       <div class="close-left">
-        <div class="label-caps teal-text">Activation Simplifiée</div>
-        <h2>Gagnez en clarté dès votre réveil.</h2>
-        <p>L'intelligence Bruce est prête à simplifier vos matinées. Contactez l'équipe Orayzis pour amorcer votre installation.</p>
+        <div class="label-caps teal-text">Projet Open Source</div>
+        <h2>Une architecture à votre disposition.</h2>
+        <p>Bruce est un démonstrateur technique illustrant mes compétences en développement Python, ingénierie système et intégration d'API.</p>
       </div>
       <div class="close-actions">
-        <a href="#simulation" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground);">Tester Bruce</a>
-        <a href="#contactSection" class="nav-pill-btn">Contacter Orayzis</a>
+        <a href="https://github.com/Orayzis" target="_blank" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground);">Voir sur GitHub</a>
+        <a href="#contactSection" class="nav-pill-btn">Me contacter</a>
       </div>
     </div>
 
     <!-- Contact & Access Request Form -->
     <div class="contact-form-card" id="contactSection">
-      <div class="label-caps amber-text" style="margin-bottom:8px;">Contact &bull; Accès Privilégié</div>
-      <h3 style="font-size:24px; margin-bottom:12px; font-family:var(--font-display);">Demander un accès à Bruce</h3>
+      <div class="label-caps amber-text" style="margin-bottom:8px;">Contact &bull; Portfolio</div>
+      <h3 style="font-size:24px; margin-bottom:12px; font-family:var(--font-display);">Me contacter</h3>
       <p style="color:var(--color-ink-secondary); font-size:14px; margin-bottom:28px; line-height:1.5;">
-        Indiquez votre besoin ou posez vos questions à l'équipe Orayzis. Nous vous répondrons dans les plus brefs délais.
+        Une question sur l'architecture, le code source ou une proposition de collaboration ? N'hésitez pas.
       </p>
       <form id="secureContactForm" novalidate autocomplete="off">
         <div class="form-grid">
@@ -1697,10 +1370,6 @@ nav.top-nav {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             <span>Conformité RGPD intégrale</span>
           </div>
-          <div class="guarantee-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span>Activation sous 24h ouvrées</span>
-          </div>
         </div>
       </form>
     </div>
@@ -1714,7 +1383,6 @@ nav.top-nav {
         <a href="#freightTrack">Accueil</a>
         <a href="#featureBlock1">Capacités</a>
         <a href="#simulation">Démonstration</a>
-        <a href="#tarifs">Offres</a>
         <a href="admin.html" class="admin-link" style="color:var(--color-muted); text-decoration:none; font-size:11px; border:1px solid rgba(237,231,220,0.15); padding:5px 12px; border-radius:12px; transition:all .2s ease;">Espace Admin &rarr;</a>
       </div>
     </div>
