@@ -6,7 +6,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Orayzis &bull; Bruce AI Assistant</title>
+<title>Rayan Mouzaine &bull; Bruce AI Assistant</title>
 <link rel="icon" type="image/png" href="assets/orayzis-symbol-clean.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,63 +110,17 @@ nav.top-nav {
   letter-spacing: -0.02em;
   color: var(--color-ink);
 }
-.nav-brand-logo {
-  height: 22px;
-  width: auto;
-  display: block;
-}
-.nav-brand-dot { color: var(--color-amber); }
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  list-style: none;
-}
-.nav-link {
-  font-family: var(--font-sans);
-  font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-weight: 600;
-  color: var(--color-ink-secondary);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.nav-link:hover { color: var(--color-amber); }
-
-.nav-pill-btn {
-  font-family: var(--font-sans);
-  font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--hairline-light);
-  color: var(--color-ink);
-  text-decoration: none;
-  background: transparent;
-  transition: all 0.2s ease;
-}
-.nav-pill-btn:hover {
-  background: var(--color-ink);
-  color: var(--color-ground);
-  border-color: var(--color-ink);
-}
 
 /* =========================================================
-   FREIGHT SCROLL HERO ("LOGISTICS THAT WORKS AS HARD AS YOU DO.")
+   HERO SCROLL SECTION (VIDEO SCRUBBING)
    ========================================================= */
 
 .track {
   position: relative;
   width: 100%;
   background: #0a0b0c;
-  /* Height set dynamically by JS: (end + viewport) */
 }
 
-/* Sticky Scene */
 .scene {
   position: sticky;
   top: 0;
@@ -178,14 +132,13 @@ nav.top-nav {
   z-index: 1;
 }
 
-.freight-video {
+.hero-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Very light top/bottom tint (black at 2-12%) */
 .scene-tint {
   position: absolute;
   inset: 0;
@@ -200,7 +153,6 @@ nav.top-nav {
   z-index: 2;
 }
 
-/* Absolute content layer full height of the track */
 .content {
   position: absolute;
   top: 0;
@@ -211,8 +163,8 @@ nav.top-nav {
   z-index: 3;
 }
 
-/* Top Nav (discreet, accessible) */
-.freight-nav {
+/* Top Nav */
+.hero-nav {
   position: absolute;
   top: 0;
   left: 0;
@@ -226,7 +178,7 @@ nav.top-nav {
   pointer-events: auto;
   box-sizing: border-box;
 }
-.freight-nav-brand {
+.hero-nav-brand {
   font-family: 'Exo 2', sans-serif;
   font-weight: 800;
   font-size: calc(20 * var(--u));
@@ -238,12 +190,12 @@ nav.top-nav {
   align-items: center;
   gap: 10px;
 }
-.freight-nav-actions {
+.hero-nav-actions {
   display: flex;
   align-items: center;
   gap: calc(24 * var(--u));
 }
-.freight-nav-link {
+.hero-nav-link {
   font-family: 'Public Sans', sans-serif;
   font-weight: 700;
   font-size: calc(11 * var(--u));
@@ -254,11 +206,25 @@ nav.top-nav {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   transition: opacity 0.2s ease;
 }
-.freight-nav-link:hover {
-  opacity: 0.75;
-}
+.hero-nav-link:hover { opacity: 0.75; }
 
-/* Intro Block: top 940/8 vh (117.5vh), centred, 1280u wide */
+.nav-pill-btn {
+  font-family: 'Public Sans', sans-serif;
+  font-size: calc(11 * var(--u));
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: #F7F5EF;
+  color: #0a0b0c;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  pointer-events: auto;
+}
+.nav-pill-btn:hover { transform: scale(1.02); }
+
+/* Intro Block */
 .intro-block {
   position: absolute;
   top: calc(940 / 8 * 1vh);
@@ -282,7 +248,7 @@ nav.top-nav {
   text-shadow: 0 calc(8 * var(--u)) calc(20 * var(--u)) rgba(0, 0, 0, 0.5);
 }
 
-.freight-headline {
+.hero-headline {
   font-family: 'Exo 2', sans-serif;
   font-weight: 800;
   font-size: calc(56 * var(--u));
@@ -294,11 +260,9 @@ nav.top-nav {
   flex-direction: column;
   align-items: center;
 }
-.freight-headline span {
-  white-space: nowrap;
-}
+.hero-headline span { white-space: nowrap; }
 
-/* Feature Blocks: 300u wide */
+/* Feature Blocks */
 .feature-block {
   position: absolute;
   width: calc(300 * var(--u));
@@ -335,59 +299,44 @@ nav.top-nav {
   text-shadow: 0 calc(6 * var(--u)) calc(16 * var(--u)) rgba(0, 0, 0, 0.5);
 }
 
-/* Desktop Rows Positioning */
-/* Row 1: top 1500/8 vh */
 .feature-row-1-left {
   top: calc(1500 / 8 * 1vh);
   left: calc(50% - (78 * var(--u)) - (300 * var(--u)));
   text-align: right;
 }
-.feature-row-1-left .feature-icon-wrap {
-  justify-content: flex-end;
-}
+.feature-row-1-left .feature-icon-wrap { justify-content: flex-end; }
 
 .feature-row-1-right {
   top: calc(1500 / 8 * 1vh);
   left: calc(50% + (78 * var(--u)));
   text-align: left;
 }
-.feature-row-1-right .feature-icon-wrap {
-  justify-content: flex-start;
-}
+.feature-row-1-right .feature-icon-wrap { justify-content: flex-start; }
 
-/* Row 2: top 1759/8 vh */
 .feature-row-2-left {
   top: calc(1759 / 8 * 1vh);
   left: calc(50% - (88 * var(--u)) - (300 * var(--u)));
   text-align: right;
 }
-.feature-row-2-left .feature-icon-wrap {
-  justify-content: flex-end;
-}
+.feature-row-2-left .feature-icon-wrap { justify-content: flex-end; }
 
 .feature-row-2-right {
   top: calc(1759 / 8 * 1vh);
   left: calc(50% + (88 * var(--u)));
   text-align: left;
 }
-.feature-row-2-right .feature-icon-wrap {
-  justify-content: flex-start;
-}
+.feature-row-2-right .feature-icon-wrap { justify-content: flex-start; }
 
-/* Row 3: top 2063/8 vh (centered) */
 .feature-row-3-center {
   top: calc(2063 / 8 * 1vh);
   left: calc(50% - (150 * var(--u)));
   text-align: center;
 }
-.feature-row-3-center .feature-icon-wrap {
-  justify-content: center;
-}
+.feature-row-3-center .feature-icon-wrap { justify-content: center; }
 
 /* =========================================================
-   TESTIMONIAL SECTION (.trust)
+   PROJECT DETAILS SECTION
    ========================================================= */
-
 .trust {
   position: relative;
   margin-top: -34vh;
@@ -467,66 +416,22 @@ nav.top-nav {
   max-width: 680px;
 }
 
-/* Portrait / Mobile (<= 609px, or portrait aspect) */
 @media (max-width: 609px), (orientation: portrait) {
-  .intro-block {
-    top: 112vh;
-    width: 90vw;
-  }
-  .freight-headline {
-    font-size: clamp(34px, calc(46 * var(--u)), 72px);
-    line-height: 1.1;
-  }
-
-  .feature-block {
-    position: relative;
-    top: auto !important;
-    left: auto !important;
-    width: 86vw;
-    margin: 0 auto;
-    text-align: center !important;
-  }
-  .feature-icon-wrap {
-    justify-content: center !important;
-    margin-bottom: 16px;
-  }
-  .feature-title br, .feature-body br {
-    display: none;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 112vh;
-    gap: 16vh;
-    box-sizing: border-box;
-  }
-  .intro-block {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin-bottom: 8vh;
-  }
-
-  .trust-container {
-    padding: 34vh 22px 100px;
-  }
-  .trust-header {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .quote-row {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 32px 0;
-  }
+  .intro-block { top: 112vh; width: 90vw; }
+  .hero-headline { font-size: clamp(34px, calc(46 * var(--u)), 72px); line-height: 1.1; }
+  .feature-block { position: relative; top: auto !important; left: auto !important; width: 86vw; margin: 0 auto; text-align: center !important; }
+  .feature-icon-wrap { justify-content: center !important; margin-bottom: 16px; }
+  .feature-title br, .feature-body br { display: none; }
+  .content { display: flex; flex-direction: column; align-items: center; padding-top: 112vh; gap: 16vh; box-sizing: border-box; }
+  .intro-block { position: relative; top: auto; left: auto; transform: none; margin-bottom: 8vh; }
+  .trust-container { padding: 34vh 22px 100px; }
+  .trust-header { grid-template-columns: 1fr; gap: 18px; }
+  .quote-row { grid-template-columns: 1fr; gap: 14px; padding: 32px 0; }
 }
 
-
-
-/* INTERACTIVE LIVE CONSOLE (BRUCE AI AUDIO ENGINE) */
+/* =========================================================
+   CONSOLE SECTION
+   ========================================================= */
 .console-section {
   padding: 130px 0;
   background: #07090c;
@@ -547,501 +452,119 @@ nav.top-nav {
 }
 .console-header h2 { font-size: clamp(28px, 3.2vw, 42px); }
 
-.console-controls {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-}
+.console-controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .pill-group {
-  display: inline-flex;
-  background: rgba(237, 231, 220, 0.05);
-  border: 1px solid rgba(237, 231, 220, 0.12);
-  border-radius: 999px;
-  padding: 4px;
-  gap: 2px;
+  display: inline-flex; background: rgba(237, 231, 220, 0.05); border: 1px solid rgba(237, 231, 220, 0.12); border-radius: 999px; padding: 4px; gap: 2px;
 }
 .pill-btn {
-  background: transparent;
-  color: var(--color-ink-secondary);
-  border: none;
-  padding: 8px 18px;
-  border-radius: 999px;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  background: transparent; color: var(--color-ink-secondary); border: none; padding: 8px 18px; border-radius: 999px;
+  font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
 }
 .pill-btn:hover { color: var(--color-ink); }
-.pill-btn[aria-pressed="true"] {
-  background: var(--color-ink);
-  color: var(--color-ground);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
+.pill-btn[aria-pressed="true"] { background: var(--color-ink); color: var(--color-ground); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
-/* Audio Player Bar */
 .audio-bar {
   background: linear-gradient(135deg, rgba(22, 27, 34, 0.9) 0%, rgba(13, 16, 21, 0.98) 100%);
-  border: 1px solid rgba(237, 231, 220, 0.14);
-  border-radius: 18px;
-  padding: 22px 28px;
-  margin-bottom: 40px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 16px 36px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(237, 231, 220, 0.14); border-radius: 18px; padding: 22px 28px; margin-bottom: 40px; display: flex; align-items: center; gap: 24px;
 }
-.audio-bar:hover {
-  border-color: rgba(232, 145, 60, 0.35);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.55), 0 0 25px rgba(232, 145, 60, 0.08);
-}
-.audio-bar.is-playing {
-  border-color: rgba(232, 145, 60, 0.65);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.6), 0 0 35px rgba(232, 145, 60, 0.2);
-}
-
 .audio-trigger-btn {
-  position: relative;
-  width: 54px; height: 54px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #EDE7DC 0%, #D8CFBE 100%);
-  color: #0A0C0E;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-.audio-trigger-btn:hover {
-  transform: scale(1.08);
-  background: var(--color-amber);
-  color: #0A0C0E;
-  box-shadow: 0 0 25px rgba(232, 145, 60, 0.5);
+  width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #EDE7DC 0%, #D8CFBE 100%); color: #0A0C0E; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .audio-trigger-btn svg { width: 22px; height: 22px; fill: currentColor; }
-
-.btn-pulse-ring {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(232, 145, 60, 0.5);
-  opacity: 0;
-  pointer-events: none;
-}
-.is-playing .btn-pulse-ring {
-  animation: pulseRing 1.8s infinite cubic-bezier(0.2, 0.8, 0.4, 1);
-}
-@keyframes pulseRing {
-  0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(1.4); opacity: 0; }
-}
-
-.live-led {
-  display: inline-block;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: #10B981;
-  box-shadow: 0 0 8px #10B981;
-  margin-right: 8px;
-  animation: ledBlink 3s ease-in-out infinite;
-}
-@keyframes ledBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-.is-playing .live-led {
-  background: #E8913C;
-  box-shadow: 0 0 12px #E8913C;
-}
-.audio-tag-chip {
-  font-size: 9.5px;
-  font-family: var(--font-sans);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgba(46, 107, 114, 0.25);
-  color: #72D2DC;
-  border: 1px solid rgba(46, 107, 114, 0.4);
-}
-
 .audio-track-info { flex-grow: 1; min-width: 0; }
-.audio-title-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.audio-identity {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--color-ink);
-}
-.audio-status-text {
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: var(--color-muted);
-  text-transform: uppercase;
-}
+.audio-title-line { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.audio-identity { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 15px; font-weight: 700; }
+.audio-status-text { font-size: 12px; letter-spacing: 0.08em; color: var(--color-muted); text-transform: uppercase; }
+.equalizer-wave { display: flex; align-items: center; gap: 3.5px; height: 24px; width: 100%; }
+.eq-bar { flex: 1; height: 3px; background: rgba(237, 231, 220, 0.16); border-radius: 2px; }
 
-.equalizer-wave {
-  display: flex;
-  align-items: center;
-  gap: 3.5px;
-  height: 24px;
-  width: 100%;
-}
-.eq-bar {
-  flex: 1;
-  height: 3px;
-  background: rgba(237, 231, 220, 0.16);
-  border-radius: 2px;
-  transition: height 0.2s ease, background 0.2s ease;
-}
-.is-playing .eq-bar {
-  background: var(--color-ink);
-  animation: wavePulse 0.9s ease-in-out infinite alternate;
-}
-.is-playing .eq-bar:nth-child(2n) { animation-duration: 0.7s; animation-delay: 0.1s; background: var(--color-amber); }
-.is-playing .eq-bar:nth-child(3n) { animation-duration: 1.1s; animation-delay: 0.2s; }
-.is-playing .eq-bar:nth-child(4n) { animation-duration: 0.8s; animation-delay: 0.15s; }
-.is-playing .eq-bar:nth-child(5n) { animation-duration: 1.2s; animation-delay: 0.25s; background: var(--color-teal); }
-
-@keyframes wavePulse {
-  0% { height: 3px; }
-  50% { height: 22px; }
-  100% { height: 5px; }
-}
-
-/* Console Workspace */
-.console-grid {
-  display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 40px;
-  align-items: start;
-}
-.cadran-wrapper {
-  background: linear-gradient(180deg, rgba(22, 26, 33, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%);
-  border: 1px solid rgba(237, 231, 220, 0.12);
-  border-radius: 20px;
-  padding: 34px 26px;
-  text-align: center;
-  box-shadow: 0 16px 36px rgba(0,0,0,0.35);
-}
+.console-grid { display: grid; grid-template-columns: 380px 1fr; gap: 40px; align-items: start; }
+.cadran-wrapper { background: linear-gradient(180deg, rgba(22, 26, 33, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%); border: 1px solid rgba(237, 231, 220, 0.12); border-radius: 20px; padding: 34px 26px; text-align: center; }
 #cadran { width: 100%; max-width: 300px; margin: 0 auto; display: block; }
-.piste { fill: none; stroke: rgba(237,231,220,0.06); stroke-width: 14; }
-.graduation { stroke: var(--color-ink-secondary); stroke-width: 1; opacity: 0.15; }
-.heure-cadran { font-size: 11px; fill: var(--color-muted); text-anchor: middle; dominant-baseline: middle; font-family: var(--font-sans); }
-.arc { fill: none; stroke-width: 14; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: tracer 1s ease-out forwards; }
-@keyframes tracer { to { stroke-dashoffset: 0; } }
-.centre-jour { font-size: 22px; font-family: var(--font-display); font-weight: 700; fill: var(--color-ink); text-anchor: middle; }
-
-.cadran-legend-row {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 24px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(237, 231, 220, 0.1);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-muted);
-}
-.leg-item { display: inline-flex; align-items: center; gap: 6px; }
-.leg-dot { width: 7px; height: 7px; border-radius: 50%; }
-
-.console-body {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.console-panel {
-  background: linear-gradient(180deg, rgba(22, 26, 33, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%);
-  border: 1px solid rgba(237, 231, 220, 0.12);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 16px 36px rgba(0,0,0,0.35);
-}
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid rgba(237, 231, 220, 0.1);
-}
-.metrics-quad {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-.quad-cell {
-  background: rgba(237, 231, 220, 0.03);
-  border: 1px solid rgba(237, 231, 220, 0.08);
-  border-radius: 12px;
-  padding: 18px;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-.quad-cell:hover {
-  border-color: rgba(232, 145, 60, 0.25);
-  transform: translateY(-2px);
-}
-.quad-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--color-muted);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.quad-val {
-  font-size: 15px;
-  color: var(--color-ink);
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.alert-strip {
-  border-radius: 12px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  font-size: 14px;
-  line-height: 1.5;
-  border: 1px solid rgba(237, 231, 220, 0.12);
-}
-.alert-strip.ok {
-  background: rgba(46, 107, 114, 0.14);
-  border-color: rgba(46, 107, 114, 0.4);
-  color: #B2D8DC;
-}
-.alert-strip.warning {
-  background: rgba(232, 145, 60, 0.14);
-  border-color: rgba(232, 145, 60, 0.4);
-  color: #F8C394;
-}
+.console-body { display: flex; flex-direction: column; gap: 20px; }
+.console-panel { background: linear-gradient(180deg, rgba(22, 26, 33, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%); border: 1px solid rgba(237, 231, 220, 0.12); border-radius: 20px; padding: 30px; }
+.panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 1px solid rgba(237, 231, 220, 0.1); }
+.metrics-quad { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.quad-cell { background: rgba(237, 231, 220, 0.03); border: 1px solid rgba(237, 231, 220, 0.08); border-radius: 12px; padding: 18px; }
+.quad-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.quad-val { font-size: 15px; color: var(--color-ink); font-weight: 500; }
+.alert-strip { border-radius: 12px; padding: 16px 20px; display: flex; align-items: flex-start; gap: 14px; font-size: 14px; border: 1px solid rgba(237, 231, 220, 0.12); }
+.alert-strip.ok { background: rgba(46, 107, 114, 0.14); border-color: rgba(46, 107, 114, 0.4); color: #B2D8DC; }
+.alert-strip.warning { background: rgba(232, 145, 60, 0.14); border-color: rgba(232, 145, 60, 0.4); color: #F8C394; }
 
 /* =========================================================
-   CLOSE & FOOTER & CONTACT
+   CLOSE SECTION (RECRUITMENT)
    ========================================================= */
 .close-section {
   padding: 140px 0 0;
   background: #040507;
-  background-image:
-    radial-gradient(circle at 50% 100%, rgba(232, 145, 60, 0.08) 0%, transparent 70%);
   border-top: 1px solid rgba(237, 231, 220, 0.08);
   position: relative;
   overflow: hidden;
 }
-.close-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 40px;
-  margin-bottom: 80px;
-}
-.close-left h2 {
-  font-size: clamp(32px, 4vw, 56px);
-  margin-bottom: 16px;
-}
-.close-left p {
-  color: var(--color-ink-secondary);
-  font-size: 16px;
-  max-width: 500px;
-}
-.close-actions {
-  display: flex;
-  gap: 16px;
-}
+.close-content { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 40px; margin-bottom: 80px; }
+.close-left h2 { font-size: clamp(32px, 4vw, 56px); margin-bottom: 16px; }
+.close-left p { color: var(--color-ink-secondary); font-size: 16px; max-width: 500px; }
+.close-actions { display: flex; gap: 16px; }
 
-/* Contact & Deployment Request Form */
 .contact-form-card {
   background: linear-gradient(180deg, rgba(22, 26, 33, 0.9) 0%, rgba(12, 14, 18, 0.98) 100%);
-  border: 1px solid rgba(237, 231, 220, 0.14);
-  border-radius: 22px;
-  padding: 44px 40px;
-  margin-top: 48px;
-  margin-bottom: 64px;
-  max-width: 720px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  border: 1px solid rgba(237, 231, 220, 0.14); border-radius: 22px; padding: 44px 40px; margin-top: 48px; margin-bottom: 64px; max-width: 720px;
 }
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.form-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-muted);
-  font-weight: 600;
-}
-.form-input, .form-textarea {
-  background: rgba(237, 231, 220, 0.03);
-  border: 1px solid rgba(237, 231, 220, 0.12);
-  border-radius: 8px;
-  padding: 13px 15px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--color-ink);
-  transition: all 0.2s ease;
-  outline: none;
-}
-.form-input:focus, .form-textarea:focus {
-  border-color: var(--color-amber);
-  box-shadow: 0 0 0 3px rgba(232, 145, 60, 0.15);
-  background: rgba(237, 231, 220, 0.05);
-}
-.form-textarea {
-  resize: vertical;
-  min-height: 96px;
-}
-.form-status {
-  font-size: 12px;
-  margin-top: 12px;
-  min-height: 20px;
-}
-.form-status.success { color: #a7f3d0; }
-.form-status.error { color: #fca5a5; }
-
-.contact-guarantees {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(237, 231, 220, 0.08);
-  font-size: 11.5px;
-  color: var(--color-muted);
-}
-.guarantee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.guarantee-item svg {
-  width: 15px; height: 15px;
-  color: var(--color-amber);
-  flex-shrink: 0;
-}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-muted); font-weight: 600; }
+.form-input, .form-textarea { background: rgba(237, 231, 220, 0.03); border: 1px solid rgba(237, 231, 220, 0.12); border-radius: 8px; padding: 13px 15px; font-family: var(--font-sans); font-size: 14px; color: var(--color-ink); outline: none; }
+.form-textarea { resize: vertical; min-height: 96px; }
 
 .footer-strip {
-  border-top: 1px solid rgba(237, 231, 220, 0.1);
-  padding: 32px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--color-muted);
+  border-top: 1px solid rgba(237, 231, 220, 0.1); padding: 32px 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-muted);
 }
-.footer-strip a { color: var(--color-ink-secondary); text-decoration: none; transition: color 0.2s; }
-.footer-strip a:hover { color: var(--color-amber); }
+.footer-strip a { color: var(--color-ink-secondary); text-decoration: none; }
+.giant-wordmark-wrap { width: 100%; text-align: center; overflow: hidden; line-height: 0.76; pointer-events: none; }
+.giant-wordmark { font-family: var(--font-display); font-size: clamp(80px, 20vw, 290px); font-weight: 800; letter-spacing: -0.03em; color: rgba(237, 231, 220, 0.04); transform: translateY(22%); display: inline-block; white-space: nowrap; }
 
-/* Signature Cropped Wordmark */
-.giant-wordmark-wrap {
-  width: 100%;
-  text-align: center;
-  overflow: hidden;
-  line-height: 0.76;
-  user-select: none;
-  pointer-events: none;
-}
-.giant-wordmark {
-  font-family: var(--font-display);
-  font-size: clamp(80px, 20vw, 290px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: rgba(237, 231, 220, 0.04);
-  transform: translateY(22%);
-  display: inline-block;
-  white-space: nowrap;
-}
-
-/* Responsive adjustments */
 @media (max-width: 960px) {
   .console-grid { grid-template-columns: 1fr; }
-  .metrics-quad { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr !important; }
 }
 </style>
 </head>
 <body>
 
-<!-- FREIGHT SCROLL HERO -->
-<div class="track" id="freightTrack">
-  <!-- Sticky Scene -->
-  <div class="scene" id="freightScene">
-    <video
-      id="freightVideo"
-      class="freight-video"
-      playsinline
-      muted
-      preload="auto"
-      poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/5e018553-cb8a-420a-819f-fcdfa08e5df0.jpg"
-    >
-      <source src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e02bb27f-80d8-445f-a03e-1b609dac4261.mp4" type="video/mp4" media="(min-width: 901px)">
-      <source src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e8eb434f-d097-4b1b-b9e6-c8b46fa43040.mp4" type="video/mp4">
+<div class="track" id="trackScroll">
+  <div class="scene">
+    <!-- INSÉREZ ICI LA VIDÉO DE VOTRE APPLICATION/TÉLÉPHONE.
+         La vidéo sera lue au scroll (scrubbing). Gardez le format MP4. -->
+    <video id="heroVideo" class="hero-video" playsinline muted preload="auto" poster="assets/placeholder-phone.jpg">
+      <source src="assets/votre-video-telephone.mp4" type="video/mp4">
     </video>
     <div class="scene-tint"></div>
   </div>
 
-  <!-- Content Layer: Full height of the track, scrolls over video -->
-  <div class="content" id="freightContent">
-    <!-- Top Nav -->
-    <nav class="freight-nav">
-      <a href="#" class="freight-nav-brand">
-        <img src="assets/orayzis-symbol-white.png" alt="Orayzis Logo" style="height:22px; width:22px; vertical-align:middle; display:inline-block;">
+  <div class="content">
+    <nav class="hero-nav">
+      <a href="#" class="hero-nav-brand">
         <span>BRUCE // PORTFOLIO</span>
       </a>
-      <div class="freight-nav-actions">
-        <a href="admin.html" class="freight-nav-link">&rarr; Console Admin</a>
-        <a href="#simulation" class="freight-nav-link">Démonstration</a>
-        <a href="https://github.com/Orayzis" target="_blank" class="nav-pill-btn" style="background:#F7F5EF; color:#0a0b0c; border:none; padding:7px 18px; font-weight:700;">Code Source</a>
+      <div class="hero-nav-actions">
+        <a href="admin.html" class="hero-nav-link">&rarr; Console Admin</a>
+        <a href="#simulation" class="hero-nav-link">Démonstration</a>
+        <a href="https://github.com/Orayzis" target="_blank" class="nav-pill-btn">Code Source</a>
       </div>
     </nav>
 
-    <!-- Intro Block: top 940/8 vh (117.5vh) -->
     <div class="intro-block" id="introBlock">
-      <div class="intro-eyebrow">ASSISTANT PERSONNEL &bull; ORAYZIS</div>
-      <h1 class="freight-headline">
+      <div class="intro-eyebrow">PROJET ÉTUDIANT &bull; RAYAN MOUZAINE</div>
+      <h1 class="hero-headline">
         <span>L'INTELLIGENCE</span>
-        <span>QUI TRAVAILLE</span>
-        <span>AUSSI DUR</span>
-        <span>QUE VOUS.</span>
+        <span>QUI ORGANISE</span>
+        <span>MON QUOTIDIEN.</span>
       </h1>
     </div>
 
-    <!-- Row 1: top 1500/8 vh (187.5vh) -->
-    <!-- Feature 1: Left column, right-aligned, 78u left of axis -->
-    <div class="feature-block feature-row-1-left" id="featureBlock1">
+    <!-- Feature 1 -->
+    <div class="feature-block feature-row-1-left">
       <div class="feature-icon-wrap">
         <svg viewBox="0 0 34 34" fill="none">
           <circle cx="17" cy="17" r="15" stroke="#F9F9F9" stroke-width="1.5" stroke-dasharray="2 3.5" />
@@ -1050,12 +573,12 @@ nav.top-nav {
           <line x1="6.5" y1="17" x2="27.5" y2="17" stroke="#F9F9F9" stroke-width="1.2" />
         </svg>
       </div>
-      <div class="feature-title">BRIEFING VOCAL<br>DU MATIN</div>
-      <div class="feature-body">Fini d'ouvrir cinq applications au réveil. Bruce<br>synthétise vos agendas, trajets et urgences<br>en un seul point d'écoute matinal.</div>
+      <div class="feature-title">BRIEFING VOCAL<br>AUTOMATISÉ</div>
+      <div class="feature-body">Fini d'ouvrir cinq applications au réveil. Mon script Python<br>synthétise mes agendas (IUT, travail, coaching)<br>en un rapport audio matinal.</div>
     </div>
 
-    <!-- Feature 2: Right column, left-aligned, 78u right of axis -->
-    <div class="feature-block feature-row-1-right" id="featureBlock2">
+    <!-- Feature 2 -->
+    <div class="feature-block feature-row-1-right">
       <div class="feature-icon-wrap">
         <svg viewBox="0 0 34 34" fill="none">
           <rect x="3" y="21" width="28" height="9" rx="1.5" stroke="#F9F9F9" stroke-width="1.5" fill="none" />
@@ -1066,13 +589,12 @@ nav.top-nav {
           <rect x="11" y="3" width="12" height="9" rx="1.5" stroke="#F9F9F9" stroke-width="1.5" fill="none" />
         </svg>
       </div>
-      <div class="feature-title">VISIBILITÉ TOTALE<br>DU PLANNING</div>
-      <div class="feature-body">Suivez vos engagements en temps réel et<br>anticipez les retards de trajet avant même<br>qu'ils ne perturbent votre journée.</div>
+      <div class="feature-title">MOTEUR<br>D'ANTICIPATION</div>
+      <div class="feature-body">Détection algorithmique des conflits temporels.<br>Le backend repère immédiatement les chevauchements<br>entre mes différents engagements.</div>
     </div>
 
-    <!-- Row 2: top 1759/8 vh (219.875vh) -->
-    <!-- Feature 3: Left column, right-aligned, 88u left of axis -->
-    <div class="feature-block feature-row-2-left" id="featureBlock3">
+    <!-- Feature 3 -->
+    <div class="feature-block feature-row-2-left">
       <div class="feature-icon-wrap">
         <svg viewBox="0 0 34 34" fill="none">
           <circle cx="17" cy="17" r="15" stroke="#F9F9F9" stroke-width="1.5" stroke-dasharray="2 3.5" />
@@ -1081,91 +603,87 @@ nav.top-nav {
         </svg>
       </div>
       <div class="feature-title">CONFIDENTIALITÉ &bull;<br>LECTURE FURTIVE</div>
-      <div class="feature-body">Protocole IMAP avancé (BODY.PEEK) : vos<br>courriels urgents sont analysés sans jamais<br>être marqués comme lus.</div>
+      <div class="feature-body">Scan sécurisé de ma boîte de réception. Le script extrait<br>les e-mails urgents de manière furtive,<br>sans déclencher l'accusé de lecture.</div>
     </div>
 
-    <!-- Feature 4: Right column, left-aligned, 88u right of axis -->
-    <div class="feature-block feature-row-2-right" id="featureBlock4">
-      <div class="feature-icon-wrap">
-        <svg viewBox="0 0 34 34" fill="none">
-          <text x="17" y="26" font-family="'Exo 2', sans-serif" font-weight="800" font-size="28" fill="#F9F9F9" text-anchor="middle">&euro;</text>
-        </svg>
-      </div>
-      <div class="feature-title">PROJET OPEN SOURCE<br>&amp; ACCESSIBLE</div>
-      <div class="feature-body">Une architecture étudiée pour être transparente.<br>L'intégralité du code et de la logique de<br>fonctionnement est documentée.</div>
-    </div>
-
-    <!-- Row 3: top 2063/8 vh (257.875vh) -->
-    <!-- Feature 5: Fifth block, centred -->
-    <div class="feature-block feature-row-3-center" id="featureBlock5">
+    <!-- Feature 4 -->
+    <div class="feature-block feature-row-2-right">
       <div class="feature-icon-wrap">
         <svg viewBox="0 0 34 34" fill="none">
           <path d="M10 8L19 17L10 26" stroke="#F9F9F9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M17 8L26 17L17 26" stroke="#F9F9F9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
-      <div class="feature-title">RÉSOLUTION IMMÉDIATE<br>DES CONFLITS</div>
-      <div class="feature-body">Quand un imprévu ou un chevauchement<br>survient, Bruce réorganise vos priorités<br>et vous alerte aussitôt.</div>
+      <div class="feature-title">PROJET ACADÉMIQUE<br>&amp; OPEN SOURCE</div>
+      <div class="feature-body">L'intégralité du code (Flask/Python) est documentée.<br>Architecture modulaire démontrant ma maîtrise<br>des flux de données et des intégrations API.</div>
+    </div>
+
+    <!-- Feature 5 -->
+    <div class="feature-block feature-row-3-center" id="lastFeature">
+      <div class="feature-icon-wrap">
+        <svg viewBox="0 0 34 34" fill="none">
+          <rect x="5" y="5" width="24" height="24" rx="3" stroke="#F9F9F9" stroke-width="2" fill="none"/>
+          <path d="M12 12h10M12 17h10M12 22h5" stroke="#F9F9F9" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="feature-title">RÉSOLUTION<br>DES TRAJETS</div>
+      <div class="feature-body">Le système calcule mathématiquement les battements<br>logistiques et génère des avertissements si<br>le temps de transit est inférieur à 25 minutes.</div>
     </div>
   </div>
 </div>
 
-<!-- AFTER THE CLOUDS: TESTIMONIAL SECTION (.trust) -->
-<section class="trust" id="trustSection">
+<!-- ARCHITECTURE SECTION -->
+<section class="trust">
   <div class="trust-container">
     <div class="trust-header">
       <div class="trust-title">
-        PLÉBISCITÉ<br>
-        PAR LES DÉCIDEURS<br>
-        <span class="trust-title-grey">&amp; ENTREPRENEURS</span>
+        UNE ARCHITECTURE<br>
+        AU SERVICE DU RÉEL
       </div>
       <div class="trust-note">
-        Des dirigeants de PME aux professionnels sursollicités, nos utilisateurs démarrent chaque journée avec un temps d'avance.
+        Projet conçu pour répondre à un défi personnel concret : synchroniser un emploi du temps universitaire, un poste en entreprise et des engagements sportifs au sein d'une infrastructure unique.
       </div>
     </div>
 
-    <!-- Quote 1 -->
     <div class="quote-row">
       <div>
-        <div class="quote-author">Thomas Reid</div>
-        <div class="quote-role">Fondateur, Studio Transat</div>
+        <div class="quote-author">Backend Python / Flask</div>
+        <div class="quote-role">Traitement Asynchrone</div>
       </div>
       <div class="quote-text">
-        &ldquo;Mon quotidien ne tournerait plus sans Bruce. Il arbitre mes priorités avant mon réveil et calcule mes trajets au millimètre. Je n'ai plus jamais raté un départ.&rdquo;
+        &ldquo;Le serveur extrait et agrège en temps réel des flux de données disparates (iCal, CSV Google Sheets, requêtes IMAP, API Météo) pour les formater en une chaîne vocalisable unique.&rdquo;
       </div>
     </div>
 
-    <!-- Quote 2 -->
     <div class="quote-row">
       <div>
-        <div class="quote-author">Ana Park</div>
-        <div class="quote-role">Responsable Opérations &amp; Projets</div>
+        <div class="quote-author">Sécurité &amp; Authentification</div>
+        <div class="quote-role">Protection des Endpoints</div>
       </div>
       <div class="quote-text">
-        &ldquo;Gérer trois agendas partagés et des flux d'e-mails continus était devenu insoutenable. Bruce a tout unifié en un briefing vocal de 90 secondes chaque matin.&rdquo;
+        &ldquo;Les routes API sont protégées par une authentification via jeton (Tokens) et une limitation de débit (Rate Limiting) empêchant toute exfiltration de mes données privées.&rdquo;
       </div>
     </div>
 
-    <!-- Quote 3 -->
     <div class="quote-row">
       <div>
-        <div class="quote-author">Liam Carter</div>
-        <div class="quote-role">Directeur d'Exploitation</div>
+        <div class="quote-author">Base de Données SQLite</div>
+        <div class="quote-role">Traçabilité &amp; Logs</div>
       </div>
       <div class="quote-text">
-        &ldquo;Un seul briefing, zéro friction, aucune surprise. Quand un créneau s'annule ou se chevauche, je suis prévenu avant même d'ouvrir mon ordinateur.&rdquo;
+        &ldquo;Implémentation d'une base de données locale chiffrée avec journalisation stricte, assurant le suivi et l'audit de toutes les requêtes entrantes sur le serveur.&rdquo;
       </div>
     </div>
   </div>
 </section>
 
-<!-- INTERACTIVE SIMULATION & BRUCE AUDIO ENGINE -->
+<!-- INTERACTIVE SIMULATION -->
 <section id="simulation" class="console-section">
   <div class="container">
     <div class="console-header">
       <div>
-        <div class="label-caps teal-text">Démonstration interactive &bull; Orayzis</div>
-        <h2>Écoutez Bruce en direct.</h2>
+        <div class="label-caps teal-text">Démonstration interactive</div>
+        <h2>Simulation de l'API.</h2>
       </div>
       <div class="console-controls">
         <div class="pill-group" role="group">
@@ -1181,261 +699,164 @@ nav.top-nav {
       </div>
     </div>
 
-    <!-- Interactive Audio Briefing Bar (Glassmorphic Luxury Deck) -->
     <div class="audio-bar" id="audioBar">
-      <button type="button" class="audio-trigger-btn" id="btnAudioTrigger" aria-label="Écouter le briefing vocal de Bruce">
-        <div class="btn-pulse-ring"></div>
-        <svg id="iconPlay" viewBox="0 0 24 24">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-        <svg id="iconPause" viewBox="0 0 24 24" style="display:none;">
-          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-        </svg>
+      <button type="button" class="audio-trigger-btn" id="btnAudioTrigger">
+        <svg id="iconPlay" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="iconPause" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
       </button>
       <div class="audio-track-info">
         <div class="audio-title-line">
           <div class="audio-identity">
-            <span class="live-led"></span>
-            <span>Bruce AI Assistant</span>
-            <span class="audio-tag-chip">Briefing vocal temps réel</span>
+            <span>Simulation Vocale Bruce</span>
           </div>
-          <span class="audio-status-text" id="audioStatus">Prêt &bull; Cliquez sur lecture pour entendre Bruce</span>
+          <span class="audio-status-text" id="audioStatus">Prêt &bull; Cliquez sur lecture pour tester</span>
         </div>
         <div class="equalizer-wave">
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
-          <div class="eq-bar"></div>
+          <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+          <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
         </div>
       </div>
     </div>
 
-    <!-- Console Workspace Content -->
     <div id="vueMatinContent" class="console-grid">
-      <!-- 24h Cadran Visualizer -->
       <div class="cadran-wrapper">
         <svg id="cadran" viewBox="-10 -10 420 420"></svg>
         <div class="cadran-legend-row">
-          <span class="leg-item"><span class="leg-dot" style="background:#818CF8"></span>Rendez-vous</span>
-          <span class="leg-item"><span class="leg-dot" style="background:#F472B6"></span>Pro</span>
-          <span class="leg-item"><span class="leg-dot" style="background:#34D399"></span>Activités</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#818CF8"></span>IUT</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#F472B6"></span>Auchan</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#34D399"></span>Coaching</span>
         </div>
       </div>
 
-      <!-- Metrics and Alert Panel -->
       <div class="console-body">
         <div class="console-panel">
           <div class="panel-header">
-            <span class="label-caps">Aperçu de la matinée</span>
+            <span class="label-caps">Extraction Logistique</span>
             <span id="badgeJour" class="label-caps amber-text">Lundi</span>
           </div>
           <div class="metrics-quad">
             <div class="quad-cell">
-              <div class="quad-label">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
-                <span>Météo Locale</span>
-              </div>
+              <div class="quad-label">Météo Locale</div>
               <div class="quad-val" id="valMeteo">--</div>
             </div>
             <div class="quad-cell">
-              <div class="quad-label">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span>Rendez-vous principal</span>
-              </div>
+              <div class="quad-label">Cours IUT</div>
               <div class="quad-val" id="valCours">--</div>
             </div>
             <div class="quad-cell">
-              <div class="quad-label">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                <span>Plage professionnelle</span>
-              </div>
+              <div class="quad-label">Shift Auchan</div>
               <div class="quad-val" id="valTravail">--</div>
             </div>
             <div class="quad-cell">
-              <div class="quad-label">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                <span>Activité personnelle</span>
-              </div>
+              <div class="quad-label">Coaching U10</div>
               <div class="quad-val" id="valActivite">--</div>
             </div>
           </div>
         </div>
 
         <div id="boxConflits" class="alert-strip ok">
-          <svg id="statusIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0; margin-top:2px;">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
-          <div id="texteConflits">Planning fluide : tous vos créneaux et trajets sont dégagés.</div>
+          <div id="texteConflits">Algorithme d'analyse temporelle au vert.</div>
         </div>
       </div>
     </div>
 
-    <!-- Email Prioritized View -->
     <div id="vueEmailsContent" class="console-panel" hidden>
       <div class="panel-header">
-        <span class="label-caps teal-text">Tri des e-mails du jour</span>
-        <span class="label-caps">5 courriels reçus &bull; 2 retenus</span>
-      </div>
-      <div class="metrics-quad" style="margin-bottom: 20px;">
-        <div class="quad-cell">
-          <div class="quad-label">Courriels prioritaires</div>
-          <div class="quad-val">2 Détectés &bull; Suivi important</div>
-        </div>
-        <div class="quad-cell">
-          <div class="quad-label">Messages secondaires</div>
-          <div class="quad-val">3 Archivés &bull; Sans notification superflue</div>
-        </div>
+        <span class="label-caps teal-text">Analyse IMAP</span>
+        <span class="label-caps">Test du module d'extraction furtive</span>
       </div>
       <div id="listeEmailsDetails" style="display:flex; flex-direction:column; gap:12px;"></div>
     </div>
   </div>
 </section>
 
-<!-- CLOSE & CROPPED GIANT WORDMARK -->
+<!-- CONTACT & RECRUITMENT -->
 <footer class="close-section">
   <div class="container">
     <div class="close-content">
       <div class="close-left">
-        <div class="label-caps teal-text">Projet Open Source</div>
-        <h2>Une architecture à votre disposition.</h2>
-        <p>Bruce est un démonstrateur technique illustrant mes compétences en développement Python, ingénierie système et intégration d'API.</p>
+        <div class="label-caps teal-text">Projet Technique</div>
+        <h2>Un développement structuré.</h2>
+        <p>Ce projet illustre mes compétences en architecture logicielle. Ouvert aux opportunités d'alternance et de stage en développement.</p>
       </div>
       <div class="close-actions">
-        <a href="https://github.com/Orayzis" target="_blank" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground);">Voir sur GitHub</a>
-        <a href="#contactSection" class="nav-pill-btn">Me contacter</a>
+        <a href="https://github.com/Orayzis" target="_blank" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground);">Code &amp; Documentation</a>
       </div>
     </div>
 
-    <!-- Contact & Access Request Form -->
     <div class="contact-form-card" id="contactSection">
-      <div class="label-caps amber-text" style="margin-bottom:8px;">Contact &bull; Portfolio</div>
+      <div class="label-caps amber-text" style="margin-bottom:8px;">Contact &bull; Recrutement</div>
       <h3 style="font-size:24px; margin-bottom:12px; font-family:var(--font-display);">Me contacter</h3>
-      <p style="color:var(--color-ink-secondary); font-size:14px; margin-bottom:28px; line-height:1.5;">
+      <p style="color:var(--color-ink-secondary); font-size:14px; margin-bottom:28px;">
         Une question sur l'architecture, le code source ou une proposition de collaboration ? N'hésitez pas.
       </p>
       <form id="secureContactForm" novalidate autocomplete="off">
         <div class="form-grid">
           <div class="form-group">
-            <label for="contactNom" class="form-label">Votre nom ou entreprise</label>
-            <input type="text" id="contactNom" class="form-input" maxlength="60" placeholder="Ex: Alex Martin" required>
+            <label class="form-label">Votre nom</label>
+            <input type="text" id="contactNom" class="form-input" required>
           </div>
           <div class="form-group">
-            <label for="contactEmail" class="form-label">Adresse e-mail</label>
-            <input type="email" id="contactEmail" class="form-input" maxlength="80" placeholder="alex@domaine.com" required>
+            <label class="form-label">Adresse e-mail</label>
+            <input type="email" id="contactEmail" class="form-input" required>
           </div>
         </div>
         <div class="form-group" style="margin-bottom:24px;">
-          <label for="contactMessage" class="form-label">Votre message</label>
-          <textarea id="contactMessage" class="form-textarea" maxlength="400" placeholder="Décrivez votre besoin (synchronisation d'agendas, briefing vocal matinal, intégration d'équipe)..." required></textarea>
+          <label class="form-label">Votre message</label>
+          <textarea id="contactMessage" class="form-textarea" required></textarea>
         </div>
-        <button type="submit" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground); width:auto; border:none; cursor:pointer; font-weight:700; padding:12px 28px;" id="btnSubmitContact">
-          Envoyer la demande
-        </button>
-        <div class="form-status" id="formStatus" aria-live="polite"></div>
-
-        <div class="contact-guarantees">
-          <div class="guarantee-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Chiffrement local AES-256</span>
-          </div>
-          <div class="guarantee-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Conformité RGPD intégrale</span>
-          </div>
-        </div>
+        <button type="submit" class="nav-pill-btn" style="background:var(--color-ink); color:var(--color-ground); width:auto; border:none; cursor:pointer;" id="btnSubmitContact">Envoyer</button>
+        <div class="form-status" id="formStatus"></div>
       </form>
     </div>
 
     <div class="footer-strip">
       <div style="display:flex; align-items:center;">
-        <img src="assets/orayzis-symbol-white.png" alt="Orayzis Logo" style="height:20px; width:20px; vertical-align:middle; margin-right:10px; opacity:0.85;">
-        <span>Orayzis &bull; Bruce AI Assistant</span>
+        <span>Bruce AI Assistant &bull; Créé par Rayan Mouzaine</span>
       </div>
       <div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
-        <a href="#freightTrack">Accueil</a>
-        <a href="#featureBlock1">Capacités</a>
-        <a href="#simulation">Démonstration</a>
-        <a href="admin.html" class="admin-link" style="color:var(--color-muted); text-decoration:none; font-size:11px; border:1px solid rgba(237,231,220,0.15); padding:5px 12px; border-radius:12px; transition:all .2s ease;">Espace Admin &rarr;</a>
+        <a href="https://github.com/Orayzis" target="_blank">GitHub</a>
+        <a href="admin.html">Espace Console</a>
       </div>
     </div>
   </div>
 
-  <!-- Signature Cropped Wordmark -->
   <div class="giant-wordmark-wrap">
-    <span class="giant-wordmark">ORAYZIS</span>
+    <span class="giant-wordmark">RAYAN</span>
   </div>
 </footer>
 
 <script>
-// --- DONNÉES & LOGIQUE MÉTIER ---
+// --- DONNÉES DE SIMULATION ---
 const JOURS = {
   lundi: {
     nom: "Lundi",
-    cours: [{ titre: "Obligation principale", d: "08:30", f: "12:30" }],
-    travail: "17:00 à 19:00",
-    activite: { texte: "18h30 à 20h00 (Séance de sport)", d: "18:30", f: "20:00" },
+    cours: [{ titre: "IUT - Base de données", d: "08:30", f: "12:30" }],
+    travail: "Repos",
+    activite: { texte: "Coaching U10 (18:30 à 19:45)", d: "18:30", f: "19:45" },
     meteo: { code: 61, temp: 9 }
   },
   mercredi: {
     nom: "Mercredi",
-    cours: [{ titre: "Formation stratégique", d: "09:00", f: "12:00" }],
-    travail: "14:00 à 18:00",
-    activite: null,
+    cours: [{ titre: "IUT - Dév Web", d: "09:00", f: "12:00" }],
+    travail: "Repos",
+    activite: { texte: "Coaching U10 (18:30 à 19:45)", d: "18:30", f: "19:45" },
     meteo: { code: 3, temp: 14 }
   },
   jeudi: {
     nom: "Jeudi",
-    cours: [{ titre: "Projet prioritaire", d: "14:00", f: "16:00" }],
-    travail: "16:15 à 20:00",
+    cours: [{ titre: "IUT - Architecture", d: "14:00", f: "16:00" }],
+    travail: "Auchan Drive (18:00 à 21:00)",
     activite: null,
     meteo: { code: 0, temp: 22 }
   },
   samedi: {
     nom: "Samedi",
     cours: [],
-    travail: "Repos",
-    activite: { texte: "10h00 à 12h00 (Activité personnelle)", d: "10:00", f: "12:00" },
+    travail: "Auchan Drive (18:00 à 21:00)",
+    activite: { texte: "Match de Football (14:00 à 16:00)", d: "14:00", f: "16:00" },
     meteo: { code: 0, temp: 24 }
   }
-};
-
-const COURRIELS = {
-  filtres: 5,
-  pro: [
-    { de: "Direction Générale", objet: "Suite à notre entretien stratégique" },
-    { de: "Client Partenaire", objet: "Validation du livrable & facturation" }
-  ],
-  perso: [
-    { de: "Service Administratif", objet: "Dossier mis à jour et validé" }
-  ]
 };
 
 const extraireMinutes = str => { 
@@ -1447,34 +868,30 @@ const hhmm = s => s.replace(":", "h");
 
 function analyserConflits(j) {
   let blocks = [];
-  j.cours.forEach(c => blocks.push({ s: extraireMinutes(c.d), e: extraireMinutes(c.f), nom: "Obligation principale" }));
+  j.cours.forEach(c => blocks.push({ s: extraireMinutes(c.d), e: extraireMinutes(c.f), nom: "Cours IUT" }));
   if (j.travail && j.travail !== "Repos") {
     let m = j.travail.match(/(\d{2}:\d{2}) à (\d{2}:\d{2})/);
-    if (m) blocks.push({ s: extraireMinutes(m[1]), e: extraireMinutes(m[2]), nom: "Contrainte pro" });
+    if (m) blocks.push({ s: extraireMinutes(m[1]), e: extraireMinutes(m[2]), nom: "Shift Auchan" });
   }
-  if (j.activite) blocks.push({ s: extraireMinutes(j.activite.d), e: extraireMinutes(j.activite.f), nom: "Activité annexe" });
+  if (j.activite) blocks.push({ s: extraireMinutes(j.activite.d), e: extraireMinutes(j.activite.f), nom: "Activité Sportive" });
 
   blocks.sort((a, b) => a.s - b.s);
   let avertissements = [];
   for (let i = 0; i < blocks.length - 1; i++) {
-    if (blocks[i].nom !== blocks[i+1].nom) {
-      let diff = blocks[i+1].s - blocks[i].e;
-      if (diff < 0) {
-        avertissements.push(`Chevauchement critique : <strong>${blocks[i].nom}</strong> empiète sur <strong>${blocks[i+1].nom}</strong>.`);
-      } else if (diff <= 25) {
-        avertissements.push(`Transit serré : seulement <strong>${diff} minutes</strong> de marge entre <strong>${blocks[i].nom}</strong> et <strong>${blocks[i+1].nom}</strong>.`);
-      }
+    let diff = blocks[i+1].s - blocks[i].e;
+    if (diff < 0) {
+      avertissements.push(`Chevauchement critique : <strong>${blocks[i].nom}</strong> empiète sur <strong>${blocks[i+1].nom}</strong>.`);
+    } else if (diff <= 25) {
+      avertissements.push(`Temps de trajet court : seulement <strong>${diff} minutes</strong> entre <strong>${blocks[i].nom}</strong> et <strong>${blocks[i+1].nom}</strong>.`);
     }
   }
   return avertissements;
 }
 
-// =========================================================
-// FREIGHT SCROLL HERO CONTROLLER & VIDEO SCRUBBER
-// =========================================================
-const freightTrack = document.getElementById("freightTrack");
-const freightVideo = document.getElementById("freightVideo");
-const lastBlock = document.getElementById("featureBlock5");
+// --- LOGIQUE VIDEO SCRUBBING ---
+const trackScroll = document.getElementById("trackScroll");
+const heroVideo = document.getElementById("heroVideo");
+const lastFeature = document.getElementById("lastFeature");
 
 const DURATION = 5.04;
 let curTime = 0;
@@ -1482,81 +899,38 @@ let isSeeking = false;
 let end = 2500;
 let knee = 0.7;
 
-function updateFreightMetrics() {
+function updateMetrics() {
   const vh = window.innerHeight;
-  if (!lastBlock || !freightTrack) return;
-  
-  // Position from the top of track
-  const lastBlockBottom = lastBlock.offsetTop + lastBlock.offsetHeight;
-  end = lastBlockBottom + 0.75 * vh;
-  freightTrack.style.height = `${end + vh}px`;
-  knee = lastBlockBottom / (end || 1);
+  if (!lastFeature || !trackScroll) return;
+  const lastFeatureBottom = lastFeature.offsetTop + lastFeature.offsetHeight;
+  end = lastFeatureBottom + 0.75 * vh;
+  trackScroll.style.height = `${end + vh}px`;
+  knee = lastFeatureBottom / (end || 1);
 }
+window.addEventListener("resize", updateMetrics);
+window.addEventListener("load", updateMetrics);
+setTimeout(updateMetrics, 100);
 
-window.addEventListener("resize", updateFreightMetrics);
-window.addEventListener("load", updateFreightMetrics);
-setTimeout(updateFreightMetrics, 100);
+if (heroVideo) heroVideo.addEventListener("seeked", () => { isSeeking = false; });
 
-if (freightVideo) {
-  freightVideo.addEventListener("seeked", () => {
-    isSeeking = false;
-  });
-  
-  // Choose source based on screen size or Save-Data
-  const isSmallScreen = window.innerWidth <= 900 || (navigator.connection && navigator.connection.saveData);
-  const preferredSrc = isSmallScreen 
-    ? "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e8eb434f-d097-4b1b-b9e6-c8b46fa43040.mp4"
-    : "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e02bb27f-80d8-445f-a03e-1b609dac4261.mp4";
-  
-  if (freightVideo.currentSrc !== preferredSrc && freightVideo.src !== preferredSrc) {
-    freightVideo.src = preferredSrc;
-  }
-}
-
-function onFreightFrame() {
+function onFrame() {
   const scrollY = window.pageYOffset;
-  const trackTop = freightTrack ? freightTrack.offsetTop : 0;
-  
-  // Progress: p = clamp((scrollY - track.top) / end)
+  const trackTop = trackScroll ? trackScroll.offsetTop : 0;
   const p = Math.max(0, Math.min(1, (scrollY - trackTop) / (end || 1)));
   
-  // Two-part mapping:
-  // While p < knee: clip progress = p / knee * 0.46
-  // After that, it runs from 0.46 to 1
-  let clipProgress = 0;
-  if (p < knee) {
-    clipProgress = (p / (knee || 1)) * 0.46;
-  } else {
-    clipProgress = 0.46 + ((p - knee) / (1 - knee || 1)) * 0.54;
-  }
-  
-  // Target time: progress * (duration - 1/48)
+  let clipProgress = (p < knee) ? (p / (knee || 1)) * 0.46 : 0.46 + ((p - knee) / (1 - knee || 1)) * 0.54;
   const targetTime = clipProgress * (DURATION - 1/48);
   curTime += (targetTime - curTime) * 0.22;
   
-  if (freightVideo && freightVideo.readyState >= 1 && !isSeeking) {
-    if (Math.abs(freightVideo.currentTime - curTime) > (1 / 60)) {
+  if (heroVideo && heroVideo.readyState >= 1 && !isSeeking) {
+    if (Math.abs(heroVideo.currentTime - curTime) > (1 / 60)) {
       isSeeking = true;
-      freightVideo.currentTime = curTime;
+      heroVideo.currentTime = curTime;
     }
   }
-
-  requestAnimationFrame(onFreightFrame);
+  requestAnimationFrame(onFrame);
 }
-
-requestAnimationFrame(onFreightFrame);
-
-// Recorder mode (?rec=1)
-if (window.location.search.includes("rec=1")) {
-  window.__recTime = function(vid, t) {
-    const p = Math.max(0, Math.min(1, t / 6.5));
-    window.scrollTo(0, p * end);
-    const clipProgress = (p < knee) ? (p / knee) * 0.46 : 0.46 + ((p - knee) / (1 - knee)) * 0.54;
-    const ct = clipProgress * (DURATION - 1/48);
-    vid.currentTime = ct;
-    return ct;
-  };
-}
+requestAnimationFrame(onFrame);
 
 // --- 24H CADRAN SVG DRAWING ---
 const point = (r, m) => { const a = (m / 1440) * 2 * Math.PI - Math.PI / 2; return [200 + r * Math.cos(a), 200 + r * Math.sin(a)]; };
@@ -1569,9 +943,7 @@ function dessinerCadran(j) {
     const m = j.travail.match(/(\d{2}:\d{2}) à (\d{2}:\d{2})/); 
     if (m) arcs.push({ type: "travail", d: extraireMinutes(m[1]), f: extraireMinutes(m[2]), color: "#F472B6" }); 
   }
-  if (j.activite) {
-    arcs.push({ type: "activite", d: extraireMinutes(j.activite.d), f: extraireMinutes(j.activite.f), color: "#34D399" });
-  }
+  if (j.activite) arcs.push({ type: "activite", d: extraireMinutes(j.activite.d), f: extraireMinutes(j.activite.f), color: "#34D399" });
 
   let g = ``;
   Object.values(RAYONS).forEach(r => g += `<circle class="piste" cx="200" cy="200" r="${r}"/>`);
@@ -1588,221 +960,51 @@ function dessinerCadran(j) {
   document.getElementById("cadran").innerHTML = g;
 }
 
-// --- XSS PROTECTION & INPUT SANITIZATION UTILITIES ---
-function escapeHtml(str) {
-  if (str === null || str === undefined) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-function sanitizeClientInput(str, maxLen = 300) {
-  if (!str) return '';
-  const cleaned = String(str).replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '').trim();
-  return cleaned.slice(0, maxLen);
-}
-
-// --- CONSOLE & BRUCE LIVE AUDIO SYNTHESIS ---
+// --- CONSOLE ---
 let vue = "matin", jour = "lundi";
-
-function genererTexteBriefing() {
-  if (vue === "matin") {
-    const j = JOURS[jour];
-    let t = `Salutations. Je suis Bruce, votre assistant personnel développé par Orayzis. Voici le briefing de votre ${j.nom}. `;
-    if (j.meteo.code === 61) {
-      t += "Alerte météorologique : pluie battante avec 9 degrés. Prévoyez vos équipements. ";
-    } else if (j.meteo.code === 0) {
-      t += `Ciel totalement dégagé avec ${j.meteo.temp} degrés. Conditions optimales. `;
-    } else {
-      t += `Temps modéré avec ${j.meteo.temp} degrés. `;
-    }
-
-    if (j.cours.length) {
-      t += `Obligation principale de ${hhmm(j.cours[0].d)} à ${hhmm(j.cours[0].f)}. `;
-    } else {
-      t += "Aucune obligation académique ou majeure sur votre agenda. ";
-    }
-
-    if (j.travail !== "Repos") {
-      t += `Activité professionnelle de ${j.travail}. `;
-    } else {
-      t += "Vous êtes en repos professionnel. ";
-    }
-
-    if (j.activite) {
-      t += `Activité annexe : ${j.activite.texte}. `;
-    }
-
-    const conflits = analyserConflits(j);
-    if (conflits.length > 0) {
-      t += "Vigilance logistique requise : " + conflits.map(c => c.replace(/<[^>]*>/g, "")).join(" ") + " ";
-    } else {
-      t += "Tous vos indicateurs de transit sont au vert. ";
-    }
-
-    t += "Passez une excellente journée.";
-    return t;
-  } else {
-    return "Voici le point sur vos e-mails. Deux messages importants demandent votre attention aujourd'hui, et les courriels secondaires ont été archivés sans vous interrompre.";
-  }
-}
-
 function afficherConsole() {
-  arreterAudio();
   const estMatin = vue === "matin";
-  
   document.getElementById("vueMatinContent").hidden = !estMatin;
   document.getElementById("vueEmailsContent").hidden = estMatin;
   document.getElementById("joursGroup").hidden = !estMatin;
-
-  const audioStatus = document.getElementById("audioStatus");
-  audioStatus.textContent = estMatin ? `Prêt &bull; Briefing du ${JOURS[jour].nom}` : "Prêt &bull; Synthèse de l'audit e-mails";
+  document.getElementById("audioStatus").textContent = estMatin ? `Prêt &bull; Briefing du ${JOURS[jour].nom}` : "Prêt &bull; Simulation IMAP";
 
   if (estMatin) {
     const j = JOURS[jour];
     dessinerCadran(j);
     document.getElementById("badgeJour").textContent = j.nom;
-    
-    let cond = [0,1].includes(j.meteo.code) ? "Ciel dégagé" : [51,61].includes(j.meteo.code) ? "Pluie battante" : "Temps mitigé";
-    document.getElementById("valMeteo").textContent = `${j.meteo.temp}°C &bull; ${cond}`;
-    document.getElementById("valCours").textContent = j.cours.length ? j.cours.map(c => `${c.titre} (${hhmm(c.d)}-${hhmm(c.f)})`).join(" / ") : "Aucune";
+    document.getElementById("valMeteo").textContent = `${j.meteo.temp}°C`;
+    document.getElementById("valCours").textContent = j.cours.length ? j.cours.map(c => `${c.titre} (${hhmm(c.d)}-${hhmm(c.f)})`).join(" / ") : "Aucun cours";
     document.getElementById("valTravail").textContent = j.travail;
-    document.getElementById("valActivite").textContent = j.activite ? j.activite.texte : "Aucune";
+    document.getElementById("valActivite").textContent = j.activite ? j.activite.texte : "Repos";
 
     const conflits = analyserConflits(j);
     const box = document.getElementById("boxConflits");
-    const icon = document.getElementById("statusIcon");
     if (conflits.length > 0) {
       box.className = "alert-strip warning";
-      icon.innerHTML = `<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>`;
-      document.getElementById("texteConflits").innerHTML = conflits.join(" ");
+      document.getElementById("texteConflits").innerHTML = conflits.join("<br>");
     } else {
       box.className = "alert-strip ok";
-      icon.innerHTML = `<polyline points="20 6 9 17 4 12"/>`;
-      document.getElementById("texteConflits").innerHTML = "<strong>Flux optimal :</strong> Trajets fluides, aucune anomalie de planning.";
+      document.getElementById("texteConflits").innerHTML = "<strong>Trajets fluides :</strong> aucun chevauchement.";
     }
   } else {
-    document.getElementById("listeEmailsDetails").innerHTML = [
-      ...COURRIELS.pro.map(m => `
-        <div style="padding:14px 16px; background:rgba(237,231,220,0.02); border-left:3px solid var(--color-teal); border-radius:6px;">
-          <div style="font-weight:600; color:var(--color-ink); font-size:14px;">${escapeHtml(m.objet)}</div>
-          <div style="font-size:12px; color:var(--color-muted); margin-top:2px;">Expéditeur : ${escapeHtml(m.de)} &bull; Priorité Pro</div>
-        </div>
-      `),
-      ...COURRIELS.perso.map(m => `
-        <div style="padding:14px 16px; background:rgba(237,231,220,0.02); border-left:3px solid var(--color-amber); border-radius:6px;">
-          <div style="font-weight:600; color:var(--color-ink); font-size:14px;">${escapeHtml(m.objet)}</div>
-          <div style="font-size:12px; color:var(--color-muted); margin-top:2px;">Expéditeur : ${escapeHtml(m.de)} &bull; Correspondance Générale</div>
-        </div>
-      `)
-    ].join("");
+    document.getElementById("listeEmailsDetails").innerHTML = `
+      <div style="padding:14px; background:rgba(237,231,220,0.02); border-left:3px solid var(--color-teal); border-radius:6px;">
+        <div style="font-weight:600; font-size:14px;">Offre d'alternance acceptée</div>
+        <div style="font-size:12px; color:var(--color-muted);">Sopra Steria &bull; Priorité Haute</div>
+      </div>
+      <div style="padding:14px; background:rgba(237,231,220,0.02); border-left:3px solid var(--color-amber); border-radius:6px;">
+        <div style="font-weight:600; font-size:14px;">Réunion de projet IUT</div>
+        <div style="font-size:12px; color:var(--color-muted);">Groupe de travail &bull; Correspondance</div>
+      </div>
+    `;
   }
-
   document.querySelectorAll("[data-vue]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.vue === vue)));
   document.querySelectorAll("[data-jour]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.jour === jour)));
 }
-
-// --- AUDIO TRIGGER & VOICE REACTION ---
-const btnAudioTrigger = document.getElementById("btnAudioTrigger");
-const iconPlay = document.getElementById("iconPlay");
-const iconPause = document.getElementById("iconPause");
-const audioBar = document.getElementById("audioBar");
-const audioStatus = document.getElementById("audioStatus");
-const synthese = window.speechSynthesis;
-
-function arreterAudio() {
-  if (synthese) synthese.cancel();
-  audioBar.classList.remove("is-playing");
-  iconPlay.style.display = "block";
-  iconPause.style.display = "none";
-}
-
-if (synthese) {
-  btnAudioTrigger.addEventListener("click", () => {
-    if (audioBar.classList.contains("is-playing")) {
-      arreterAudio();
-      audioStatus.textContent = "Interrompu &bull; Cliquer pour réécouter Bruce";
-      return;
-    }
-
-    synthese.cancel();
-    const texte = genererTexteBriefing();
-    const u = new SpeechSynthesisUtterance(texte);
-    u.lang = "fr-FR";
-    
-    const voix = synthese.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
-    if (voix) u.voice = voix;
-
-    u.onstart = () => {
-      audioBar.classList.add("is-playing");
-      iconPlay.style.display = "none";
-      iconPause.style.display = "block";
-      audioStatus.innerHTML = "<span class='amber-text'>Bruce parle en direct...</span> (Cliquer pour stopper)";
-    };
-
-    u.onend = u.onerror = () => {
-      audioBar.classList.remove("is-playing");
-      iconPlay.style.display = "block";
-      iconPause.style.display = "none";
-      audioStatus.textContent = "Briefing terminé &bull; Prêt pour réécoute";
-    };
-
-    synthese.speak(u);
-  });
-}
-
 document.querySelectorAll("[data-vue]").forEach(b => b.addEventListener("click", () => { vue = b.dataset.vue; afficherConsole(); }));
 document.querySelectorAll("[data-jour]").forEach(b => b.addEventListener("click", () => { jour = b.dataset.jour; afficherConsole(); }));
 afficherConsole();
-
-// --- SECURE FORM SUBMISSION (SANITIZED, VALIDATED, RATE-LIMITED) ---
-const contactForm = document.getElementById("secureContactForm");
-const formStatus = document.getElementById("formStatus");
-let lastFormSubmitTime = 0;
-
-if (contactForm) {
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const now = Date.now();
-
-    // Rate-limiting on client-side (1 submission per 10 seconds)
-    if (now - lastFormSubmitTime < 10000) {
-      formStatus.className = "form-status error";
-      formStatus.textContent = "Veuillez patienter 10 secondes avant de renouveler l'envoi.";
-      return;
-    }
-
-    const nomRaw = document.getElementById("contactNom").value;
-    const emailRaw = document.getElementById("contactEmail").value;
-    const msgRaw = document.getElementById("contactMessage").value;
-
-    const nomSanitized = sanitizeClientInput(nomRaw, 60);
-    const emailSanitized = sanitizeClientInput(emailRaw, 80);
-    const msgSanitized = sanitizeClientInput(msgRaw, 400);
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailSanitized)) {
-      formStatus.className = "form-status error";
-      formStatus.textContent = "Format d'adresse e-mail invalide.";
-      return;
-    }
-
-    if (msgSanitized.length < 8) {
-      formStatus.className = "form-status error";
-      formStatus.textContent = "Le message doit comporter au moins 8 caractères.";
-      return;
-    }
-
-    lastFormSubmitTime = now;
-    formStatus.className = "form-status success";
-    // Using textContent to prevent any reflected XSS
-    formStatus.textContent = "Merci " + nomSanitized + ", votre message a bien été envoyé. Notre équipe vous répondra très rapidement à l'adresse " + emailSanitized + ".";
-    contactForm.reset();
-  });
-}
 </script>
 </body>
 </html>
