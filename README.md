@@ -2,58 +2,51 @@
   <img src="BruceAi/banner.svg" width="100%" alt="Bruce AI Assistant">
 </p>
 
-# BRUCE, Votre Assistant IA Personnel
+# BRUCE AI - Assistant Personnel Automatisé
 
-> **Votre matinée. Optimisée. Automatisée. Dictée.**
+**Auteur :** Rayan Mouzaine
 
-> **[Ouvrir la console de démonstration interactive](https://orayzis.github.io/Bruce-AIAssistant/)**
+**Statut :** Projet de Portfolio / Démonstrateur Technique
 
-**Créateur :** Orayzis 
+**Interface Web :** [Consulter l'architecture et la simulation](https://orayzis.github.io/Bruce-AIAssistant/)
 
-**Statut :** Opérationnel 
+## Contexte du projet
 
-**Version :** 1.1 (bêta) 
+Ce projet répond à un défi logistique personnel : synchroniser de manière automatisée mon emploi du temps universitaire (IUT), mes horaires de travail (Auchan Drive) et mes engagements sportifs (Coaching U10).
 
-**Website** : https://orayzis.github.io/Bruce-AIAssistant/
+Bruce est une API backend qui agrège ces sources de données hétérogènes, résout les conflits temporels, filtre mes correspondances, et formate ces informations pour un briefing vocal quotidien déclenché via un raccourci iOS.
 
----
+Ce dépôt documente l'architecture du système et sert de démonstrateur de mes compétences en développement logiciel.
 
-## Le diagnostic : La fragmentation de l'attention
+## Architecture Technique
 
-Agenda universitaire, planning de travail fluctuant, alertes météorologiques, e-mails stratégiques noyés au milieu des spams... Avant même votre premier café, votre esprit est déjà sollicité par la collecte d'informations dispersées sur quatre à cinq applications différentes. 
+* **Backend :** API RESTful développée en Python avec le framework Flask.
+* **Base de données :** SQLite (mode WAL) assurant la persistance des journaux d'audit et la traçabilité des requêtes.
+* **Sécurité :** Routes verrouillées par jetons d'authentification (Tokens), limitation de débit en mémoire (Rate Limiting) et requêtes paramétrées.
+* **Infrastructure :** Hébergement cloud (PaaS) sur Render. Implémentation d'une stratégie Keep-Alive (UptimeRobot) pour annuler la latence de démarrage à froid (Cold Start).
 
-Cette routine génère une charge mentale inutile et une déperdition de temps dès le réveil.
+## Modules et Fonctionnalités
 
-## La solution : Le protocole Bruce
+### 1. Convergence des flux
 
-Bruce n'est pas une énième application à ouvrir. C'est une architecture backend invisible qui travaille pendant que vous dormez. 
+Le serveur extrait et nettoie en temps réel des données issues de formats variés : agendas complexes (iCal), plannings collaboratifs (exports CSV) et API externes (Open-Meteo pour les relevés géolocalisés).
 
-Chaque matin, sans aucune intervention de votre part, le système rassemble vos bases de données, croise vos contraintes logistiques, nettoie vos communications et génère un briefing vocal tactique, énoncé directement par votre smartphone.
+### 2. Moteur d'anticipation logistique
 
----
+Un algorithme d'analyse temporelle trie chronologiquement les événements de la journée. Le système calcule les battements mathématiques entre chaque activité et génère une alerte préventive si un temps de transit est inférieur à 25 minutes.
 
-## Capacités du système
+### 3. Lecture furtive et Tri IMAP
 
-### 1. Convergence absolue des données
-Bruce se connecte silencieusement à votre écosystème. Il extrait en temps réel les données de vos agendas complexes (flux iCal), de vos plannings de travail collaboratifs (Google Sheets) et des services météorologiques géolocalisés.
+Module de connexion sécurisée (IMAP sur SSL) conçu pour isoler les e-mails professionnels (candidatures, urgences) des flux promotionnels. Le scan est effectué de manière furtive pour protéger la confidentialité, sans jamais marquer les messages comme lus sur le serveur distant.
 
-### 2. Anticipation logistique et Moteur de conflits
-L'assistant ne se contente pas de lire vos horaires, il les analyse. Grâce à un algorithme de calcul temporel, il croise vos activités. Un chevauchement détecté ? Un temps de trajet critique (< 25 min) entre deux lieux ? Bruce lève instantanément une *Vigilance de transit* pour que vous gardiez toujours un coup d'avance.
+### 4. Restitution vocale (iOS)
 
-### 3. Filtrage chirurgical des correspondances
-Avant même que vous n'ouvriez votre boîte de réception, Bruce opère un tri algorithmique. Les communications automatisées et promotionnelles sont écartées sous silence. Seules les opportunités professionnelles (candidatures, réseau) et les urgences vous sont dictées à voix haute.
+L'API structure les données brutes en une chaîne textuelle optimisée pour le traitement du langage naturel. L'automatisation Apple (Raccourcis) interroge l'endpoint chaque matin pour énoncer le rapport de manière fluide.
 
-### 4. Restitution vocale automatisée (iOS)
-À l'heure de votre choix, l'assistant prend le contrôle audio. Il vous délivre un rapport structuré, fluide et naturel : contexte météorologique avec recommandation vestimentaire, annonce des obligations, alertes de chevauchement et synthèse des e-mails.
+## Compétences évaluables
 
----
-
-## Une architecture forgée sur-mesure
-
-Le moteur de Bruce a été conçu pour être totalement agnostique et modulable. 
-
-Que vous soyez soumis à des horaires de bureau stricts, à un emploi du temps de freelance imprévisible, ou que vous deviez jongler entre des sessions de conduite et des entraînements sportifs exigeants, le système se reconfigure pour épouser la géométrie exacte de votre quotidien.
-
-**Vous exigez ce niveau d'organisation ?**
-
-L'architecture est stable, testée et prête à être déployée pour de nouveaux profils. Explorez l'interface de démonstration via le lien ci-dessus, et contactez-moi directement pour initier la conception de votre propre assistant personnel (sur devis).
+* Développement backend en Python (Flask).
+* Intégration, conception et sécurisation d'API REST.
+* Parsing et manipulation de structures de données (JSON, CSV, iCal).
+* Conception d'algorithmes de détection de conflits logistiques.
+* Déploiement et maintien d'un serveur en production.
