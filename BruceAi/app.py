@@ -117,7 +117,7 @@ ANNONCES_MAILS = [
 # Sensitive external feed URLs loaded strictly from environment variables
 URL_ADE = os.environ.get("ADE_ICAL_URL", "")
 URL_DRIVE = os.environ.get("DRIVE_CSV_URL", "")
-SCHEDULE_USER = os.environ.get("SCHEDULE_USER_NAME", "orayzis").lower()
+SCHEDULE_USER = os.environ.get("SCHEDULE_USER_NAME", "rayan").lower()
 
 # ------------------------------------------------------------------------------
 # Core Helper Functions with Hardening
@@ -206,7 +206,7 @@ def obtenir_cours_du_jour() -> str:
                     dtend = composant.get('dtend')
                     fin = dtend.dt.astimezone(fuseau).strftime("%Hh%M") if dtend else "inconnue"
                     cours_liste.append(f"{titre} ({heure_debut}-{fin})")
-        return " / ".join(cours_liste) if cours_liste else "Aucune obligation académique aujourd'hui."
+        return " / ".join(cours_liste) if cours_liste else "Aucun cours aujourd'hui."
     except Exception as e:
         logger.warning(f"Erreur parsing iCal: {e}")
         return "Données d'agenda indisponibles pour le moment."
@@ -532,14 +532,16 @@ def route_matin():
     fuseau = pytz.timezone('Europe/Paris')
     jour_py = datetime.now(fuseau).weekday()
     
-    coaching = "18h30 à 19h45 (Séance tactique)" if jour_py in (0, 2) else "Pas d'activité prévue"
-    match = "Journée de compétition" if jour_py == 5 else "Pas de compétition"
+    # Définition stricte des textes de coaching et match
+    coaching = "U10 de 18h30 à 19h45" if jour_py in (0, 2) else "Pas de coaching aujourd'hui"
+    match = "Match aujourd'hui" if jour_py == 5 else "Pas de match aujourd'hui"
     
+    # Structure exacte imposée
     corps = (
-        f"Agenda : {cours_str}\n"
-        f"Planning : {drive_str}\n"
-        f"Activités : {coaching}\n"
-        f"Statut : {match}"
+        f"Cours : {cours_str}\n"
+        f"Drive : {drive_str}\n"
+        f"Coaching : {coaching}\n"
+        f"Match : {match}"
     )
     
     citation = random.choice(CITATIONS_MOTIVANTES)
@@ -549,7 +551,7 @@ def route_matin():
     drive_vocal = "Vous êtes en repos professionnel." if "Repos" in drive_str else f"Pour vos engagements, vous êtes prévu de {drive_str}."
     
     phrase_programme = f"{cours_vocal} {drive_vocal}"
-    if coaching != "Pas d'activité prévue":
+    if coaching != "Pas de coaching aujourd'hui":
         phrase_programme += f" Activité programmée de {coaching}."
 
     # Conflict detection algorithm
@@ -566,7 +568,7 @@ def route_matin():
         if s and e:
             blocks.append((s, e, "vos engagements professionnels"))
             
-    if coaching != "Pas d'activité prévue":
+    if coaching != "Pas de coaching aujourd'hui":
         s, e = extraire_temps(coaching)
         if s and e:
             blocks.append((s, e, "votre activité annexe"))
