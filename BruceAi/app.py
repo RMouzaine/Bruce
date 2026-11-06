@@ -83,21 +83,14 @@ ACCROCHES = [
 
 CITATIONS_MOTIVANTES = [
     "Allah n'impose à aucune âme une charge supérieure à sa capacité.",
-    "N'oubliez pas : le succès, c'est de tomber sept fois et de se relever huit.",
     "La discipline est le pont entre les objectifs et les accomplissements.",
-    "Chaque jour est une nouvelle opportunité de devenir la meilleure version de vous-même.",
     "Les diamants sont conçus sous la pression.",
     "Rien ne te sera donné, va tout chercher.",
-    "La seule limite à notre épanouissement de demain sera nos doutes d'aujourd'hui.",
-    "Ce n'est pas l'aptitude, mais l'attitude, qui détermine votre altitude.",
-    "Un voyage de mille lieues commence toujours par un premier pas.",
     "Faites de votre vie un rêve, et d'un rêve, une réalité.",
-    "La motivation vous fait débuter, mais c'est l'habitude qui vous fait continuer.",
-    "Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",
+    "Le succès n'est pas final, l'échec n'est pas fatal.",
     "Il n'y a pas d'ascenseur pour la réussite, il faut prendre l'escalier.",
-    "Le meilleur moment pour planter un arbre était il y a 20 ans. Le deuxième meilleur moment est maintenant.",
-    "L'action est la clé fondamentale de tout succès.",
-    "La meilleure façon de prédire l'avenir est de le créer."
+    "Tu veux mourir là ou t’as envie, ou tu veux mourir là ou t’as vécu ?.",
+    "J'ai promis d'être le premier, quitte à tricher pour gagner."
 ]
 
 TRANSITIONS_PROGRAMME = [
@@ -539,6 +532,7 @@ def route_matin():
     
     # Structure textuelle exacte imposée
     corps = (
+        Consultons votre agenda du jour :
         f"Cours : {cours_str}\n"
         f"Drive : {drive_str}\n"
         f"Coaching : {coaching}\n"
