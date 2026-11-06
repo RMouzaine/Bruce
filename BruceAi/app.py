@@ -135,14 +135,16 @@ def extraire_temps(horaire_str: str):
 
 def obtenir_meteo_et_conseil() -> str:
     """
-    Retrieves weather forecast from Open-Meteo with network timeout bounds.
+    Retrieves weather forecast from Open-Meteo with network timeout bounds and User-Agent.
     """
     try:
         url_meteo = "https://api.open-meteo.com/v1/forecast?latitude=47.90&longitude=1.90&current_weather=true"
-        # Network timeout of 4 seconds to prevent thread stalling
-        reponse = requests.get(url_meteo, timeout=4.0)
+        # Ajout d'un User-Agent pour éviter le blocage de l'API et extension du timeout
+        headers = {'User-Agent': 'Orayzis-Bruce/1.2 (Security Hardened)'}
+        reponse = requests.get(url_meteo, headers=headers, timeout=6.0)
         reponse.raise_for_status()
         data = reponse.json()
+        
         meteo = data.get("current_weather", {})
         
         temp = meteo.get("temperature", 0)
@@ -530,9 +532,9 @@ def route_matin():
     coaching = "U10 de 18h30 à 19h45" if jour_py in (0, 2) else "Pas de coaching aujourd'hui"
     match = "Match aujourd'hui" if jour_py == 5 else "Pas de match aujourd'hui"
     
-    # Structure textuelle exacte imposée
+    # Structure textuelle exacte imposée (Correction de la syntaxe appliquée ici)
     corps = (
-        Consultons votre agenda du jour :
+        "Consultons votre agenda du jour :\n"
         f"Cours : {cours_str}\n"
         f"Drive : {drive_str}\n"
         f"Coaching : {coaching}\n"
