@@ -82,6 +82,7 @@ ACCROCHES = [
 ]
 
 CITATIONS_MOTIVANTES = [
+    "Allah n'impose à aucune âme une charge supérieure à sa capacité.",
     "N'oubliez pas : le succès, c'est de tomber sept fois et de se relever huit.",
     "La discipline est le pont entre les objectifs et les accomplissements.",
     "Chaque jour est une nouvelle opportunité de devenir la meilleure version de vous-même.",
@@ -292,7 +293,7 @@ def obtenir_derniers_mails() -> str:
     try:
         mail = imaplib.IMAP4_SSL("imap.gmail.com", port=993)
         mail.login(utilisateur, mot_de_passe)
-        mail.select("inbox", readonly=True)  # Read-only flag protects against accidental state modification
+        mail.select("inbox", readonly=True)
         
         status, messages = mail.search(None, '(UNSEEN)')
         if status != "OK":
@@ -536,7 +537,7 @@ def route_matin():
     coaching = "U10 de 18h30 à 19h45" if jour_py in (0, 2) else "Pas de coaching aujourd'hui"
     match = "Match aujourd'hui" if jour_py == 5 else "Pas de match aujourd'hui"
     
-    # Structure exacte imposée
+    # Structure textuelle exacte imposée
     corps = (
         f"Cours : {cours_str}\n"
         f"Drive : {drive_str}\n"
@@ -547,12 +548,13 @@ def route_matin():
     citation = random.choice(CITATIONS_MOTIVANTES)
     transition = random.choice(TRANSITIONS_PROGRAMME)
     
-    cours_vocal = "Aucune obligation académique aujourd'hui." if "Aucun" in cours_str else f"Côté obligations, vous avez : {cours_str}."
-    drive_vocal = "Vous êtes en repos professionnel." if "Repos" in drive_str else f"Pour vos engagements, vous êtes prévu de {drive_str}."
+    # Formulation vocale ajustée
+    cours_vocal = "Aucun cours au programme aujourd'hui." if "Aucun" in cours_str else f"Côté cours, vous avez : {cours_str}."
+    drive_vocal = "Vous êtes en repos pour le Drive." if "Repos" in drive_str else f"Pour le Drive, vous êtes prévu de {drive_str}."
+    coaching_vocal = "Aucun coaching de prévu." if "Pas de" in coaching else f"Vous avez une séance de coaching : {coaching}."
+    match_vocal = "Aucun match au programme aujourd'hui." if "Pas de" in match else "C'est un jour de match."
     
-    phrase_programme = f"{cours_vocal} {drive_vocal}"
-    if coaching != "Pas de coaching aujourd'hui":
-        phrase_programme += f" Activité programmée de {coaching}."
+    phrase_programme = f"{cours_vocal} {drive_vocal} {coaching_vocal} {match_vocal}"
 
     # Conflict detection algorithm
     blocks = []
@@ -561,17 +563,17 @@ def route_matin():
         for c in cours_liste:
             s, e = extraire_temps(c)
             if s and e:
-                blocks.append((s, e, "vos obligations principales"))
+                blocks.append((s, e, "vos cours"))
                 
     if "Repos" not in drive_str and "non synchronisées" not in drive_str:
         s, e = extraire_temps(drive_str)
         if s and e:
-            blocks.append((s, e, "vos engagements professionnels"))
+            blocks.append((s, e, "le Drive"))
             
-    if coaching != "Pas de coaching aujourd'hui":
+    if "Pas de" not in coaching:
         s, e = extraire_temps(coaching)
         if s and e:
-            blocks.append((s, e, "votre activité annexe"))
+            blocks.append((s, e, "le coaching"))
             
     blocks.sort(key=lambda x: x[0])
     
