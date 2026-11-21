@@ -8,7 +8,7 @@
 
 **Statut :** Projet de Portfolio / Démonstrateur Technique
 
-**Interface Web :** [Consulter l'architecture et la simulation](https://orayzis.github.io/Bruce-AIAssistant/)
+**Interface Web :** [Consulter l'architecture et la simulation](https://rmouzaine.github.io/Bruce/)
 
 ## Contexte du projet
 
